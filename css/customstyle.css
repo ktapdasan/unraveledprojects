@@ -1,0 +1,36 @@
+body {
+	min-height: 1200px;
+	padding-top: 70px;
+	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.navbar {
+	background-color: #2f2d2d;
+	background: #2f2d2d;
+	border-color: #050505;
+	-webkit-box-shadow: 0 8px 6px -6px #999;
+	-moz-box-shadow: 0 8px 6px -6px #999;
+	box-shadow: 0 8px 6px -6px #999;
+}
+
+.navbar .navbar-brand {
+	text-shadow: 0px 1px 7px #c0c0c0;
+	margin-left: 10px;
+	color: #fefdfd !important;
+	font-size: 1.8em
+}
+
+.navbar .navbar-collapse li a {
+	color: #fefdfd !important;
+	text-shadow: 0px 1px 7px #c0c0c0;
+}
+.navbar .navbar-collapse li a:hover{
+	background-color: #fefdfd;
+	color: #2f2d2d !important;
+}
+.login-logo{
+	text-shadow: 0px 1px 7px #c0c0c0;
+	margin-left: 10px;
+	color: #0d0c0c !important;
+	font-size: 1.8em
+}
