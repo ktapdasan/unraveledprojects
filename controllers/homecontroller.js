@@ -1,8 +1,5 @@
-demoApp.controller('HomeController', function($scope, $interval) {
-	$scope.theTime = new Date().toLocaleTimeString();
-	$interval(function () {
-		$scope.theTime = new Date().toLocaleTimeString();
-	}, 1000);
+demoApp.controller('HomeController', function($scope) {
+	
 });
 
 demoApp.controller('SimpleController', function($scope) {
