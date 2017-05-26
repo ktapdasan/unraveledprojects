@@ -14,5 +14,12 @@ app.controller('HomeController', function($scope,SessionFactory,md5) {
         });
     }
 
+    $scope.logout = function(){
+        var promise = SessionFactory.logout();
+        promise.then(function(data){
+            window.location = './login.html';
+        })
+    }
+
 });
 

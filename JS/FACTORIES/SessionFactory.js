@@ -10,14 +10,14 @@ app.factory('SessionFactory', function($http, $location){
         return promise;
     };
 
-    // factory.logout = function(){
-    //     var promise = $http({
-    //         url:'./FUNCTIONS/Session/deletesession.php',
-    //         method: 'GET'
-    //     })
+    factory.logout = function(){
+        var promise = $http({
+            url:'./FUNCTIONS/Session/deletesession.php',
+            method: 'GET'
+        })
 
-    //     return promise;
-    // };
+        return promise;
+    };
 
     return factory;
 })
