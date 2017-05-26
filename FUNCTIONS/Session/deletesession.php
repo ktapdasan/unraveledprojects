@@ -1,5 +1,5 @@
 <?php
-$_id = md5('user_random_key');
+$_id = md5('pk');
 
 header("HTTP/1.0 200 OK");
 setcookie ($_id, "", time() - 3600, '/');
