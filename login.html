@@ -29,11 +29,11 @@
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="ASSETS/bootstrap/js/bootstrap.min.js"></script>
-
+  <script src="ASSETS/js/JqueryStretch.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
         checksession();
-
+        $.backstretch("ASSETS/picture/initiald.jpg");
         $("#user_id, #password, #btn_submit").on('keypress', function( event ) {
             if ( event.which == 13 ) {
                 login();
