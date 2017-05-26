@@ -1,0 +1,67 @@
+ .ngdialog.ngdialog-theme-plain.custom-width .ngdialog-content {
+    width: 50%;
+}
+
+.ngdialog.dialogwidth450 .ngdialog-content{
+	width : 450px;
+	margin-top: -100px;
+}
+
+.ngdialog.dialogwidth500 .ngdialog-content{
+  width : 500px;
+  margin-top: -140px;
+}
+
+.ngdialog.dialogwidth800 .ngdialog-content{
+	width : 800px;
+	margin-top: -140px;
+}
+
+.ngdialog.dialogwidth800_overflow .ngdialog-content{
+  width : 800px;
+  margin-top: -140px;
+  max-height: 600px;
+  height:600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.ngdialog.dialogwidth1200 .ngdialog-content{
+	width : 1200px;
+	margin-top: -140px;
+	height:500px;
+	max-height: 500px; 
+}
+.ngdialog.ngdialog-theme-plain.custom-widthemail .ngdialog-content {
+    width: 1000px;
+    margin-top: -140px;
+
+    max-height: 560px;
+    overflow-x: scroll;
+}
+.ngdialog.ngdialog-theme-plain.custom-widthconfirmation .ngdialog-content {
+    margin-left: 418px;
+}
+
+.ngdialog.ngdialog-theme-plain.custom-widthmodal .ngdialog-content {
+    margin-top: -150px;
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow : scroll; 
+}
+
+.ngdialog.ngdialog-theme-plain.custom-widthseminar .ngdialog-content {
+   width: 400px;
+   margin-top: -100px;
+   max-height: 550px;
+   max-width: 400px;
+   overflow-x: hidden;
+}
+
+.ngdialog.ngdialog-theme-plain.custom-examdialog .ngdialog-content {
+    width: 1000px;
+    margin-top: -140px;
+    margin-left: 130px;
+    max-height: 550px;
+    overflow-x: scroll;
+}

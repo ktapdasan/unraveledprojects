@@ -62,5 +62,60 @@ class Users extends ClassParent
 EOT;
         return ClassParent::get($sql);
     }
+
+    public function get_user($data){
+        $pk = $data['pk'];
+        $sql = <<<EOT
+                select 
+                    pk,
+                    user_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    date_created::timestamp(0),
+                    archived
+                from users
+                where archived = 'f'
+                and md5(pk::text) = '$pk'
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function upload_picture($data){
+        $picture_link = $data['picture_link'];
+        $uploaded_by = $data['uploaded_by'];
+        $sql = <<<EOT
+                insert into pictures
+                (
+                    link,
+                    uploaded_by
+                )
+                VALUES
+                (
+                    '$picture_link',
+                    $uploaded_by
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function get_uploaded_picture($data){
+        $pk = $data['pk'];
+        $sql = <<<EOT
+                select 
+                    link,
+                    uploaded_by,
+                    date_uploaded::timestamp(0)
+                from pictures
+                where uploaded_by = $pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
 }
 ?>

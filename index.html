@@ -9,6 +9,12 @@
 		<link href="ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
 		<link href="ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
 		<link href="ASSETS/bootstrap/css/bootstrap-social.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog.min.css" >
+		<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-plain.min.css">
+		<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-theme-default.min.css">
+		<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog-custom-width.css">
+
+		<link rel="stylesheet" type="text/css" href="./ASSETS/js/notification/angular-ui-notification.min.css" >
 	</head>
 	<body ng-controller="HomeController">
 		<nav class="navbar navbar-default navbar-fixed-top">
@@ -20,19 +26,30 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#"><b>&nbspUnraveled &trade;</b></a>	
+					<a class="navbar-brand" href="#/"><b>&nbspUnraveled &trade;</b></a>	
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="#/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbspHome</a></li>
-						<li><a href="" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i>&nbspLogOut</span></a></li>
-						<!-- <li><a href="#/LoginVIA"></span>&nbspFacebook Login</a></li> -->					
+						<li class="dropdown">
+			              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-briefcase"></i> Bucket <span class="caret"></span></a>
+			              <ul class="dropdown-menu">
+			                <li style="color:black;"><a href="#/bucket/pictures">Pictures</a></li>
+			                <li><a href="" style="color:black;">Files</a></li>
+			                <li role="separator" class="divider"></li>
+			              </ul>
+			            </li>
+						<li><a href=""><i class="fa fa-cogs"></i>&nbspAdmin</a></li>
 					</ul>
+					<ul class="nav navbar-nav navbar-right">
+					 	<li><a href="" title="Your are login as this User">{{user.first_name + " " + user.middle_name + " " + user.last_name}}</a></li>
+			           <li><a href="" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i>&nbspLogOut</span></a></li>
+			        </ul>
 				</div>
 			</div>
 		</nav>
 		<div class="container">
-			<div class="jumbotron" ng-view="" style="height:500px">
+			<div class="jumbotron" ng-view="">
 			</div>
 			<hr>
 		</div>
@@ -52,7 +69,14 @@
 		<script src="JS/module.js"></script>
 		
 		<script src="JS/CONTROLLERS/homecontroller.js"></script>
+		<script src="JS/CONTROLLERS/bucketcontroller.js"></script>
 
 		<script src="JS/FACTORIES/SessionFactory.js"></script>
+		<script src="JS/FACTORIES/UserFactory.js"></script>
+
+		<script src="./ASSETS/js/dialog/ngDialog.js"></script>
+		<script src="./ASSETS/js/uploader/angular-file-upload.min.js"></script>
+		<script src="./ASSETS/js/notification/angular-ui-notification.min.js"></script>
+
 	</body>
 </html>

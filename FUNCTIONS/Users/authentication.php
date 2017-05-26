@@ -16,8 +16,8 @@ $data = $class->auth($_POST);
 header("HTTP/1.0 404 User Not Found");
 if($data['status']){
 	// print_r($data);
-	$user_random_key = md5('user_random_key'); 
-	setcookie($user_random_key, md5($data['result'][0]['user_random_key']), time()+7200000, '/');
+	$pk = md5('pk'); 
+	setcookie($pk, md5($data['result'][0]['pk']), time()+7200000, '/');
 	header("HTTP/1.0 200 OK");
 }
 

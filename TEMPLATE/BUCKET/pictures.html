@@ -1,0 +1,40 @@
+<section class="content-header" style="margin-top:-30px;">
+	<h1>
+		Bucket
+		<small style="color:blue;cursor:pointer;" ng-click="upload_pictures()"><u> Upload</u></small>
+	</h1>
+	<ol class="breadcrumb">
+		<li><a href=""><i class="fa fa-briefcase"></i> Bucket</a></li>
+		<li class="active">Pictures</li>
+	</ol>
+</section>
+<section class="content">
+	<div class="row">
+		<div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-repeat="(k,v) in uploaded_picture">
+			<a class="thumbnail" href="">
+				<img class="img-responsive" src="{{v.link}}" alt="" style="min-height:150px;max-height-150px;">
+			</a>
+		</div>
+	</div>
+</section>
+<script type="text/ng-template" id="UploadModal">
+<div class="ngdialog-message">
+<div style="margin-top: -15px;">
+<h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+</div>
+<div>
+	<input type="file" nv-file-select="" accept=".jpg,.png,.jpeg" uploader="uploader" />
+</div>
+<div class="progress" style="">
+	<div class="progress-bar" role="progressbar" ng-style="{ 'width': uploader.progress + '%' }"></div>
+</div>
+<div>
+	<button type="button" tabindex="16" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length">
+		<span class="glyphicon glyphicon-upload"></span> Upload
+	</button>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)">{{modal.close}}</button>
+<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')">{{modal.save}}</button>
+</div>
+</script>

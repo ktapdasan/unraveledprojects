@@ -49,7 +49,6 @@ create table users
 	first_name text not null,
 	middle_name text not null,
 	last_name text not null,
-	user_random_key text not null,
 	date_created timestamptz default now(),
 	archived boolean default false
 );
@@ -60,7 +59,6 @@ insert into users
 	first_name,
 	middle_name,
 	last_name,
-	user_random_key,
 	user_id
 )
 VALUES
@@ -68,6 +66,15 @@ VALUES
 	'Ken',
 	'Villanueva',
 	'Tapdasan',
-	'KVTCMVF',
 	'201400072'
 );
+
+create table pictures
+(
+	image_pk serial primary key,
+	uploaded_by int not null,
+	link text not null,
+	date_uploaded timestamptz default now(),
+	archived boolean default false
+);
+alter table pictures owner to ktapdasan;
