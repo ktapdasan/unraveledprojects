@@ -5,7 +5,8 @@ app.controller('BucketController', function(
                                             md5,
                                             ngDialog,
                                             FileUploader,
-                                            UINotification
+                                            UINotification,
+                                            $filter
                                             ) 
                                         {
 
@@ -53,7 +54,10 @@ app.controller('BucketController', function(
         var promise = UserFactory.get_uploaded_picture(filters);
         promise.then(function(data){
             $scope.uploaded_picture = data.data.result;
-            console.log($scope.uploaded_picture);
+            for (var i in $scope.uploaded_picture){
+                $scope.uploaded_picture[i].date_uploaded = new Date($scope.uploaded_picture[i].date_uploaded);
+                $scope.uploaded_picture[i].date_uploaded = $filter('date')($scope.uploaded_picture[i].date_uploaded,'medium');
+            }
 
         })
         .then(null, function(data){
