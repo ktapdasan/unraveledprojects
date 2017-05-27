@@ -1,4 +1,4 @@
-var app = angular.module('onload', ['ngRoute','ngCookies','angular-md5','ngDialog','angularFileUpload','ui-notification']);
+var app = angular.module('onload', ['ngRoute','ngCookies','angular-md5','ngDialog','angularFileUpload','ui-notification','ui.bootstrap']);
 app.config(function($routeProvider) {             
 	$routeProvider
 	.when('/',             {                 

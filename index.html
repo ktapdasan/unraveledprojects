@@ -6,7 +6,7 @@
 		<!-- <link rel="icon" href="logo.ico"> -->
 		<link href="ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-		<link href="ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
+		<!-- <link href="ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" /> -->
 		<link href="ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
 		<link href="ASSETS/bootstrap/css/bootstrap-social.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="./ASSETS/js/dialog/ngDialog.min.css" >
@@ -16,7 +16,8 @@
 
 		<link rel="stylesheet" type="text/css" href="./ASSETS/js/notification/angular-ui-notification.min.css" >
 	</head>
-	<body ng-controller="HomeController">
+	<body ng-controller="HomeController" style="padding-top: 60px;
+	font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;">
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="navbar-header">
@@ -28,7 +29,7 @@
 					</button>
 					<a class="navbar-brand" href="#/"><b>&nbspUnraveled &trade;</b></a>	
 				</div>
-				<div id="navbar" class="navbar-collapse collapse">
+				<div id="navbar" class="navbar-collapse collapse" style="margin-top:5px;">
 					<ul class="nav navbar-nav">
 						<li><a href="#/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbspHome</a></li>
 						<li class="dropdown">
@@ -77,6 +78,7 @@
 		<script src="./ASSETS/js/dialog/ngDialog.js"></script>
 		<script src="./ASSETS/js/uploader/angular-file-upload.min.js"></script>
 		<script src="./ASSETS/js/notification/angular-ui-notification.min.js"></script>
+		<script data-require="ui-bootstrap@*" data-semver="0.12.1" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.min.js"></script>
 
 	</body>
 </html>

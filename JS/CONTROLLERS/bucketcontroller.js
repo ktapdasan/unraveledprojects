@@ -17,6 +17,11 @@ app.controller('BucketController', function(
 
     $scope.uploaded_picture = {};
 
+      $scope.viewby = 4;
+      $scope.currentPage = 4;
+      $scope.itemsPerPage = $scope.viewby;
+      $scope.maxSize = 5;
+
     init();
 
     function init(){
@@ -57,12 +62,28 @@ app.controller('BucketController', function(
             for (var i in $scope.uploaded_picture){
                 $scope.uploaded_picture[i].date_uploaded = new Date($scope.uploaded_picture[i].date_uploaded);
                 $scope.uploaded_picture[i].date_uploaded = $filter('date')($scope.uploaded_picture[i].date_uploaded,'medium');
-            }
+            } 
+
+            $scope.totalItems = $scope.uploaded_picture.length;
+
 
         })
         .then(null, function(data){
 
         });
+    }
+
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+      };
+
+      $scope.pageChanged = function() {
+        console.log('Page changed to: ' + $scope.currentPage);
+      };
+
+    $scope.setItemsPerPage = function(num) {
+      $scope.itemsPerPage = num;
+      $scope.currentPage = 1; //reset to first paghe
     }
 
     $scope.upload_pictures = function(){
