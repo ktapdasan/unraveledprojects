@@ -1,0 +1,164 @@
+<div class="page-title">
+	<div class="title_left">
+		<h3 class="slideinmargin">
+			Products Section
+		</h3>
+	</div>
+</div>
+<div class="clearfix"></div>
+<div style="margin-top:10px;"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+					<div class="row" style="margin-top:-10px;">
+						<div class="form-group col-md-2">
+							<input type="text" class="form-control" placeholder="Product Name" ng-model="form.product_name"/>
+						</div>
+						<div class="form-group col-md-2">
+							<input type="text" class="form-control" placeholder="Item Bar Code" ng-model="form.product_bar_code"/>
+						</div>
+						<div class="form-group col-md-2">
+							<input type="text" class="form-control" is-Number placeholder="Stocks" ng-model="form.product_stocks"/>
+						</div>
+						<div class="form-group col-md-2">
+							<input type="text" class="form-control" is-Number placeholder="Price" ng-model="form.product_price"/>
+						</div>
+						<div class="form-group col-md-2">
+							<div class="form-group">
+                				<div class='input-group  date' datetimepicker ng-model="form.product_expiration" id='datetimepicker1' >
+                    				<input type='text'  placeholder="Exp. Date" class="form-control" />
+                    			<span class="input-group-addon">
+                        	<span class="glyphicon glyphicon-calendar"></span>
+                    	</span>
+                				</div>
+            				</div>
+						</div>
+						<input  type="button" class="btn btn-success" value="Add Item" ng-click="add_product()">
+					</div>
+				</div>
+	</div>
+
+
+			<div class="panel">
+				<div class="panel-body">
+					<div class="clearfix"></div>
+				</div>
+				<div class="x_content">
+					<table class="table table-hover">
+						<thead>
+							<tr >
+								<th>#</th>
+								<th>Item Name</th>
+								<th>Stocks</th>
+								<th>Price</th>
+								<th>Item Code</th>
+								<th>Date Encoded</th>
+								<th>Item Expiration</th>
+								<th>Option</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(k,v) in product_data.slice(((currentPage_productdata-1)*itemsPerPage_productdata), ((currentPage_productdata)*itemsPerPage_productdata))">
+								<th scope="row">{{v.number}}</th>
+								<td>{{v.product_name}}</td>
+								<td>{{v.product_stocks}}</td>
+								<td>{{v.product_price}}</td>
+								<td>{{v.product_bar_code}}</td>
+								<td>{{v.date_created | date :  "medium" }}</td>
+								<td>{{v.product_product_expiration | date :  "medium"}}</td>
+								<td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
+									<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
+								</td>
+								</tr><!-- 
+								<tr ng-if="!request_points.status">
+									<td colspan="6" style="text-align: center;">No Data Found</td>
+								</tr> -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+			</div>
+
+	
+	<div class="row">
+    <div class="col-md-12">
+      <center>
+        <pagination total-items="totalItems_productdata" ng-model="currentPage_productdata" ng-change="pageChanged_productdata()" class="pagination-md" items-per-page="itemsPerPage_productdata"></pagination>
+      </center>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="EditMyProfile">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Product Name <input type="text" style="width:200px;" class="form-control" ng-model="modal.product_name">
+        </div>
+        <div style="margin-left:13px;">
+          Item Bar Code <input type="text" style="width:200px;" class="form-control" ng-model="modal.product_bar_code">
+        </div>
+        <div style="margin-left:13px;">
+          Stocks <input type="text" style="width:200px;" class="form-control" ng-model="modal.product_stocks">
+        </div>
+        <div style="margin-left:13px;">
+          Price <input type="text" style="width:200px;" class="form-control" ng-model="modal.product_price">
+        </div>
+        <div style="margin-left:13px;">
+          Exp. Date 
+          <div class='input-group  date' style="width:270px;" datetimepicker ng-model="modal.product_expiration" id='datetimepicker1' >
+           <input type='text'  placeholder="Exp. Date" class="form-control" />
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+             </span>
+        </div>
+      </div>
+    <br>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-upload"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/javascript">
+            $(document).ready(function () {
+                $('#datetimepicker1').datetimepicker({
+                	format: 'MM/DD/YYYY'
+                });
+            });
+        </script>
+
+<script type="text/ng-template" id="MyPointsModal">
+<div class="ngdialog-message" style="width: 500px;">
+<div style="margin-top: -15px;">
+<h3><span style="color:#0c79be;">{{ modal.title }}</span></h3>
+
+</div>
+<div>
+<table style="width: 85%;">
+<thead>
+<tr>
+<td>
+<input type="text" class="form-control" is-Number maxlength="7" placeholder="2000" ng-model="form.request_points" />
+</td>
+</tr>
+</thead>
+</table>
+</div>
+</div>
+<div class="ngdialog-buttons">
+<button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+<button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+</div>
+</script>

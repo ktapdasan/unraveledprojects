@@ -103,6 +103,90 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function add_product($data){
+
+        $product_name = $data['product_name'];
+        $product_bar_code = $data['product_bar_code'];
+        $product_stocks = $data['product_stocks'];
+        $product_price = $data['product_price'];
+        $product_product_expiration = $data['product_product_expiration'];
+
+        $sql = <<<EOT
+                insert into product_data
+                (
+                    product_name,
+                    product_bar_code,
+                    product_stocks,
+                    product_price,
+                    product_product_expiration
+                )
+                VALUES
+                (
+                    '$product_name',
+                    '$product_bar_code',
+                    '$product_stocks',
+                    '$product_price',
+                    '$product_product_expiration'
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function edit_product_data($data){
+
+        $pk = $data['pk'];
+        $product_name = $data['product_name'];
+        $product_bar_code = $data['product_bar_code'];
+        $product_stocks = $data['product_stocks'];
+        $product_price = $data['product_price'];
+        $product_product_expiration = $data['product_product_expiration'];
+
+        $sql = <<<EOT
+                update product_data set
+                (
+                    product_name,
+                    product_bar_code,
+                    product_stocks,
+                    product_price,
+                    product_product_expiration
+                )
+                =
+                (
+                    '$product_name',
+                    '$product_bar_code',
+                    '$product_stocks',
+                    '$product_price',
+                    '$product_product_expiration'
+                )
+                where pk = '$pk'
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function delete_product_data($data){
+
+        $pk = $data['pk'];
+
+        $sql = <<<EOT
+                update product_data set
+                (
+                    archived
+                )
+                =
+                (
+                    't'
+                )
+                where pk = '$pk'
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
     public function get_uploaded_picture($data){
         $pk = $data['pk'];
         $sql = <<<EOT
@@ -112,6 +196,25 @@ EOT;
                     date_uploaded::timestamp(0)
                 from pictures
                 where uploaded_by = $pk
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_product_data($data){
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    product_name,
+                    product_bar_code,
+                    product_stocks,
+                    product_price,
+                    product_product_expiration,
+                    date_created::timestamp(0)
+                from product_data
+                where archived = 'f'
                 ;
 EOT;
 
