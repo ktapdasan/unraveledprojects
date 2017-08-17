@@ -20,7 +20,7 @@ app.controller('BucketController', function(
       $scope.viewby = 4;
       $scope.currentPage = 4;
       $scope.itemsPerPage = $scope.viewby;
-      $scope.maxSize = 5;
+      $scope.maxSize = 2;
 
     init();
 
