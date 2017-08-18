@@ -53,6 +53,7 @@ create table users
 	archived boolean default false
 );
 alter table users owner to ktapdasan;
+alter table users add column superior_pin text DEFAULT md5('SirWayne'::text);
 
 insert into users
 (
