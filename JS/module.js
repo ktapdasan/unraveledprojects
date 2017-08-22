@@ -6,7 +6,8 @@ var app = angular.module('onload', [
 								'angularFileUpload',
 								'ui-notification',
 								'ui.bootstrap',
-								'ae-datetimepicker'
+								'ae-datetimepicker',
+								'angucomplete-alt'
 								]);
 
 
@@ -17,7 +18,7 @@ app.config(function($routeProvider) {
 		templateUrl: 'TEMPLATE/HOME/home.html'             
 	})
 	.when('/Sales',             {                 
-		controller: 'HomeController',
+		controller: 'Product',
 		templateUrl: 'TEMPLATE/HOME/sales.html'             
 	})
 	.when('/Admin',             {                 

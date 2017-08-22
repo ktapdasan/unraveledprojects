@@ -62,8 +62,8 @@
 								<th>Product Name</th>
 								<th>Supplier Code Name</th>
 								<th># of Stocks</th>
+								<th>Supplier Price</th>
 								<th>Retail Price</th>
-								<th>Market Price</th>
 								<th>Bar Code</th>
 								<th>Date Encoded</th>
 								<th>Product Expiration</th>
@@ -267,7 +267,7 @@
     </div>
     <div class="row">
         <div style="margin-left:13px;">
-          Product Order Number <input disabled type="text" style="width:350px;" class="form-control" ng-model="modal.finalnumber">
+          Purchase Order Number <input disabled type="text" style="width:350px;" class="form-control" ng-model="modal.finalnumber">
         </div>
         <div style="margin-left:13px;margin-top:10px;">
           Quantity <input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.product_quantity">
@@ -275,14 +275,14 @@
         <div style="margin-left:13px;margin-top:10px;">
           Date Needed 
           <div class='input-group  date' style="width:300px;" datetimepicker ng-model="modal.product_date_needed" id='datetimepicker1' >
-           <input type='text'  placeholder="Exp. Date" class="form-control" />
+           <input type='text' class="form-control" />
             <span class="input-group-addon">
               <span class="glyphicon glyphicon-calendar"></span>
              </span>
         </div>
       </div>
     <div style="margin-left:13px;margin-top:10px;">
-          Market Price <input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.product_market_price">
+          Supplier Price <input type="text" is-Number style="width:300px;" class="form-control" ng-model="modal.product_market_price">
         </div>
   	</div>
   <div class="ngdialog-buttons" style="margin-top:20px;">

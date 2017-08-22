@@ -5,7 +5,8 @@ app.controller('Product', function(
                                             ProductFactory,
                                             md5,
                                             $filter,
-                                            ngDialog
+                                            ngDialog,
+                                            $route
                                           ) 
 {
 	
@@ -13,7 +14,11 @@ app.controller('Product', function(
 
     $scope.form = {};
     $scope.filter = {};
+    $scope.product_total = {};
     $scope.modal = {};
+    $scope.tender_data = [];
+
+    $scope.cashier = {};
 
     $scope.viewby_productdata = 4;
     $scope.currentPage_productdata = 4;
@@ -43,6 +48,7 @@ app.controller('Product', function(
             get_user();
             DEFAULTDATES();
             makeid();
+            maketransaction_number();
 
         })
         .then(null, function(data){
@@ -356,11 +362,92 @@ $scope.setItemsPerPage_orderdata = function(num) {
             get_product_data();
 })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+    var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
 
     });
     });
 }
+
+function maketransaction_number() {
+  var transact_number = "";
+
+  var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  for (var i = 0; i < 10; i++){
+    transact_number += possible.charAt(Math.floor(Math.random() * possible.length));
+}
+    $scope.form.transact_number = transact_number;
+}
+
+$scope.tender_product = function(test){
+    maketransaction_number();
+
+   if (test == undefined || test == null || test == ' ' || test == " ") {
+        return false;
+   };
+
+   console.log(test);
+
+   $scope.tender_data.push(test.description);
+   console.log($scope.tender_data);
+   for (var i in $scope.tender_data) {
+        $scope.tender_data[i].product_price = parseInt($scope.tender_data[i].product_price);
+        if ($scope.tender_data[i].status == true || $scope.tender_data[i].status == undefined) {
+        }else{
+           $scope.tender_data[i].status = false; 
+        };
+   };
+ for (var z in $scope.tender_data){
+   $scope.product_total += parseInt($scope.tender_data[z].product_retail_price);
+}
+   console.log($scope.form.total);
+
+}
+
+$scope.tender_product_final = function(){
+
+var data = {
+    product_transaction_number : $scope.form.transact_number,
+    cashier_user_id : $scope.user.user_id,
+    data : JSON.stringify($scope.tender_data)
+};
+
+$scope.product_total1 = $scope.product_total;
+
+console.log($scope.product_total);
+   var promise = ProductFactory.tender_product(data);
+    promise.then(function(data){
+
+    })
+    .then(null, function(data){
+
+    });
+}
+
+$scope.get_all_products = function(){
+    get_all_products();
+}
+
+function get_all_products(){
+
+      if ($scope.filter.searchstring == undefined || $scope.filter.searchstring == '' || $scope.filter.searchstring == null) {
+          $scope.filter.searchstring = undefined;
+      }
+
+       var filters = {
+          wildcard : $scope.filter.searchstring
+        };
+      
+      var promise = ProductFactory.get_all_products(filters);
+      promise.then(function(data){
+        $scope.product_data = data.data.result;
+
+      })
+      .then(null, function(data){
+          $scope.result_status = 'maybe';
+      });
+  }
 
 
     $scope.add_supplier = function(){
@@ -447,14 +534,12 @@ function makeid() {
 
   var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var possible3 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   for (var i = 0; i < 5; i++){
     text += possible.charAt(Math.floor(Math.random() * possible.length));
     text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
-    text3 += possible3.charAt(Math.floor(Math.random() * possible3.length));
 }
-    finalnumber = text+"-"+text2+"-"+text3;
+    finalnumber = text+"-"+text2;
     $scope.form.finalnumber = finalnumber;
 }
 

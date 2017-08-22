@@ -173,6 +173,49 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function tender_product($data){
+
+        $datas = $data['data'];
+        $z = json_decode($datas, true);
+        
+        $product_transaction_number = $data['product_transaction_number'];
+        $cashier_user_id = $data['cashier_user_id'];
+
+        
+        $sql = "begin;";
+        foreach ($z as $key => $value) {
+
+            $product_name = $value['product_name'];
+            $product_quantity = $value['product_quantity'];
+            $product_supplier_price = $value['product_srp'];
+            $product_retail_price = $value['product_price'];
+
+            $sql .= <<<EOT
+                insert into tender_data
+                (
+                    product_name,
+                    product_quantity,
+                    product_supplier_price,
+                    product_retail_price,
+                    product_transaction_number,
+                    cashier_user_id
+                )
+                VALUES
+                (
+                    '$product_name',
+                    '$product_quantity',
+                    '$product_supplier_price',
+                    '$product_retail_price',
+                    '$product_transaction_number',
+                    '$cashier_user_id'
+                )
+                ;
+EOT;
+        }
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
+    }
+
     public function request_product_order($data){
 
         $pk = $data['pk'];
@@ -390,6 +433,27 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_tender_data($data){  
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    product_name,
+                    product_quantity,
+                    product_supplier_price,
+                    product_retail_price,
+                    product_transaction_number,
+                    cashier_user_id,
+                    date_created::timestamp(0)
+                from tender_data
+                where archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function get_request_order_data($data){
 
         $sql = <<<EOT
@@ -427,6 +491,33 @@ EOT;
                 ;
 EOT;
 
+        return ClassParent::get($sql);
+    }
+
+    public function get_all_products($filter){
+
+        $wildcard = $filter['wildcard'];
+
+        if ($wildcard != undefined) {
+             $title_companyname.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%'";
+        }
+
+        $sql = <<<EOT
+            SELECT
+                pk,
+                product_name,
+                product_bar_code,
+                product_stocks,
+                product_srp,
+                product_price,
+                product_supplier,
+                product_product_expiration
+            from product_data
+            where archived = false
+            $title_companyname
+            order by date_created desc
+            ;
+EOT;
         return ClassParent::get($sql);
     }
 }

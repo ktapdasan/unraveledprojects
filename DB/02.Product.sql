@@ -39,3 +39,17 @@ create table request_order_data
 	archived boolean default false
 );
 alter table request_order_data owner to ktapdasan;
+
+create table tender_data
+(
+	pk serial primary key,
+	product_name text not null,
+	product_quantity int not null,
+	product_supplier_price text not null,
+	product_retail_price text not null,
+	product_transaction_number text not null,
+	cashier_user_id int not null,
+	date_created timestamptz default now(),
+	archived boolean default false
+);
+alter table tender_data owner to ktapdasan;
