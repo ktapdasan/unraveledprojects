@@ -14,7 +14,22 @@ app.controller('Product', function(
 
     $scope.form = {};
     $scope.filter = {};
-    $scope.product_total = {};
+    $scope.tender_voided = {};
+    $scope.tender_voided.count = 0;
+    $scope.cash_status = false;
+    $scope.discount = false;
+    $scope.tender_status = false;
+    $scope.discount_amount = 0;
+    $scope.amount_senior = 0;
+    $scope.product_total_tempo = 0;
+    $scope.net_amount = 0;
+    $scope.vat = 0;
+    $scope.change = 0;
+    $scope.cash = 0;
+    $scope.number = 0;
+    $scope.number_total = 0;
+    $scope.product_total_temporary = 0;
+    $scope.product_total = 0;
     $scope.modal = {};
     $scope.tender_data = [];
 
@@ -131,6 +146,8 @@ app.controller('Product', function(
                 $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
                 $scope.product_data[i].number = a += 1;
             };
+
+            
 
             $scope.totalItems_productdata = $scope.product_data.length;
 
@@ -381,41 +398,153 @@ function maketransaction_number() {
 }
 
 $scope.tender_product = function(test){
+
+    $scope.product_total_tempo = 0;
     maketransaction_number();
 
    if (test == undefined || test == null || test == ' ' || test == " ") {
         return false;
    };
 
-   console.log(test);
-
    $scope.tender_data.push(test.description);
-   console.log($scope.tender_data);
+   /*console.log($scope.tender_data);*/
    for (var i in $scope.tender_data) {
-        $scope.tender_data[i].product_price = parseInt($scope.tender_data[i].product_price);
+        $scope.tender_data[i].product_price = parseFloat($scope.tender_data[i].product_price);
         if ($scope.tender_data[i].status == true || $scope.tender_data[i].status == undefined) {
         }else{
-           $scope.tender_data[i].status = false; 
+           $scope.tender_data[i].status = false;
         };
    };
- for (var z in $scope.tender_data){
-   $scope.product_total += parseInt($scope.tender_data[z].product_retail_price);
+
+   /*$scope.number = $scope.tender_data[i].number;*/
+
+  /* for (var k in $scope.tender_data){
+    if ($scope.tender_data[k].product_retail_price != undefined) {
+        if ($scope.tender_data[k].tempo_status == true || test == undefined){
+        $scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
+        $scope.product_total_temporary = $scope.product_total_tempo;
+   console.log($scope.product_total_temporary);
+    };
+    };
+};*/
+/*
+    for (var o in $scope.tender_data) {
+        if ($scope.tender_data[k].tempo_status == true || test == undefined){
+        $scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
+        $scope.product_total_temporary = $scope.product_total_tempo;
+    };*/
+ 
+
 }
-   console.log($scope.form.total);
+
+$scope.temporary = function(){
+
+    $scope.product_total_tempo = 0;
+    $scope.number = 0;
+
+    /*if ($scope.tender_data[k].tempo_status == true) {
+        $scope.tender_data[i].product_price = 0;
+    };*/
+
+   for (var k in $scope.tender_data){
+            $scope.product_total_tempo += $scope.tender_data[k].product_retail_price;
+            $scope.product_total_temporary = $scope.product_total_tempo;
+            $scope.number += $scope.tender_data[k].product_quantity;
+            $scope.number_total = $scope.number;
+   /*console.log($scope.tender_data[k].product_retail_price);*/
+};
+ 
+
+}
+
+$scope.discount_amount = function(){
+
+    $scope.discount = true;
+
+    var notify = $.notify('You have succesfully added a Senior Citizen Discount', { allow_dismiss: true });
+ 
+
+}
+
+$scope.cancel_transaction = function(){
+
+    $route.reload();
+ 
+
+}
+
+$scope.void_product = function(k){
+
+    $scope.tender_voided.count += 1;
+    $scope.tender_voided.value = $scope.tender_data[k].product_retail_price;
+    $scope.tender_data.splice(k, 1);
+    $scope.product_total_temporary = $scope.product_total_temporary - $scope.tender_voided.value;
+
+    console.log($scope.tender_voided.count);
 
 }
 
 $scope.tender_product_final = function(){
 
-var data = {
+
+    
+
+for (var z in $scope.tender_data){
+   $scope.product_total += parseFloat($scope.tender_data[z].product_retail_price);
+};
+    var vat1
+    vat1 = parseFloat($scope.product_total) * .12 / 1.12;
+    $scope.vat = vat1.toFixed(2);
+    console.log($scope.vat);
+
+    var net_amnt
+    net_amnt = parseFloat($scope.product_total) - vat1;
+    $scope.net_amount = net_amnt.toFixed(2);
+    console.log(net_amnt);
+
+    var dscnt_amnt
+    var amnt_snr
+    if ($scope.discount == true) {
+        dscnt_amnt = net_amnt * .20;
+        $scope.discount_amount = dscnt_amnt.toFixed(2);
+        console.log($scope.discount_amount);
+        amnt_snr = net_amnt - dscnt_amnt;
+        $scope.amount_senior = amnt_snr.toFixed(2);
+        $scope.product_total = $scope.amount_senior;
+        /*console.log($scope.product_total);  */
+    }else{
+        $scope.discount_amount = 0;
+    };
+
+    if ($scope.cash_status == true) {
+        $scope.cash_status = false;
+    };
+
+    $scope.change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
+
+    /*if ($scope.form.product_total == '' || $scope.form.product_total == "" || $scope.form.product_total == NaN || $scope.form.product_total == null || $scope.form.product_total == undefined || $scope.form.product_total == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        $scope.tender_status = true;
+        return false;
+    };*/
+
+    var data = {
     product_transaction_number : $scope.form.transact_number,
     cashier_user_id : $scope.user.user_id,
-    data : JSON.stringify($scope.tender_data)
-};
+    data : JSON.stringify($scope.tender_data),
+    vat_percentage : 12,
+    net_amount : $scope.net_amount,
+    vat : $scope.vat,
+    discount : $scope.discount_amount,
+    change : $scope.change,
+    cash : $scope.cash,
+    total : $scope.product_total,
+    void_count : $scope.tender_voided.count
+    };
 
-$scope.product_total1 = $scope.product_total;
+    console.log(data);
+    return false;
 
-console.log($scope.product_total);
    var promise = ProductFactory.tender_product(data);
     promise.then(function(data){
 

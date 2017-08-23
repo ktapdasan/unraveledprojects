@@ -189,6 +189,13 @@ EOT;
             $product_quantity = $value['product_quantity'];
             $product_supplier_price = $value['product_srp'];
             $product_retail_price = $value['product_price'];
+            $vat_percentage = $value['vat_percentage'];
+            $net_amount = $value['net_amount'];
+            $vat = $value['vat'];
+            $discount = $value['discount'];
+            $change = $value['change'];
+            $cash = $value['cash'];
+            $total = $value['total'];
 
             $sql .= <<<EOT
                 insert into tender_data
@@ -198,7 +205,13 @@ EOT;
                     product_supplier_price,
                     product_retail_price,
                     product_transaction_number,
-                    cashier_user_id
+                    vat_percentage,
+                    net_amount,
+                    vat,
+                    discount,
+                    change,
+                    cash,
+                    total
                 )
                 VALUES
                 (
@@ -207,7 +220,13 @@ EOT;
                     '$product_supplier_price',
                     '$product_retail_price',
                     '$product_transaction_number',
-                    '$cashier_user_id'
+                    '$vat_percentage',
+                    '$net_amount',
+                    '$vat',
+                    '$discount',
+                    '$change',
+                    '$cash',
+                    '$total'
                 )
                 ;
 EOT;

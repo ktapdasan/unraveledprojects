@@ -213,20 +213,34 @@ input {
                         <tr ng-repeat="(k,v) in tender_data track by $index">
                             <th scope="row">{{k+1}}</th>
                             <td>{{v.product_name}}</td>
-                            <td><input type="number" ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_retail_price=v.product_quantity*v.product_price,v.status=true]"></td>{{v.quantity}}
+                            <td><input type="number" ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_retail_price=v.product_quantity*v.product_price,v.status=true,temporary(),v.tempo_status=true]"></td>{{v.quantity}}
                             <td>{{v.product_retail_price}}</td>
-                            <td>&nbsp&nbsp<i class="fa fa-times-circle" aria-hidden="true" style="cursor:pointer" ng-click="edit_supplier_data(v)"  title="Void Product"></i>
+                            <td>&nbsp&nbsp<i class="fa fa-times-circle" aria-hidden="true" style="cursor:pointer" ng-click="void_product(k)"  title="Void Product"></i>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-<input type="button" class="btn btn-success" value="Add Item" ng-click="tender_product_final()">
 </div>
 <div class="col-md-5">
-    RECEIPT
-    total = {{form.total}}
+    <div>
+    <input type="number" ng-model="product_total_temporary" disabled style="width:400px;height:100px;font-size:100px;">
+    </div>
+    <div class="form-group">
+        <p style="font-size:30px;">Total = {{product_total}}</p>
+        <p style="font-size:30px;">Cash</p><input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-53px;margin-left:70px;height:40px;width:128px;position:absolute;" ng-keypress="$event.keyCode === 13 && [cash_status=true]">
+        <p style="font-size:30px;">VAT% = 12%</p>
+        <p style="font-size:30px;">Net. Amt = {{net_amount}} </p>
+        <p style="font-size:30px;">VAT = {{vat}}</p>
+        <p style="font-size:30px;">Discount = {{discount_amount}}</p>
+        <p style="font-size:30px;">Change = {{change}}</p>
+        <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
+    </div>
+<input type="button" class="btn btn-success" ng-disabled="tender_status" value="Tender Item" ng-click="tender_product_final();cash_status=true;tender_status=true">
+<input type="button" class="btn btn-warning" ng-disabled="tender_status" value="Discount" ng-click="discount_amount()">
+<input type="button" class="btn btn-danger" ng-disabled="tender_status" value="Cancel Transaction" ng-click="cancel_transaction()">
+<input type="button" class="btn btn-danger" ng-show="tender_status" value="Next Transaction" ng-click="cancel_transaction()">
 </div>
 </div>
 </div>

@@ -48,6 +48,12 @@ create table tender_data
 	product_supplier_price text not null,
 	product_retail_price text not null,
 	product_transaction_number text not null,
+	vat_percentage text not null,
+	net_amount text not null,
+	vat text not null,
+	discount text not null,
+	change text not null,
+	cash text not null,
 	cashier_user_id int not null,
 	date_created timestamptz default now(),
 	archived boolean default false
