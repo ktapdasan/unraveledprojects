@@ -54,8 +54,22 @@ create table tender_data
 	discount text not null,
 	change text not null,
 	cash text not null,
+	void_count text not null,
+	total text not null,
 	cashier_user_id int not null,
 	date_created timestamptz default now(),
 	archived boolean default false
 );
 alter table tender_data owner to ktapdasan;
+
+create table gift_certificate_data
+(
+	pk serial primary key,
+	gc_name text not null,
+	gc_code text not null,
+	gc_amount text not null,
+	cashier_user_id int not null,
+	date_created timestamptz default now(),
+	archived boolean default false
+);
+alter table gift_certificate_data owner to ktapdasan;

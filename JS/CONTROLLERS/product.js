@@ -9,14 +9,18 @@ app.controller('Product', function(
                                             $route
                                           ) 
 {
-	
+    
     $scope.user = {};
 
     $scope.form = {};
     $scope.filter = {};
     $scope.tender_voided = {};
     $scope.tender_voided.count = 0;
+    $scope.stock_amount_finalized = 0;
+    $scope.stock_amount_pk = {};
+    $scope.stock_amount = 0;
     $scope.cash_status = false;
+    $scope.gift_status = false;
     $scope.discount = false;
     $scope.tender_status = false;
     $scope.discount_amount = 0;
@@ -50,12 +54,12 @@ app.controller('Product', function(
     $scope.itemsPerPage_orderdata = $scope.viewby_orderdata;
     $scope.maxSize = 5;
 
-	init();
+    init();
 
     $scope.vm = {};
     $scope.vm.options = {format: 'YYYY/MM/DD HH:mm', showClear: true};
 
-	function init(){
+    function init(){
         var promise = SessionFactory.getsession();
         promise.then(function(data){
             var _id = md5.createHash('pk');
@@ -146,8 +150,6 @@ app.controller('Product', function(
                 $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
                 $scope.product_data[i].number = a += 1;
             };
-
-            
 
             $scope.totalItems_productdata = $scope.product_data.length;
 
@@ -406,8 +408,10 @@ $scope.tender_product = function(test){
         return false;
    };
 
+   console.log(test);
+
    $scope.tender_data.push(test.description);
-   /*console.log($scope.tender_data);*/
+   console.log($scope.tender_data);
    for (var i in $scope.tender_data) {
         $scope.tender_data[i].product_price = parseFloat($scope.tender_data[i].product_price);
         if ($scope.tender_data[i].status == true || $scope.tender_data[i].status == undefined) {
@@ -466,6 +470,135 @@ $scope.discount_amount = function(){
 
 }
 
+$scope.pay_gift_cert = function(){
+
+    /*if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){
+            
+                var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
+                return false;
+            }*/
+
+    $scope.modal = {
+        title : 'Accept Gift Certificate',
+        save : 'Tender',
+        close : 'Cancel'
+     };
+
+    ngDialog.openConfirm({
+        template: 'GiftModal',
+        className: 'ngdialog-theme-plain dialogwidth400',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+.then(function(value){
+    return false;
+}, function(value){
+
+    $scope.modal = {
+    cashier_user_id : $scope.user.user_id,
+    gc_name : $scope.modal.gc_name, 
+    gc_code : $scope.modal.gc_code,
+    gc_amount : $scope.modal.gc_amount
+    };
+
+    $scope.cash = $scope.modal.gc_amount;
+    $scope.cash_status = true;
+    $scope.gift_status = true;
+
+    var promise = ProductFactory.gift_certificate_data($scope.modal);
+    promise.then(function(data){
+        var notify = $.notify('You have succesfully added the gift certificate', { 'type': 'success', allow_dismiss: true });
+            get_supplier_data();
+})
+    .then(null, function(data){
+    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+    });
+
+});
+
+}
+
+$scope.stock_checker = function(k){
+
+var stock_quantity
+    stock_quantity = $scope.tender_data[k].product_quantity;
+var prd_stcks
+    prd_stcks = $scope.tender_data[k].product_stocks;
+var datax
+    datax = $scope.tender_data[k].pk;
+
+    
+    $scope.stock_amount_pk = datax;
+
+        $scope.stock_amount = parseInt($scope.tender_data[k].product_stocks) - parseInt(stock_quantity) ;
+        $scope.stock_amount_finalized = $scope.stock_amount;
+        console.log($scope.stock_amount);
+        if ($scope.stock_amount <= 0) {
+
+        $scope.modal = {
+        title : 'URGENT!',
+        close : 'Close'
+            }     
+
+                    ngDialog.openConfirm({
+                    template: 'AdviceModal',
+                    className: 'ngdialog-theme-plain dialogwidth400',
+                    preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+                return nestedConfirmDialog;
+            },
+                scope: $scope,
+                showClose: false
+            })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+    });
+
+        };
+
+    if (stock_quantity > prd_stcks) {
+        $scope.modal = {
+        title : 'URGENT!',
+        close : 'Close'
+            }     
+
+                    ngDialog.openConfirm({
+                    template: 'AdviceExceedModal',
+                    className: 'ngdialog-theme-plain dialogwidth400',
+                    preCloseCallback: function(value) {
+                var nestedConfirmDialog;
+                return nestedConfirmDialog;
+            },
+                scope: $scope,
+                showClose: false
+            })
+        .then(function(value){
+            return false;
+        }, function(value){
+
+    });
+};
+
+/*var data = {
+    stock_amount : $scope.stock_amount,
+    pk : datax
+}
+ var promise = ProductFactory.update_stocks(data);
+            promise.then(function(data){
+        })
+        .then(null, function(data){
+
+        });*/
+
+}
+
 $scope.cancel_transaction = function(){
 
     $route.reload();
@@ -473,25 +606,94 @@ $scope.cancel_transaction = function(){
 
 }
 
-$scope.void_product = function(k){
-
-    $scope.tender_voided.count += 1;
-    $scope.tender_voided.value = $scope.tender_data[k].product_retail_price;
-    $scope.tender_data.splice(k, 1);
-    $scope.product_total_temporary = $scope.product_total_temporary - $scope.tender_voided.value;
-
-    console.log($scope.tender_voided.count);
+$scope.check_amount = function(cash){
+console.log(cash);
+console.log($scope.product_total_temporary);
+if (cash < $scope.product_total_temporary) {
+        var notify = $.notify('Oops your money is not enough!', { allow_dismiss: true });
+        $scope.cash_status=false;
+        return false;
+    }; 
 
 }
 
+$scope.void_product = function(k){
+
+    $scope.modal = {
+        title : 'Please input a pin',
+        save : 'Delete',
+        close : 'Cancel'
+        }     
+
+        ngDialog.openConfirm({
+        template: 'InputPinModal',
+        className: 'ngdialog-theme-plain dialogwidth400',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+                $scope.form.pin = md5.createHash($scope.modal.pin);
+            if ($scope.form.pin == $scope.user.superior_pin) {
+                $scope.tender_voided.count += 1;
+                $scope.tender_voided.value = $scope.tender_data[k].product_retail_price;
+                $scope.tender_data[k].product_retail_price = 0;
+                $scope.tender_data[k].product_quantity = 0;
+                $scope.tender_data[k].status = false;
+                $scope.tender_data.splice(k, 1);
+                $scope.product_total_temporary = $scope.product_total_temporary - $scope.tender_voided.value;
+            }else{
+                var notify = $.notify('Oops wrong pincode!', { allow_dismiss: true });
+                return false;
+            };
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+.then(function(value){
+    return false;
+}, function(value){
+
+    });
+
+}
+
+/*$scope.stock_finalizer = function(){
+
+var stock_quantity
+    stock_quantity = $scope.tender_data.product_quantity;
+var prd_stcks
+    prd_stcks = $scope.tender_data.product_stocks;
+        for (var i in tender_data) {
+            stock_quantity = $scope.tender_data[i].product_quantity;
+            prd_stcks = $scope.tender_data[i].product_stocks;
+        };
+        $scope.stock_amount = parseInt($scope.tender_data.product_stocks) - parseInt(stock_quantity) ;
+
+    console.log(stock_quantity);
+    console.log(prd_stcks);
+    console.log($scope.stock_amount);
+
+}*/
+
 $scope.tender_product_final = function(){
-
-
+/*
+var stock_quantity
+var prd_stcks*/
     
 
 for (var z in $scope.tender_data){
    $scope.product_total += parseFloat($scope.tender_data[z].product_retail_price);
 };
+
+/*for (var o in $scope.tender_data){
+   stock_quantity = $scope.tender_data[o].product_quantity;
+   prd_stcks = $scope.tender_data[o].product_stocks;
+$scope.stock_amount = parseInt(prd_stcks) - parseInt(stock_quantity) ;
+};
+
+console.log(stock_quantity);
+console.log(prd_stcks);
+console.log($scope.stock_amount);*/
+
     var vat1
     vat1 = parseFloat($scope.product_total) * .12 / 1.12;
     $scope.vat = vat1.toFixed(2);
@@ -520,13 +722,11 @@ for (var z in $scope.tender_data){
         $scope.cash_status = false;
     };
 
-    $scope.change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
-
-    /*if ($scope.form.product_total == '' || $scope.form.product_total == "" || $scope.form.product_total == NaN || $scope.form.product_total == null || $scope.form.product_total == undefined || $scope.form.product_total == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
-        $scope.tender_status = true;
-        return false;
-    };*/
+    var temp_change
+    temp_change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
+    $scope.change = temp_change.toFixed(2);
+    
+    $scope.gift_status = true;
 
     var data = {
     product_transaction_number : $scope.form.transact_number,
@@ -539,11 +739,42 @@ for (var z in $scope.tender_data){
     change : $scope.change,
     cash : $scope.cash,
     total : $scope.product_total,
+    stock_amount_finalized : $scope.stock_amount_finalized,
+    stock_amount_pk : $scope.stock_amount_pk,
     void_count : $scope.tender_voided.count
     };
 
-    console.log(data);
-    return false;
+
+    if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.product_total == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        tender_status = true;
+        return false;
+    };
+    if (data.net_amount == '' || data.net_amount == "" || data.net_amount == NaN || data.net_amount == null || data.net_amount == undefined || data.net_amount == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        tender_status = true;
+        return false;
+    };
+    if (data.vat == '' || data.vat == "" || data.vat == NaN || data.vat == null || data.vat == undefined || data.vat == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        tender_status = true;
+        return false;
+    };
+    if (data.change == '' || data.change == "" || data.change == NaN || data.change == null || data.change == undefined || data.change == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        tender_status = true;
+        return false;
+    };
+    if (data.cash == '' || data.cash == "" || data.cash == NaN || data.cash == null || data.cash == undefined || data.cash == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        tender_status = true;
+        return false;
+    };
+    if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.total == 'NaN') {
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        $scope.tender_status = true;
+        return false;
+    };
 
    var promise = ProductFactory.tender_product(data);
     promise.then(function(data){

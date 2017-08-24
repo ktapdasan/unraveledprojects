@@ -174,32 +174,51 @@ EOT;
     }
 
     public function tender_product($data){
-
+        
         $datas = $data['data'];
         $z = json_decode($datas, true);
         
         $product_transaction_number = $data['product_transaction_number'];
         $cashier_user_id = $data['cashier_user_id'];
+        $vat_percentage = $data['vat_percentage'];
+        $net_amount = $data['net_amount'];
+        $vat = $data['vat'];
+        $discount = $data['discount'];
+        $change = $data['change'];
+        $cash = $data['cash'];
+        $total = $data['total'];
+        $void_count = $data['void_count'];
+        $stock_amount_finalized = $data['stock_amount_finalized'];
+        $stock_amount_pk = $data['stock_amount_pk'];
 
-        
         $sql = "begin;";
+
+        $sql = <<<EOT
+                update product_data set
+                (
+                    product_stocks
+                    
+                )
+                =
+                (
+                    '$stock_amount_finalized'
+                )
+                where pk = '$stock_amount_pk'
+                ;
+EOT;
+        
         foreach ($z as $key => $value) {
 
             $product_name = $value['product_name'];
             $product_quantity = $value['product_quantity'];
             $product_supplier_price = $value['product_srp'];
             $product_retail_price = $value['product_price'];
-            $vat_percentage = $value['vat_percentage'];
-            $net_amount = $value['net_amount'];
-            $vat = $value['vat'];
-            $discount = $value['discount'];
-            $change = $value['change'];
-            $cash = $value['cash'];
-            $total = $value['total'];
+            
 
             $sql .= <<<EOT
                 insert into tender_data
                 (
+                    cashier_user_id,
                     product_name,
                     product_quantity,
                     product_supplier_price,
@@ -211,10 +230,12 @@ EOT;
                     discount,
                     change,
                     cash,
-                    total
+                    total,
+                    void_count
                 )
                 VALUES
                 (
+                    '$cashier_user_id',
                     '$product_name',
                     '$product_quantity',
                     '$product_supplier_price',
@@ -226,7 +247,8 @@ EOT;
                     '$discount',
                     '$change',
                     '$cash',
-                    '$total'
+                    '$total',
+                    '$void_count'
                 )
                 ;
 EOT;
@@ -259,6 +281,34 @@ EOT;
                     '$product_quantity',
                     '$product_date_needed',
                     '$product_market_price'
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function gift_certificate_data($data){
+
+        $cashier_user_id = $data['cashier_user_id'];
+        $gc_name = $data['gc_name'];
+        $gc_code = $data['gc_code'];
+        $gc_amount = $data['gc_amount'];
+
+        $sql = <<<EOT
+                insert into gift_certificate_data
+                (
+                    cashier_user_id,
+                    gc_name,
+                    gc_code,
+                    gc_amount
+                )
+                VALUES
+                (
+                    '$cashier_user_id',
+                    '$gc_name',
+                    '$gc_code',
+                    '$gc_amount'
                 )
                 ;
 EOT;

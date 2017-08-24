@@ -53,6 +53,40 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
+    factory.update_stocks = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/update_stocks.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+    factory.gift_certificate_data = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/gift_certificate_data.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
     factory.add_supplier = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Product/add_supplier.php', 

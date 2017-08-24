@@ -213,7 +213,7 @@ input {
                         <tr ng-repeat="(k,v) in tender_data track by $index">
                             <th scope="row">{{k+1}}</th>
                             <td>{{v.product_name}}</td>
-                            <td><input type="number" ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_retail_price=v.product_quantity*v.product_price,v.status=true,temporary(),v.tempo_status=true]"></td>{{v.quantity}}
+                            <td><input type="number" ng-model="v.product_quantity" style="width:50px;" ng-disabled="v.status" ng-keypress="$event.keyCode === 13 && [v.product_retail_price=v.product_quantity*v.product_price,v.status=true,temporary(),v.tempo_status=true,stock_checker(k)]"> <i style="cursor:pointer" ng-if="v.status==true" ng-click="v.status=false" class="fa fa-plus-circle"></i> </td>
                             <td>{{v.product_retail_price}}</td>
                             <td>&nbsp&nbsp<i class="fa fa-times-circle" aria-hidden="true" style="cursor:pointer" ng-click="void_product(k)"  title="Void Product"></i>
                             </td>
@@ -229,7 +229,7 @@ input {
     </div>
     <div class="form-group">
         <p style="font-size:30px;">Total = {{product_total}}</p>
-        <p style="font-size:30px;">Cash</p><input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-53px;margin-left:70px;height:40px;width:128px;position:absolute;" ng-keypress="$event.keyCode === 13 && [cash_status=true]">
+        <p style="font-size:30px;">Cash</p><input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-53px;margin-left:70px;height:40px;width:128px;position:absolute;" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash)]">
         <p style="font-size:30px;">VAT% = 12%</p>
         <p style="font-size:30px;">Net. Amt = {{net_amount}} </p>
         <p style="font-size:30px;">VAT = {{vat}}</p>
@@ -237,10 +237,87 @@ input {
         <p style="font-size:30px;">Change = {{change}}</p>
         <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
     </div>
-<input type="button" class="btn btn-success" ng-disabled="tender_status" value="Tender Item" ng-click="tender_product_final();cash_status=true;tender_status=true">
+<input type="button" class="btn btn-success"  ng-disabled="tender_status" value="Tender Item" ng-click="tender_product_final();cash_status=true;tender_status=true">
 <input type="button" class="btn btn-warning" ng-disabled="tender_status" value="Discount" ng-click="discount_amount()">
+<input type="button" class="btn btn-info" ng-disabled="gift_status" value="Gift Certificate" ng-click="pay_gift_cert()">
 <input type="button" class="btn btn-danger" ng-disabled="tender_status" value="Cancel Transaction" ng-click="cancel_transaction()">
 <input type="button" class="btn btn-danger" ng-show="tender_status" value="Next Transaction" ng-click="cancel_transaction()">
 </div>
 </div>
 </div>
+
+<script type="text/ng-template" id="GiftModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          Gift Certificate Name <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_name">
+          Gift Certificate Code <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_code">
+          Gift Certificate Amount <input type="text" style="width:350px;" class="form-control" ng-model="modal.gc_amount">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="InputPinModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PIN CODE <input type="password" style="width:350px;" class="form-control" ng-model="modal.pin">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-trash"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="AdviceModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PLEASE TELL TO YOUR SUPERVISOR THAT THERE IS NO MORE STOCK FOR THIS PRODUCT AFTER TENDERING THE ITEMS
+        </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+  </div>
+</div>
+</div>
+</script>
+
+<script type="text/ng-template" id="AdviceExceedModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          PLEASE LIMIT THE ITEM QUANTITY YOU INPUT BECAUSE THERE IS A LIMITED STOCK FOR THIS ITEM
+        </div>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+  </div>
+</div>
+</div>
+</script>
