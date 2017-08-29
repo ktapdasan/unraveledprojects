@@ -29,17 +29,20 @@ CREATE ROLE
 create table accounts
 (
 	user_id text,
-    password text DEFAULT md5('User123456!'::text)
+    password text DEFAULT md5('User123456!'::text),
+    user_type text
 );
 alter table accounts owner to ktapdasan;
 
 insert into accounts
 (
-	user_id
+	user_id,
+	user_type
 )
 VALUES
 (
-	'201400072'
+	'201400072',
+	'2'
 );
 
 create table users
@@ -49,6 +52,7 @@ create table users
 	first_name text not null,
 	middle_name text not null,
 	last_name text not null,
+	user_type text not null,
 	date_created timestamptz default now(),
 	archived boolean default false
 );
@@ -60,14 +64,33 @@ insert into users
 	first_name,
 	middle_name,
 	last_name,
-	user_id
+	user_id,
+	user_type
 )
 VALUES
 (
 	'Ken',
 	'Villanueva',
 	'Tapdasan',
-	'201400072'
+	'201400072',
+	'2'
+);
+
+insert into users
+(
+	first_name,
+	middle_name,
+	last_name,
+	user_id,
+	user_type
+)
+VALUES
+(
+	'R-Wayne',
+	'Feliciano',
+	'Lipardo',
+	'2014000100',
+	'1'
 );
 
 create table pictures

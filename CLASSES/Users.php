@@ -71,6 +71,7 @@ EOT;
                     user_id,
                     superior_pin,
                     first_name,
+                    user_type,
                     middle_name,
                     last_name,
                     date_created::timestamp(0),

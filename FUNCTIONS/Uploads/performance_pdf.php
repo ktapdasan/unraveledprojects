@@ -36,7 +36,7 @@ class PDF extends FPDF
 		// $pdf-$column_widths = ['50','50','50','50'];
 		$pdf->construct();
 		$pdf->AddPage('L','Legal');
-		$pdf->Cell(32, 10, 'Cashier Name' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(40, 10, 'Cashier Name' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(40, 10, 'Product Name' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(36, 10, 'Product Quantity' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(30, 10, 'Supplier Price' , 'LTBR', 0, 'L'); 
@@ -48,7 +48,7 @@ class PDF extends FPDF
 		foreach ($data as $k => $v) { 
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->SetFillColor(36, 96, 84);
-		$pdf->Cell(32, 10, $v['first_name'].' '.$v['last_name'], 'LTBR', 0, 'L'); 
+		$pdf->Cell(40, 10, $v['first_name'].' '.$v['last_name'], 'LTBR', 0, 'L'); 
 		$pdf->Cell(40, 10, $v['product_name'], 'LTBR', 0, 'L');
 		$pdf->Cell(36, 10, $v['product_quantity'], 'LTBR', 0, 'L');
 		$pdf->Cell(30, 10, $v['product_supplier_price'], 'LTBR', 0, 'L');
