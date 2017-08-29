@@ -84,6 +84,33 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_reports($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $where = "";
+        $name = $filter['name'];
+
+        $sql = <<<EOT
+            select
+                product_name,
+                product_quantity,
+                date_created,
+                product_supplier_price,
+                cashier_user_id,
+                product_transaction_number,
+                (select first_name from users where user_id = cashier_user_id) as first_name,
+                (select last_name from users where user_id = cashier_user_id) as last_name,
+                void_count,
+                total
+                from tender_data
+                where cashier_user_id = '$name'
+                order by date_created desc
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
     public function upload_picture($data){
         $picture_link = $data['picture_link'];
         $uploaded_by = $data['uploaded_by'];

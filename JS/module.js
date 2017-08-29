@@ -25,6 +25,10 @@ app.config(function($routeProvider) {
 		controller: 'Product',
 		templateUrl: 'TEMPLATE/HOME/admin.html'             
 	})
+	.when('/Report',             {                 
+		controller: 'Reports',
+		templateUrl: 'TEMPLATE/HOME/report.html'             
+	})
 	.when('/bucket/pictures',             {                 
 		controller: 'BucketController',
 		templateUrl: 'TEMPLATE/BUCKET/pictures.html'             
