@@ -1,6 +1,7 @@
 <?php
 require_once('../PDF/fpdf.php');
 $data = json_decode($_GET['reports'], true);
+$total = $_GET['total'];
 
 class PDF extends FPDF
 {
@@ -55,8 +56,16 @@ class PDF extends FPDF
 		$pdf->Cell(29, 10, $v['void_count'], 'LTBR', 0, 'L');
 		$pdf->Cell(43, 10, $v['product_transaction_number'], 'LTBR', 0, 'L');
 		$pdf->Cell(53, 10, $v['date_created'], 'LTBR', 0, 'L');
-		$pdf->Cell(25, 10, $v['total'], 'LTBR', 0, 'L');
+		$pdf->Cell(25, 10, $v['tempo_total'], 'LTBR', 0, 'L');
 		$pdf->Ln();
-	}
+	}	
+		$pdf->Cell(40, 10, '' , 0, 'L'); 
+		$pdf->Cell(40, 10, '' , 0, 'L'); 
+		$pdf->Cell(36, 10, '' , 0, 'L'); 
+		$pdf->Cell(30, 10, '' , 0, 'L'); 
+		$pdf->Cell(29, 10, '' , 0, 'L'); 
+		$pdf->Cell(43, 10, '' , 0, 'L'); 
+		$pdf->Cell(53, 10, 'Grand Total' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(25, 10, $total, 'LTBR', 0, 'L'); 
 		$pdf->Output();
 ?>

@@ -12,7 +12,9 @@ $class = new Users(
 	);
 
 $filter = array(
-				"name" => $_POST['name']
+				"name" => $_POST['name'],
+				"date_from" => $_POST['date_from'],
+				"date_to" => $_POST['date_to'],
 	);
 
 $class = new Users();

@@ -91,6 +91,8 @@ EOT;
         }
         $where = "";
         $name = $filter['name'];
+        $date_from = $filter['date_from'];
+        $date_to = $filter['date_to'];
 
         $sql = <<<EOT
             select
@@ -98,6 +100,7 @@ EOT;
                 product_quantity,
                 date_created,
                 product_supplier_price,
+                product_retail_price,
                 cashier_user_id,
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
@@ -105,11 +108,10 @@ EOT;
                 void_count,
                 total
                 from tender_data
-                where cashier_user_id = '$name'
+                where cashier_user_id = '$name' and tender_data.date_created::date between '$date_from' and '$date_to' AND archived = 'f'
                 order by date_created desc
                 ;
 EOT;
-
         return ClassParent::get($sql);
     }
     public function upload_picture($data){

@@ -23,7 +23,7 @@ app.controller('Product', function(
     $scope.gift_status = false;
     $scope.discount = false;
     $scope.tender_status = false;
-    $scope.discount_amount = 0;
+    $scope.discount_amounts = 0;
     $scope.amount_senior = 0;
     $scope.product_total_tempo = 0;
     $scope.net_amount = 0;
@@ -708,14 +708,14 @@ console.log($scope.stock_amount);*/
     var amnt_snr
     if ($scope.discount == true) {
         dscnt_amnt = net_amnt * .20;
-        $scope.discount_amount = dscnt_amnt.toFixed(2);
-        console.log($scope.discount_amount);
+        $scope.discount_amounts = dscnt_amnt.toFixed(2);
+        console.log($scope.discount_amounts);
         amnt_snr = net_amnt - dscnt_amnt;
         $scope.amount_senior = amnt_snr.toFixed(2);
         $scope.product_total = $scope.amount_senior;
         /*console.log($scope.product_total);  */
     }else{
-        $scope.discount_amount = 0;
+        $scope.discount_amounts = 0;
     };
 
     if ($scope.cash_status == true) {
@@ -725,6 +725,9 @@ console.log($scope.stock_amount);*/
     var temp_change
     temp_change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
     $scope.change = temp_change.toFixed(2);
+
+    console.log($scope.change);
+    return false;
     
     $scope.gift_status = true;
 
@@ -735,7 +738,7 @@ console.log($scope.stock_amount);*/
     vat_percentage : 12,
     net_amount : $scope.net_amount,
     vat : $scope.vat,
-    discount : $scope.discount_amount,
+    discount : $scope.discount_amounts,
     change : $scope.change,
     cash : $scope.cash,
     total : $scope.product_total,

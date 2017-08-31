@@ -233,8 +233,8 @@ input {
     <div class="form-group">
         <p style="font-size:20px;margin-top:10px;">Total </p> <input type="number" ng-model="product_total" disabled style="width:200px;height:30px;font-size:30px;margin-top:-40px;margin-left:200px;position:absolute"/>
         <p style="font-size:20px;margin-top:10px;">Cash </p> <input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-45px;font-size:30px;margin-left:70px;height:30px;margin-left:200px;width:200px;position:absolute" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash)]"/>
-        <p style="font-size:20px;">Discount </p> <input type="number" ng-model="discount_amount" disabled style="width:200px;height:30px;font-size:30px;margin-top:-45px;margin-left:200px;position:absolute"/>
-        <p style="font-size:30px;">Change </p> <input type="number" ng-model="change" disabled style="width:200px;height:40px;font-size:40px;margin-top:-55px;margin-left:200px;position:absolute"/>
+        <p style="font-size:20px;">Discount </p> <input type="text" ng-model="discount_amounts" disabled style="width:200px;height:30px;font-size:30px;margin-top:-45px;margin-left:200px;position:absolute"/>
+        <p style="font-size:30px;">Change </p> <input type="text" ng-model="change" disabled style="width:200px;height:40px;font-size:40px;margin-top:-55px;margin-left:200px;position:absolute"/>
         <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
         <!-- 
         <p style="font-size:30px;">VAT% = 12%</p>

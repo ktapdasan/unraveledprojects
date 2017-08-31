@@ -75,6 +75,8 @@ app.controller('Reports', function(
 
 
         $scope.filter.product_expiration = new Date();
+        $scope.filter.sales_from = new Date();
+        $scope.filter.sales_to = new Date();
     }
 
     function getMonday(d) {
@@ -100,11 +102,15 @@ app.controller('Reports', function(
         return monday;
     }
 
+
+
+
     $scope.get_reports = function(){
         var filter = {
-            name : $scope.form.cashier_name
+            name : $scope.form.cashier_name,
+            date_from : $filter('date')($scope.form.sales_from._d, "mediumDate"),
+            date_to : $filter('date')($scope.form.sales_to._d, "mediumDate")
         };
-
     var promise = ProductFactory.get_reports(filter);
     promise.then(function(data){
         $scope.tender_data = data.data.result;
@@ -114,6 +120,22 @@ app.controller('Reports', function(
                 $scope.tender_data[i].date_created = new Date($scope.tender_data[i].date_created);
                 $scope.tender_data[i].date_created = $filter('date')($scope.tender_data[i].date_created, "medium");
                 $scope.tender_data[i].number = a += 1;
+            };
+
+            var b = 0;
+            for (var i in $scope.tender_data) {
+                b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].product_retail_price); 
+                $scope.tender_data[i].tempo_total = b.toFixed(2);
+                console.log($scope.tender_data[i].tempo_total);            
+                console.log($scope.tender_data[i].product_quantity);            
+                console.log($scope.tender_data[i].product_retail_price);            
+            };
+
+            $scope.form.totaaal = 0;
+            for (var k in $scope.tender_data) {
+                $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
+                $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+                console.log($scope.form.totaaal);
             };
 
         $scope.tender_data_status = true;
@@ -208,8 +230,7 @@ $scope.setItemsPerPage_productdata = function(num) {
 }
 
     $scope.print_pdf = function(){
-
-        window.open('./FUNCTIONS/Uploads/performance_pdf.php?reports=' + JSON.stringify($scope.tender_data)
+        window.open('./FUNCTIONS/Uploads/performance_pdf.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal
             );
 }
 
