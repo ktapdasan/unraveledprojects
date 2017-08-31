@@ -177,7 +177,7 @@ input {
                 maxlength="50"
                 pause="100"
                 selected-object="test"
-                ng-click="tender_product(test);test = undefined"
+                ng-keypress="$event.keyCode === 13 && [tender_product(test),test = undefined]"
                 local-data="product_data"
                 search-fields="product_bar_code"
                 title-field="product_name"
@@ -223,24 +223,28 @@ input {
             </div>
         </div>
 </div>
+<div style="margin-top:-50px;margin-left:610px">
+<p>Sub Total</p>
+</div>
 <div class="col-md-5">
     <div>
     <input type="number" ng-model="product_total_temporary" disabled style="width:400px;height:100px;font-size:100px;">
     </div>
     <div class="form-group">
-        <p style="font-size:30px;">Total = {{product_total}}</p>
-        <p style="font-size:30px;">Cash</p><input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-53px;margin-left:70px;height:40px;width:128px;position:absolute;" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash)]">
+        <p style="font-size:20px;margin-top:10px;">Total </p> <input type="number" ng-model="product_total" disabled style="width:200px;height:30px;font-size:30px;margin-top:-40px;margin-left:200px;position:absolute"/>
+        <p style="font-size:20px;margin-top:10px;">Cash </p> <input type="text" ng-disabled="cash_status == true" ng-model="cash" class="form-control" is-Number style="margin-top:-45px;font-size:30px;margin-left:70px;height:30px;margin-left:200px;width:200px;position:absolute" ng-keypress="$event.keyCode === 13 && [cash_status=true,check_amount(cash)]"/>
+        <p style="font-size:20px;">Discount </p> <input type="number" ng-model="discount_amount" disabled style="width:200px;height:30px;font-size:30px;margin-top:-45px;margin-left:200px;position:absolute"/>
+        <p style="font-size:30px;">Change </p> <input type="number" ng-model="change" disabled style="width:200px;height:40px;font-size:40px;margin-top:-55px;margin-left:200px;position:absolute"/>
+        <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
+        <!-- 
         <p style="font-size:30px;">VAT% = 12%</p>
         <p style="font-size:30px;">Net. Amt = {{net_amount}} </p>
-        <p style="font-size:30px;">VAT = {{vat}}</p>
-        <p style="font-size:30px;">Discount = {{discount_amount}}</p>
-        <p style="font-size:30px;">Change = {{change}}</p>
-        <!-- <p style="font-size:30px;">Number of Items = {{number}}</p> -->
+        <p style="font-size:30px;">VAT = {{vat}}</p> -->
     </div>
 <input type="button" class="btn btn-success"  ng-disabled="tender_status" value="Tender Item" ng-click="tender_product_final();cash_status=true;tender_status=true">
 <input type="button" class="btn btn-warning" ng-disabled="tender_status" value="Discount" ng-click="discount_amount()">
 <input type="button" class="btn btn-info" ng-disabled="gift_status" value="Gift Certificate" ng-click="pay_gift_cert()">
-<input type="button" class="btn btn-danger" ng-disabled="tender_status" value="Cancel Transaction" ng-click="cancel_transaction()">
+<input style="margin-top:5px" type="button" class="btn btn-danger" ng-disabled="tender_status" value="Cancel Transaction" ng-click="cancel_transaction()">
 <input type="button" class="btn btn-danger" ng-show="tender_status" value="Next Transaction" ng-click="cancel_transaction()">
 </div>
 </div>
