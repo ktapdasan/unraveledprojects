@@ -14,11 +14,11 @@
 						<div class="form-group col-md-4">
 							<input type="text" class="form-control" placeholder="Cashier ID" ng-model="form.cashier_name"/>
               </div>
-              <div class="form-group col-md-4">
-                Date From: <input datetimepicker ng-model="form.sales_from" type="text" id="datetimepicker1" style="width:120px;"/>
+              <div class="form-group col-md-4" style="margin-top:-20px;">
+                Date From: <input datetimepicker class="form-control" ng-model="form.sales_from" type="text" id="datetimepicker1" style="width:120px;"/>
             </div>
-            <div class="form-group col-md-4" style="margin-left:-100px;">
-                To: <input datetimepicker ng-model="form.sales_to" type="text" id="datetimepicker2" style="width:120px;"/>
+            <div class="form-group col-md-4" style="margin-left:-100px;margin-top:-20px;">
+                To: <input datetimepicker class="form-control" ng-model="form.sales_to" type="text" id="datetimepicker2" style="width:120px;"/>
             </div>
             <input value="Find" type="button" class="btn" ng-click="get_reports()" style="color: #ffffff; background-color: #800080; border-color: #130269;">
 					</div>

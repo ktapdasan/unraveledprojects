@@ -408,10 +408,8 @@ $scope.tender_product = function(test){
         return false;
    };
 
-   console.log(test);
 
    $scope.tender_data.push(test.description);
-   console.log($scope.tender_data);
    for (var i in $scope.tender_data) {
         $scope.tender_data[i].product_price = parseFloat($scope.tender_data[i].product_price);
         if ($scope.tender_data[i].status == true || $scope.tender_data[i].status == undefined) {
@@ -537,7 +535,6 @@ var datax
 
         $scope.stock_amount = parseInt($scope.tender_data[k].product_stocks) - parseInt(stock_quantity) ;
         $scope.stock_amount_finalized = $scope.stock_amount;
-        console.log($scope.stock_amount);
         if ($scope.stock_amount <= 0) {
 
         $scope.modal = {
@@ -607,8 +604,6 @@ $scope.cancel_transaction = function(){
 }
 
 $scope.check_amount = function(cash){
-console.log(cash);
-console.log($scope.product_total_temporary);
 if (cash < $scope.product_total_temporary) {
         var notify = $.notify('Oops your money is not enough!', { allow_dismiss: true });
         $scope.cash_status=false;
@@ -675,6 +670,23 @@ var prd_stcks
 }*/
 
 $scope.tender_product_final = function(){
+
+    var b = 0;
+    var g = 0;
+            for (var i in $scope.tender_data) {
+                b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].product_retail_price); 
+                $scope.tender_data[i].tempo_total = b.toFixed(2);
+                $scope.tender_data[i].tempor_total = $scope.tender_data[i].product_retail_price.toFixed(2); 
+                g += $scope.tender_data[i].product_quantity; 
+                 $scope.form.product_count = g;
+            };
+
+            $scope.form.totaaal = 0;
+            for (var k in $scope.tender_data) {
+                $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
+                $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+            };
+
 /*
 var stock_quantity
 var prd_stcks*/
@@ -697,19 +709,15 @@ console.log($scope.stock_amount);*/
     var vat1
     vat1 = parseFloat($scope.product_total) * .12 / 1.12;
     $scope.vat = vat1.toFixed(2);
-    console.log($scope.vat);
-
     var net_amnt
     net_amnt = parseFloat($scope.product_total) - vat1;
     $scope.net_amount = net_amnt.toFixed(2);
-    console.log(net_amnt);
 
     var dscnt_amnt
     var amnt_snr
     if ($scope.discount == true) {
         dscnt_amnt = net_amnt * .20;
         $scope.discount_amounts = dscnt_amnt.toFixed(2);
-        console.log($scope.discount_amounts);
         amnt_snr = net_amnt - dscnt_amnt;
         $scope.amount_senior = amnt_snr.toFixed(2);
         $scope.product_total = $scope.amount_senior;
@@ -726,8 +734,16 @@ console.log($scope.stock_amount);*/
     temp_change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
     $scope.change = temp_change.toFixed(2);
 
-    console.log($scope.change);
-    return false;
+    var r
+    var e
+    e = parseFloat($scope.cash);
+    r = e.toFixed(2);
+
+    var w
+    var q
+    w = parseFloat($scope.product_total);
+    q = w.toFixed(2);
+
     
     $scope.gift_status = true;
 
@@ -778,10 +794,25 @@ console.log($scope.stock_amount);*/
         $scope.tender_status = true;
         return false;
     };
-
+    $scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
+    console.log($scope.tender_data);
+    console.log(data);
    var promise = ProductFactory.tender_product(data);
     promise.then(function(data){
-
+        window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
+            + '&user_id_fname=' + $scope.user.first_name 
+            + '&user_id_lname=' + $scope.user.last_name 
+            + '&date_time=' + $scope.filter.product_expiration 
+            + '&TI=' + $scope.form.transact_number
+            + '&count=' + g
+            + '&net_amnt=' + $scope.net_amount
+            + '&vat=' + $scope.vat
+            + '&change=' + $scope.change
+            + '&total=' + q
+            + '&change=' + $scope.change
+            + '&discount=' + $scope.discount_amounts
+            + '&cash=' + r
+            );
     })
     .then(null, function(data){
 
