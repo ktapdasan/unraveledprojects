@@ -696,6 +696,11 @@ for (var z in $scope.tender_data){
    $scope.product_total += parseFloat($scope.tender_data[z].product_retail_price);
 };
 
+for (var o in $scope.tender_data) {
+        $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
+        console.log($scope.tender_data[o].product_price);
+   };
+
 /*for (var o in $scope.tender_data){
    stock_quantity = $scope.tender_data[o].product_quantity;
    prd_stcks = $scope.tender_data[o].product_stocks;
@@ -720,8 +725,8 @@ console.log($scope.stock_amount);*/
         $scope.discount_amounts = dscnt_amnt.toFixed(2);
         amnt_snr = net_amnt - dscnt_amnt;
         $scope.amount_senior = amnt_snr.toFixed(2);
+        console.log($scope.amount_senior);  
         $scope.product_total = $scope.amount_senior;
-        /*console.log($scope.product_total);  */
     }else{
         $scope.discount_amounts = 0;
     };

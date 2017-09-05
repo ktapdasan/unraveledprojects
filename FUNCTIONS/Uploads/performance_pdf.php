@@ -6,7 +6,7 @@ $str = 'Php';
 
 class PDF extends FPDF
 {
-	function construct ($margin = 20) 
+	function construct ($margin = 5) 
 	{ 
 		$this->SetTopMargin($margin); 
 		$this->SetLeftMargin($margin); 
@@ -42,6 +42,8 @@ class PDF extends FPDF
 		$pdf->Cell(40, 10, 'Product Name' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(36, 10, 'Product Quantity' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(30, 10, 'Supplier Price' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(25, 10, 'Retail Price' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(20, 10, 'Discount' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(29, 10, 'Voided Items' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(43, 10, 'Transaction Number' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(53, 10, 'Date Tendered' , 'LTBR', 0, 'L'); 
@@ -54,6 +56,8 @@ class PDF extends FPDF
 		$pdf->Cell(40, 10, $v['product_name'], 'LTBR', 0, 'L');
 		$pdf->Cell(36, 10, $v['product_quantity'], 'LTBR', 0, 'L');
 		$pdf->Cell(30, 10, $v['product_supplier_price'], 'LTBR', 0, 'L');
+		$pdf->Cell(25, 10, $v['product_retail_price'], 'LTBR', 0, 'L');
+		$pdf->Cell(20, 10, $v['discount'], 'LTBR', 0, 'L');
 		$pdf->Cell(29, 10, $v['void_count'], 'LTBR', 0, 'L');
 		$pdf->Cell(43, 10, $v['product_transaction_number'], 'LTBR', 0, 'L');
 		$pdf->Cell(53, 10, $v['date_created'], 'LTBR', 0, 'L');
@@ -64,6 +68,8 @@ class PDF extends FPDF
 		$pdf->Cell(40, 10, '' , 0, 'L'); 
 		$pdf->Cell(36, 10, '' , 0, 'L'); 
 		$pdf->Cell(30, 10, '' , 0, 'L'); 
+		$pdf->Cell(25, 10, '' , 0, 'L'); 
+		$pdf->Cell(20, 10, '' , 0, 'L'); 
 		$pdf->Cell(29, 10, '' , 0, 'L'); 
 		$pdf->Cell(43, 10, '' , 0, 'L'); 
 		$pdf->Cell(53, 10, 'Grand Total' , 'LTBR', 0, 'L'); 

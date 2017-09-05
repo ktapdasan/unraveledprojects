@@ -102,6 +102,7 @@ EOT;
                 product_supplier_price,
                 product_retail_price,
                 cashier_user_id,
+                discount,
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
