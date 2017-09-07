@@ -56,6 +56,9 @@ create table tender_data
 	cash text not null,
 	void_count text not null,
 	total text not null,
+	gc_amount text not null,
+	gc_name text not null,
+	gc_code text not null,
 	cashier_user_id text not null,
 	date_created timestamptz default now(),
 	archived boolean default false

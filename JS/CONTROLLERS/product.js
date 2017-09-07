@@ -670,6 +670,7 @@ var prd_stcks
 }*/
 
 $scope.tender_product_final = function(){
+    maketransaction_number();
 
     var b = 0;
     var g = 0;
@@ -752,6 +753,14 @@ console.log($scope.stock_amount);*/
     
     $scope.gift_status = true;
 
+    if ($scope.modal.gc_amount == undefined) {
+        $scope.modal.gc_amount = 0;
+        $scope.modal.gc_name = 'none';
+        $scope.modal.gc_code = 'none';
+    }else if ($scope.modal.gc_amount != undefined) {
+        $scope.change = 0;
+    };
+
     var data = {
     product_transaction_number : $scope.form.transact_number,
     cashier_user_id : $scope.user.user_id,
@@ -761,6 +770,9 @@ console.log($scope.stock_amount);*/
     vat : $scope.vat,
     discount : $scope.discount_amounts,
     change : $scope.change,
+    gc_amount : $scope.modal.gc_amount,
+    gc_name : $scope.modal.gc_name, 
+    gc_code : $scope.modal.gc_code,
     cash : $scope.cash,
     total : $scope.product_total,
     stock_amount_finalized : $scope.stock_amount_finalized,
@@ -770,32 +782,32 @@ console.log($scope.stock_amount);*/
 
 
     if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.product_total == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong1!', { allow_dismiss: true });
         tender_status = true;
         return false;
     };
     if (data.net_amount == '' || data.net_amount == "" || data.net_amount == NaN || data.net_amount == null || data.net_amount == undefined || data.net_amount == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong2!', { allow_dismiss: true });
         tender_status = true;
         return false;
     };
     if (data.vat == '' || data.vat == "" || data.vat == NaN || data.vat == null || data.vat == undefined || data.vat == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong3!', { allow_dismiss: true });
         tender_status = true;
         return false;
     };
-    if (data.change == '' || data.change == "" || data.change == NaN || data.change == null || data.change == undefined || data.change == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+    if (data.change == NaN || data.change == null || data.change == undefined || data.change == 'NaN') {
+        var notify = $.notify('Oops there something wrong4!', { allow_dismiss: true });
         tender_status = true;
         return false;
     };
     if (data.cash == '' || data.cash == "" || data.cash == NaN || data.cash == null || data.cash == undefined || data.cash == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong5!', { allow_dismiss: true });
         tender_status = true;
         return false;
     };
     if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.total == 'NaN') {
-        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong6!', { allow_dismiss: true });
         $scope.tender_status = true;
         return false;
     };

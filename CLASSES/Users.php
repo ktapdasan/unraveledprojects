@@ -221,6 +221,9 @@ EOT;
         $void_count = $data['void_count'];
         $stock_amount_finalized = $data['stock_amount_finalized'];
         $stock_amount_pk = $data['stock_amount_pk'];
+        $gc_name = $data['gc_name'];
+        $gc_amount = $data['gc_amount'];
+        $gc_code = $data['gc_code'];
 
         $sql = "begin;";
 
@@ -262,7 +265,10 @@ EOT;
                     change,
                     cash,
                     total,
-                    void_count
+                    void_count,
+                    gc_amount,
+                    gc_name,
+                    gc_code
                 )
                 VALUES
                 (
@@ -279,7 +285,10 @@ EOT;
                     '$change',
                     '$cash',
                     '$total',
-                    '$void_count'
+                    '$void_count',
+                    '$gc_amount',
+                    '$gc_name',
+                    '$gc_code'
                 )
                 ;
 EOT;

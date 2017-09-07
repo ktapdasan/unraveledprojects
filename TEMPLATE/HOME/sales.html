@@ -179,7 +179,7 @@ input {
                 selected-object="test"
                 ng-keypress="$event.keyCode === 13 && [tender_product(test),test = undefined]"
                 local-data="product_data"
-                search-fields="product_bar_code"
+                search-fields="product_bar_code,product_name"
                 title-field="product_name"
                 minlength="1"
                 input-class="form-control form-control-small"
@@ -246,6 +246,7 @@ input {
 <input type="button" class="btn btn-info" ng-disabled="gift_status" value="Gift Certificate" ng-click="pay_gift_cert()">
 <input style="margin-top:5px" type="button" class="btn btn-danger" ng-disabled="tender_status" value="Cancel Transaction" ng-click="cancel_transaction()">
 <input type="button" class="btn btn-danger" ng-show="tender_status" value="Next Transaction" ng-click="cancel_transaction()">
+<input style="margin-top:5px" type="button" class="btn btn-warning" ng-show="tender_status" value="Send Receipt" ng-click="send_receipt()">
 </div>
 </div>
 </div>
