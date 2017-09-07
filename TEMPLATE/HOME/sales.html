@@ -272,6 +272,25 @@ input {
   </div>
 </script>
 
+<script type="text/ng-template" id="SendReceiptModal">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+        <div style="margin-left:13px;">
+          E-mail of the Customer <input type="text" style="width:350px;" class="form-control" ng-model="modal.email">
+        </div>
+
+
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check-square-o"> </i> {{modal.save}}</button>
+  </div>
+</script>
+
 <script type="text/ng-template" id="InputPinModal">
   <div class="ngdialog-message">
     <div style="margin-top: -15px;">

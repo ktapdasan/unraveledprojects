@@ -53,6 +53,23 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
+    factory.submit_toemail = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/submit_toemail.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
     factory.update_stocks = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Product/update_stocks.php', 

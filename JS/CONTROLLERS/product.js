@@ -16,6 +16,7 @@ app.controller('Product', function(
     $scope.filter = {};
     $scope.tender_voided = {};
     $scope.tender_voided.count = 0;
+    $scope.submit_datas = {};
     $scope.stock_amount_finalized = 0;
     $scope.stock_amount_pk = {};
     $scope.stock_amount = 0;
@@ -744,11 +745,12 @@ console.log($scope.stock_amount);*/
     var e
     e = parseFloat($scope.cash);
     r = e.toFixed(2);
-
+    $scope.form.r = r;
     var w
     var q
     w = parseFloat($scope.product_total);
     q = w.toFixed(2);
+    $scope.form.q = q;
 
     
     $scope.gift_status = true;
@@ -834,6 +836,63 @@ console.log($scope.stock_amount);*/
     .then(null, function(data){
 
     });
+}
+
+$scope.send_receipt = function(){
+
+    $scope.modal = {
+        title : 'Send Receipt Via E-mail',
+        save : 'Send',
+        close : 'Cancel'
+     };
+
+    ngDialog.openConfirm({
+        template: 'SendReceiptModal',
+        className: 'ngdialog-theme-plain dialogwidth400',
+        scope: $scope,
+        showClose: false
+    })
+.then(function(value){
+    return false;
+}, function(value){
+
+    $scope.submit_datas = {
+    product_transaction_number : $scope.form.transact_number,
+    cashier_user_id : $scope.user.user_id,
+    data : JSON.stringify($scope.tender_data),
+    vat_percentage : 12,
+    net_amount : $scope.net_amount,
+    stock_amount_finalized : $scope.stock_amount_finalized,
+    stock_amount_pk : $scope.stock_amount_pk,
+    void_count : $scope.tender_voided.count,
+    email : $scope.modal.email,
+    user_id_fname : $scope.user.first_name,
+    user_id_lname : $scope.user.last_name ,
+    date_time :$scope.filter.product_expiration,
+    TI : $scope.form.transact_number,
+    count : $scope.form.product_count,
+    message: '<p>Dear Customer,</p><div>&nbsp;</div><div>Attached is your official receipt. Thank you for shopping with us and see you very soon!</div><div>&nbsp;</div><div>For feedback and inquiries do not hesitate to email us via the email address written in the official receipt.</div><div>&nbsp;</div><div>Thank you!</div><div>&nbsp;</div><div>GoSari Team</div>',
+    vat : $scope.vat,
+    change :  $scope.change,
+    total :  $scope.form.q,
+    discount : $scope.discount_amounts,
+    cash : $scope.form.r
+    };
+
+        var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });
+        console.log($scope.submit_datas);
+    var promise = ProductFactory.submit_toemail($scope.submit_datas);
+    promise.then(function(data){
+        var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });
+
+})
+    .then(null, function(data){
+    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+    });
+
+});
+
 }
 
 $scope.get_all_products = function(){
