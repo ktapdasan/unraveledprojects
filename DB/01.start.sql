@@ -45,6 +45,17 @@ VALUES
 	'2'
 );
 
+insert into accounts
+(
+	user_id,
+	user_type
+)
+VALUES
+(
+	'2014000100',
+	'1'
+);
+
 create table users
 (
 	pk serial primary key,
