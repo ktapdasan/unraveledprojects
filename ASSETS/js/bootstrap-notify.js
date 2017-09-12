@@ -35,7 +35,7 @@
 		},
 		offset: 20,
 		spacing: 10,
-		z_index: 1031,
+		z_index: 9999999999999,
 		duration: 5000,
 		delay: 1000,
 		timer: 1000,

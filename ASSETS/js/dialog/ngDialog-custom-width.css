@@ -12,6 +12,13 @@
   margin-top: -140px;
 }
 
+.ngdialog.dialogwidth28 .ngdialog-content{
+  width : 1050px;
+  margin-top: -140px;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+
 .ngdialog.dialogwidth800 .ngdialog-content{
 	width : 800px;
 	margin-top: -140px;

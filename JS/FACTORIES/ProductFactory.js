@@ -257,9 +257,9 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
-    factory.get_product_data = function(data){
+    factory.submit_toemailreceipt = function(data){
         var promise = $http({
-            url:'./FUNCTIONS/Product/get_product_data.php', 
+            url:'./FUNCTIONS/Product/submit_toemailreceipt.php', 
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {
@@ -277,6 +277,57 @@ app.factory('ProductFactory', function($http, $location){
     factory.get_product_data = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Product/get_product_data.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+    factory.get_receiptsback = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/get_receiptsback.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+    factory.get_best_selling = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/get_best_selling.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+    factory.get_receipts = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/get_receipts.php', 
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             transformRequest: function(obj) {

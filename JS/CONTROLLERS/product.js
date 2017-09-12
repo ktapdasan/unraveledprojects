@@ -1,15 +1,15 @@
 app.controller('Product', function(
-                                            $scope,
-                                            SessionFactory,
-                                            UserFactory,
-                                            ProductFactory,
-                                            md5,
-                                            $filter,
-                                            ngDialog,
-                                            $route
-                                          ) 
+    $scope,
+    SessionFactory,
+    UserFactory,
+    ProductFactory,
+    md5,
+    $filter,
+    ngDialog,
+    $route
+    ) 
 {
-    
+
     $scope.user = {};
 
     $scope.form = {};
@@ -90,7 +90,7 @@ app.controller('Product', function(
 
         })
         .then(null, function(data){
-            
+
         });
     }
 
@@ -140,11 +140,11 @@ app.controller('Product', function(
 
     function get_product_data(){
 
-    var promise = ProductFactory.get_product_data();
-    promise.then(function(data){
-        $scope.product_data = data.data.result;
+        var promise = ProductFactory.get_product_data();
+        promise.then(function(data){
+            $scope.product_data = data.data.result;
 
-        var a = 0;
+            var a = 0;
             for (var i in $scope.product_data) {
                 $scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
                 $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
@@ -155,24 +155,24 @@ app.controller('Product', function(
             $scope.totalItems_productdata = $scope.product_data.length;
 
             $scope.form = {};
-    })
-    .then(null, function(data){
+        })
+        .then(null, function(data){
 
 
-    });
-}
+        });
+    }
 
-$scope.setPage_productdata = function (pageNo) {
-    $scope.currentPage_productdata = pageNo;
-};
+    $scope.setPage_productdata = function (pageNo) {
+        $scope.currentPage_productdata = pageNo;
+    };
 
-$scope.pageChanged_productdata = function() {
-    console.log('Page changed to: ' + $scope.currentPage_productdata);
-};
+    $scope.pageChanged_productdata = function() {
+        console.log('Page changed to: ' + $scope.currentPage_productdata);
+    };
 
-$scope.setItemsPerPage_productdata = function(num) {
-    $scope.itemsPerPage_productdata = num;
-    $scope.currentPage_productdata = 1; //reset to first paghe
+    $scope.setItemsPerPage_productdata = function(num) {
+        $scope.itemsPerPage_productdata = num;
+$scope.currentPage_productdata = 1; //reset to first paghe
 }
 
 function get_supplier_data(){
@@ -183,14 +183,14 @@ function get_supplier_data(){
         console.log($scope.supplier_data);
 
         var a = 0;
-            for (var i in $scope.supplier_data) {
-                $scope.supplier_data[i].date_created = new Date($scope.supplier_data[i].date_created);
-                $scope.supplier_data[i].number = a += 1;
-            };
+        for (var i in $scope.supplier_data) {
+            $scope.supplier_data[i].date_created = new Date($scope.supplier_data[i].date_created);
+            $scope.supplier_data[i].number = a += 1;
+        };
 
-            $scope.totalItems_supplierdata = $scope.supplier_data.length;
+        $scope.totalItems_supplierdata = $scope.supplier_data.length;
 
-            $scope.form = {};
+        $scope.form = {};
     })
     .then(null, function(data){
 
@@ -209,7 +209,7 @@ $scope.pageChanged_supplierdata = function() {
 
 $scope.setItemsPerPage_supplierdata = function(num) {
     $scope.itemsPerPage_supplierdata = num;
-    $scope.currentPage_supplierdata = 1; //reset to first paghe
+$scope.currentPage_supplierdata = 1; //reset to first paghe
 }
 
 function get_request_order_data(){
@@ -220,14 +220,14 @@ function get_request_order_data(){
         console.log($scope.request_data);
 
         var a = 0;
-            for (var i in $scope.request_data) {
-                $scope.request_data[i].date_created = new Date($scope.request_data[i].date_created);
-                $scope.request_data[i].number = a += 1;
-            };
+        for (var i in $scope.request_data) {
+            $scope.request_data[i].date_created = new Date($scope.request_data[i].date_created);
+            $scope.request_data[i].number = a += 1;
+        };
 
-            $scope.totalItems_orderdata = $scope.request_data.length;
+        $scope.totalItems_orderdata = $scope.request_data.length;
 
-            $scope.form = {};
+        $scope.form = {};
     })
     .then(null, function(data){
 
@@ -245,18 +245,18 @@ $scope.pageChanged_orderdata = function() {
 
 $scope.setItemsPerPage_orderdata = function(num) {
     $scope.itemsPerPage_orderdata = num;
-    $scope.currentPage_orderdata = 1; //reset to first paghe
+$scope.currentPage_orderdata = 1; //reset to first paghe
 }
-    $scope.logout = function(){
-        var promise = SessionFactory.logout();
-        promise.then(function(data){
-            window.location = './login.html';
-        })
-    }
+$scope.logout = function(){
+    var promise = SessionFactory.logout();
+    promise.then(function(data){
+        window.location = './login.html';
+    })
+}
 
-    $scope.add_product = function(){
+$scope.add_product = function(){
 
-        $scope.form.product_expiration = $filter('date')($scope.filter.product_expiration, "mediumDate");
+    $scope.form.product_expiration = $filter('date')($scope.filter.product_expiration, "mediumDate");
 
     var datas = {
         product_name : $scope.form.product_name,
@@ -272,15 +272,15 @@ $scope.setItemsPerPage_orderdata = function(num) {
     var promise = ProductFactory.add_product(datas);
     promise.then(function(data){
         var notify = $.notify('You have succesfully added the product', { allow_dismiss: true });
-            get_product_data();
-})
+        get_product_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
 
     });
 }
 
-    $scope.edit_product_data = function(v){
+$scope.edit_product_data = function(v){
     var index = $scope.product_data.indexOf(v);
 
     $scope.modal = {
@@ -294,7 +294,7 @@ $scope.setItemsPerPage_orderdata = function(num) {
         product_expiration : $scope.product_data[index].product_product_expiration,
         product_srp : $scope.product_data[index].product_srp,
         product_supplier : $scope.product_data[index].product_supplier
-     };
+    };
 
     ngDialog.openConfirm({
         template: 'EditMyProfile',
@@ -302,7 +302,7 @@ $scope.setItemsPerPage_orderdata = function(num) {
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
             if($scope.modal.product_name == '' || $scope.modal.product_bar_code == '' || $scope.modal.product_stocks == '' || $scope.modal.product_price == ''){
-            
+
                 var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
                 return false;
             }
@@ -311,53 +311,53 @@ $scope.setItemsPerPage_orderdata = function(num) {
         scope: $scope,
         showClose: false
     })
-.then(function(value){
-    return false;
-}, function(value){
+    .then(function(value){
+        return false;
+    }, function(value){
 
 
-    $scope.modal.new_product_date_expiration = $filter('date')($scope.modal.product_expiration._d, "medium");
+        $scope.modal.new_product_date_expiration = $filter('date')($scope.modal.product_expiration._d, "medium");
 
-    var datas = {
-        pk : $scope.product_data[index].pk,
-        product_name : $scope.modal.product_name,
-        product_bar_code : $scope.modal.product_bar_code,
-        product_stocks : $scope.modal.product_stocks,
-        product_price : $scope.modal.product_price,
-        product_srp : $scope.modal.product_srp,
-        product_expiration : $scope.modal.new_product_date_expiration,
-        supplier_code_name : $scope.modal.supplier_code_name,
-        product_supplier : $scope.modal.product_supplier
-    }
+        var datas = {
+            pk : $scope.product_data[index].pk,
+            product_name : $scope.modal.product_name,
+            product_bar_code : $scope.modal.product_bar_code,
+            product_stocks : $scope.modal.product_stocks,
+            product_price : $scope.modal.product_price,
+            product_srp : $scope.modal.product_srp,
+            product_expiration : $scope.modal.new_product_date_expiration,
+            supplier_code_name : $scope.modal.supplier_code_name,
+            product_supplier : $scope.modal.product_supplier
+        }
 
-    var promise = ProductFactory.edit_product_data(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
+        var promise = ProductFactory.edit_product_data(datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
             get_product_data();
-})
-    .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
+        });
     });
-});
 }
 
-    $scope.delete_product_data = function(v){
-        var index = $scope.product_data.indexOf(v);
+$scope.delete_product_data = function(v){
+    var index = $scope.product_data.indexOf(v);
 
 
-        $scope.modal = {
+    $scope.modal = {
         title : 'Please input a pin',
         save : 'Delete',
         close : 'Cancel'
-        }     
+    }     
 
-        ngDialog.openConfirm({
+    ngDialog.openConfirm({
         template: 'InputPinModal',
         className: 'ngdialog-theme-plain dialogwidth400',
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
-                $scope.form.pin = md5.createHash($scope.modal.pin);
+            $scope.form.pin = md5.createHash($scope.modal.pin);
             if($scope.form.pin != $scope.user.superior_pin){
                 var notify = $.notify('The Pin is incorrect!', {'type': 'danger', allow_dismiss: true });
                 return false;
@@ -367,36 +367,36 @@ $scope.setItemsPerPage_orderdata = function(num) {
         scope: $scope,
         showClose: false
     })
-.then(function(value){
-    return false;
-}, function(value){
+    .then(function(value){
+        return false;
+    }, function(value){
 
-    var datas = {
-        pk : $scope.product_data[index].pk
-    }
+        var datas = {
+            pk : $scope.product_data[index].pk
+        }
 
 
-    var promise = ProductFactory.delete_product_data(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully deleted the product', { 'type': 'success', allow_dismiss: true });
+        var promise = ProductFactory.delete_product_data(datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully deleted the product', { 'type': 'success', allow_dismiss: true });
             get_product_data();
-})
-    .then(null, function(data){
-    var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
 
-    });
+        });
     });
 }
 
 function maketransaction_number() {
-  var transact_number = "";
+    var transact_number = "";
 
-  var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  for (var i = 0; i < 10; i++){
-    transact_number += possible.charAt(Math.floor(Math.random() * possible.length));
-}
+    for (var i = 0; i < 10; i++){
+        transact_number += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
     $scope.form.transact_number = transact_number;
 }
 
@@ -405,38 +405,38 @@ $scope.tender_product = function(test){
     $scope.product_total_tempo = 0;
     maketransaction_number();
 
-   if (test == undefined || test == null || test == ' ' || test == " ") {
+    if (test == undefined || test == null || test == ' ' || test == " ") {
         return false;
-   };
+    };
 
 
-   $scope.tender_data.push(test.description);
-   for (var i in $scope.tender_data) {
+    $scope.tender_data.push(test.description);
+    for (var i in $scope.tender_data) {
         $scope.tender_data[i].product_price = parseFloat($scope.tender_data[i].product_price);
         if ($scope.tender_data[i].status == true || $scope.tender_data[i].status == undefined) {
         }else{
-           $scope.tender_data[i].status = false;
+            $scope.tender_data[i].status = false;
         };
-   };
-
-   /*$scope.number = $scope.tender_data[i].number;*/
-
-  /* for (var k in $scope.tender_data){
-    if ($scope.tender_data[k].product_retail_price != undefined) {
-        if ($scope.tender_data[k].tempo_status == true || test == undefined){
-        $scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
-        $scope.product_total_temporary = $scope.product_total_tempo;
-   console.log($scope.product_total_temporary);
     };
-    };
+
+    /*$scope.number = $scope.tender_data[i].number;*/
+
+/* for (var k in $scope.tender_data){
+if ($scope.tender_data[k].product_retail_price != undefined) {
+if ($scope.tender_data[k].tempo_status == true || test == undefined){
+$scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
+$scope.product_total_temporary = $scope.product_total_tempo;
+console.log($scope.product_total_temporary);
+};
+};
 };*/
 /*
-    for (var o in $scope.tender_data) {
-        if ($scope.tender_data[k].tempo_status == true || test == undefined){
-        $scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
-        $scope.product_total_temporary = $scope.product_total_tempo;
-    };*/
- 
+for (var o in $scope.tender_data) {
+if ($scope.tender_data[k].tempo_status == true || test == undefined){
+$scope.product_total_tempo += parseInt($scope.tender_data[k].product_retail_price);
+$scope.product_total_temporary = $scope.product_total_tempo;
+};*/
+
 
 }
 
@@ -445,18 +445,18 @@ $scope.temporary = function(){
     $scope.product_total_tempo = 0;
     $scope.number = 0;
 
-    /*if ($scope.tender_data[k].tempo_status == true) {
-        $scope.tender_data[i].product_price = 0;
-    };*/
+/*if ($scope.tender_data[k].tempo_status == true) {
+$scope.tender_data[i].product_price = 0;
+};*/
 
-   for (var k in $scope.tender_data){
-            $scope.product_total_tempo += $scope.tender_data[k].product_retail_price;
-            $scope.product_total_temporary = $scope.product_total_tempo;
-            $scope.number += $scope.tender_data[k].product_quantity;
-            $scope.number_total = $scope.number;
-   /*console.log($scope.tender_data[k].product_retail_price);*/
+for (var k in $scope.tender_data){
+    $scope.product_total_tempo += $scope.tender_data[k].product_retail_price;
+    $scope.product_total_temporary = $scope.product_total_tempo;
+    $scope.number += $scope.tender_data[k].product_quantity;
+    $scope.number_total = $scope.number;
+    /*console.log($scope.tender_data[k].product_retail_price);*/
 };
- 
+
 
 }
 
@@ -465,43 +465,43 @@ $scope.discount_amount = function(){
     $scope.discount = true;
 
     var notify = $.notify('You have succesfully added a Senior Citizen Discount', { allow_dismiss: true });
- 
+
 
 }
 
 $scope.pay_gift_cert = function(){
 
-    /*if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){
-            
-                var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
-                return false;
-            }*/
+/*if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){
 
-    $scope.modal = {
-        title : 'Accept Gift Certificate',
-        save : 'Tender',
-        close : 'Cancel'
-     };
+var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
+return false;
+}*/
 
-    ngDialog.openConfirm({
-        template: 'GiftModal',
-        className: 'ngdialog-theme-plain dialogwidth400',
-        preCloseCallback: function(value) {
-            var nestedConfirmDialog;
-            return nestedConfirmDialog;
-        },
-        scope: $scope,
-        showClose: false
-    })
+$scope.modal = {
+    title : 'Accept Gift Certificate',
+    save : 'Tender',
+    close : 'Cancel'
+};
+
+ngDialog.openConfirm({
+    template: 'GiftModal',
+    className: 'ngdialog-theme-plain dialogwidth400',
+    preCloseCallback: function(value) {
+        var nestedConfirmDialog;
+        return nestedConfirmDialog;
+    },
+    scope: $scope,
+    showClose: false
+})
 .then(function(value){
     return false;
 }, function(value){
 
     $scope.modal = {
-    cashier_user_id : $scope.user.user_id,
-    gc_name : $scope.modal.gc_name, 
-    gc_code : $scope.modal.gc_code,
-    gc_amount : $scope.modal.gc_amount
+        cashier_user_id : $scope.user.user_id,
+        gc_name : $scope.modal.gc_name, 
+        gc_code : $scope.modal.gc_code,
+        gc_amount : $scope.modal.gc_amount
     };
 
     $scope.cash = $scope.modal.gc_amount;
@@ -511,10 +511,10 @@ $scope.pay_gift_cert = function(){
     var promise = ProductFactory.gift_certificate_data($scope.modal);
     promise.then(function(data){
         var notify = $.notify('You have succesfully added the gift certificate', { 'type': 'success', allow_dismiss: true });
-            get_supplier_data();
-})
+        get_supplier_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
     });
 
@@ -524,88 +524,87 @@ $scope.pay_gift_cert = function(){
 
 $scope.stock_checker = function(k){
 
-var stock_quantity
+    var stock_quantity
     stock_quantity = $scope.tender_data[k].product_quantity;
-var prd_stcks
+    var prd_stcks
     prd_stcks = $scope.tender_data[k].product_stocks;
-var datax
+    var datax
     datax = $scope.tender_data[k].pk;
 
-    
+
     $scope.stock_amount_pk = datax;
 
-        $scope.stock_amount = parseInt($scope.tender_data[k].product_stocks) - parseInt(stock_quantity) ;
-        $scope.stock_amount_finalized = $scope.stock_amount;
-        if ($scope.stock_amount <= 0) {
+    $scope.stock_amount = parseInt($scope.tender_data[k].product_stocks) - parseInt(stock_quantity) ;
+    $scope.stock_amount_finalized = $scope.stock_amount;
+    if ($scope.stock_amount <= 0) {
 
         $scope.modal = {
-        title : 'URGENT!',
-        close : 'Close'
-            }     
+            title : 'URGENT!',
+            close : 'Close'
+        }     
 
-                    ngDialog.openConfirm({
-                    template: 'AdviceModal',
-                    className: 'ngdialog-theme-plain dialogwidth400',
-                    preCloseCallback: function(value) {
+        ngDialog.openConfirm({
+            template: 'AdviceModal',
+            className: 'ngdialog-theme-plain dialogwidth400',
+            preCloseCallback: function(value) {
                 var nestedConfirmDialog;
                 return nestedConfirmDialog;
             },
-                scope: $scope,
-                showClose: false
-            })
+            scope: $scope,
+            showClose: false
+        })
         .then(function(value){
             return false;
         }, function(value){
 
-    });
+        });
 
-        };
+    };
 
     if (stock_quantity > prd_stcks) {
         $scope.modal = {
-        title : 'URGENT!',
-        close : 'Close'
-            }     
+            title : 'URGENT!',
+            close : 'Close'
+        }     
 
-                    ngDialog.openConfirm({
-                    template: 'AdviceExceedModal',
-                    className: 'ngdialog-theme-plain dialogwidth400',
-                    preCloseCallback: function(value) {
+        ngDialog.openConfirm({
+            template: 'AdviceExceedModal',
+            className: 'ngdialog-theme-plain dialogwidth400',
+            preCloseCallback: function(value) {
                 var nestedConfirmDialog;
                 return nestedConfirmDialog;
             },
-                scope: $scope,
-                showClose: false
-            })
+            scope: $scope,
+            showClose: false
+        })
         .then(function(value){
             return false;
         }, function(value){
-
-    });
-};
+        });
+    };
 
 /*var data = {
-    stock_amount : $scope.stock_amount,
-    pk : datax
+stock_amount : $scope.stock_amount,
+pk : datax
 }
- var promise = ProductFactory.update_stocks(data);
-            promise.then(function(data){
-        })
-        .then(null, function(data){
+var promise = ProductFactory.update_stocks(data);
+promise.then(function(data){
+})
+.then(null, function(data){
 
-        });*/
+});*/
 
 }
 
 $scope.cancel_transaction = function(){
 
     $route.reload();
- 
+
 
 }
 
 $scope.check_amount = function(cash){
-if (cash < $scope.product_total_temporary) {
+    if (cash < $scope.product_total_temporary) {
         var notify = $.notify('Oops your money is not enough!', { allow_dismiss: true });
         $scope.cash_status=false;
         return false;
@@ -619,14 +618,14 @@ $scope.void_product = function(k){
         title : 'Please input a pin',
         save : 'Delete',
         close : 'Cancel'
-        }     
+    }     
 
-        ngDialog.openConfirm({
+    ngDialog.openConfirm({
         template: 'InputPinModal',
         className: 'ngdialog-theme-plain dialogwidth400',
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
-                $scope.form.pin = md5.createHash($scope.modal.pin);
+            $scope.form.pin = md5.createHash($scope.modal.pin);
             if ($scope.form.pin == $scope.user.superior_pin) {
                 $scope.tender_voided.count += 1;
                 $scope.tender_voided.value = $scope.tender_data[k].product_retail_price;
@@ -648,25 +647,25 @@ $scope.void_product = function(k){
     return false;
 }, function(value){
 
-    });
+});
 
 }
 
 /*$scope.stock_finalizer = function(){
 
 var stock_quantity
-    stock_quantity = $scope.tender_data.product_quantity;
+stock_quantity = $scope.tender_data.product_quantity;
 var prd_stcks
-    prd_stcks = $scope.tender_data.product_stocks;
-        for (var i in tender_data) {
-            stock_quantity = $scope.tender_data[i].product_quantity;
-            prd_stcks = $scope.tender_data[i].product_stocks;
-        };
-        $scope.stock_amount = parseInt($scope.tender_data.product_stocks) - parseInt(stock_quantity) ;
+prd_stcks = $scope.tender_data.product_stocks;
+for (var i in tender_data) {
+stock_quantity = $scope.tender_data[i].product_quantity;
+prd_stcks = $scope.tender_data[i].product_stocks;
+};
+$scope.stock_amount = parseInt($scope.tender_data.product_stocks) - parseInt(stock_quantity) ;
 
-    console.log(stock_quantity);
-    console.log(prd_stcks);
-    console.log($scope.stock_amount);
+console.log(stock_quantity);
+console.log(prd_stcks);
+console.log($scope.stock_amount);
 
 }*/
 
@@ -675,37 +674,37 @@ $scope.tender_product_final = function(){
 
     var b = 0;
     var g = 0;
-            for (var i in $scope.tender_data) {
-                b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].product_retail_price); 
-                $scope.tender_data[i].tempo_total = b.toFixed(2);
-                $scope.tender_data[i].tempor_total = $scope.tender_data[i].product_retail_price.toFixed(2); 
-                g += $scope.tender_data[i].product_quantity; 
-                 $scope.form.product_count = g;
-            };
+    for (var i in $scope.tender_data) {
+        b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].product_retail_price); 
+        $scope.tender_data[i].tempo_total = b.toFixed(2);
+        $scope.tender_data[i].tempor_total = $scope.tender_data[i].product_retail_price.toFixed(2); 
+        g += $scope.tender_data[i].product_quantity; 
+        $scope.form.product_count = g;
+    };
 
-            $scope.form.totaaal = 0;
-            for (var k in $scope.tender_data) {
-                $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
-                $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
-            };
+    $scope.form.totaaal = 0;
+    for (var k in $scope.tender_data) {
+        $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
+        $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+    };
 
 /*
 var stock_quantity
 var prd_stcks*/
-    
+
 
 for (var z in $scope.tender_data){
-   $scope.product_total += parseFloat($scope.tender_data[z].product_retail_price);
+    $scope.product_total += parseFloat($scope.tender_data[z].product_retail_price);
 };
 
 for (var o in $scope.tender_data) {
-        $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
-        console.log($scope.tender_data[o].product_price);
-   };
+    $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
+    console.log($scope.tender_data[o].product_price);
+};
 
 /*for (var o in $scope.tender_data){
-   stock_quantity = $scope.tender_data[o].product_quantity;
-   prd_stcks = $scope.tender_data[o].product_stocks;
+stock_quantity = $scope.tender_data[o].product_quantity;
+prd_stcks = $scope.tender_data[o].product_stocks;
 $scope.stock_amount = parseInt(prd_stcks) - parseInt(stock_quantity) ;
 };
 
@@ -713,57 +712,57 @@ console.log(stock_quantity);
 console.log(prd_stcks);
 console.log($scope.stock_amount);*/
 
-    var vat1
-    vat1 = parseFloat($scope.product_total) * .12 / 1.12;
-    $scope.vat = vat1.toFixed(2);
-    var net_amnt
-    net_amnt = parseFloat($scope.product_total) - vat1;
-    $scope.net_amount = net_amnt.toFixed(2);
+var vat1
+vat1 = parseFloat($scope.product_total) * .12 / 1.12;
+$scope.vat = vat1.toFixed(2);
+var net_amnt
+net_amnt = parseFloat($scope.product_total) - vat1;
+$scope.net_amount = net_amnt.toFixed(2);
 
-    var dscnt_amnt
-    var amnt_snr
-    if ($scope.discount == true) {
-        dscnt_amnt = net_amnt * .20;
-        $scope.discount_amounts = dscnt_amnt.toFixed(2);
-        amnt_snr = net_amnt - dscnt_amnt;
-        $scope.amount_senior = amnt_snr.toFixed(2);
-        console.log($scope.amount_senior);  
-        $scope.product_total = $scope.amount_senior;
-    }else{
-        $scope.discount_amounts = 0;
-    };
+var dscnt_amnt
+var amnt_snr
+if ($scope.discount == true) {
+    dscnt_amnt = net_amnt * .20;
+    $scope.discount_amounts = dscnt_amnt.toFixed(2);
+    amnt_snr = net_amnt - dscnt_amnt;
+    $scope.amount_senior = amnt_snr.toFixed(2);
+    console.log($scope.amount_senior);  
+    $scope.product_total = $scope.amount_senior;
+}else{
+    $scope.discount_amounts = 0;
+};
 
-    if ($scope.cash_status == true) {
-        $scope.cash_status = false;
-    };
+if ($scope.cash_status == true) {
+    $scope.cash_status = false;
+};
 
-    var temp_change
-    temp_change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
-    $scope.change = temp_change.toFixed(2);
+var temp_change
+temp_change = parseFloat($scope.cash)  - parseFloat($scope.product_total);
+$scope.change = temp_change.toFixed(2);
 
-    var r
-    var e
-    e = parseFloat($scope.cash);
-    r = e.toFixed(2);
-    $scope.form.r = r;
-    var w
-    var q
-    w = parseFloat($scope.product_total);
-    q = w.toFixed(2);
-    $scope.form.q = q;
+var r
+var e
+e = parseFloat($scope.cash);
+r = e.toFixed(2);
+$scope.form.r = r;
+var w
+var q
+w = parseFloat($scope.product_total);
+q = w.toFixed(2);
+$scope.form.q = q;
 
-    
-    $scope.gift_status = true;
 
-    if ($scope.modal.gc_amount == undefined) {
-        $scope.modal.gc_amount = 0;
-        $scope.modal.gc_name = 'none';
-        $scope.modal.gc_code = 'none';
-    }else if ($scope.modal.gc_amount != undefined) {
-        $scope.change = 0;
-    };
+$scope.gift_status = true;
 
-    var data = {
+if ($scope.modal.gc_amount == undefined) {
+    $scope.modal.gc_amount = 0;
+    $scope.modal.gc_name = 'none';
+    $scope.modal.gc_code = 'none';
+}else if ($scope.modal.gc_amount != undefined) {
+    $scope.change = 0;
+};
+
+var data = {
     product_transaction_number : $scope.form.transact_number,
     cashier_user_id : $scope.user.user_id,
     data : JSON.stringify($scope.tender_data),
@@ -775,67 +774,67 @@ console.log($scope.stock_amount);*/
     gc_amount : $scope.modal.gc_amount,
     gc_name : $scope.modal.gc_name, 
     gc_code : $scope.modal.gc_code,
-    cash : $scope.cash,
-    total : $scope.product_total,
+    cash : $scope.form.r,
+    total : $scope.form.q,
     stock_amount_finalized : $scope.stock_amount_finalized,
     stock_amount_pk : $scope.stock_amount_pk,
     void_count : $scope.tender_voided.count
-    };
+};
 
 
-    if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.product_total == 'NaN') {
-        var notify = $.notify('Oops there something wrong1!', { allow_dismiss: true });
-        tender_status = true;
-        return false;
-    };
-    if (data.net_amount == '' || data.net_amount == "" || data.net_amount == NaN || data.net_amount == null || data.net_amount == undefined || data.net_amount == 'NaN') {
-        var notify = $.notify('Oops there something wrong2!', { allow_dismiss: true });
-        tender_status = true;
-        return false;
-    };
-    if (data.vat == '' || data.vat == "" || data.vat == NaN || data.vat == null || data.vat == undefined || data.vat == 'NaN') {
-        var notify = $.notify('Oops there something wrong3!', { allow_dismiss: true });
-        tender_status = true;
-        return false;
-    };
-    if (data.change == NaN || data.change == null || data.change == undefined || data.change == 'NaN') {
-        var notify = $.notify('Oops there something wrong4!', { allow_dismiss: true });
-        tender_status = true;
-        return false;
-    };
-    if (data.cash == '' || data.cash == "" || data.cash == NaN || data.cash == null || data.cash == undefined || data.cash == 'NaN') {
-        var notify = $.notify('Oops there something wrong5!', { allow_dismiss: true });
-        tender_status = true;
-        return false;
-    };
-    if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.total == 'NaN') {
-        var notify = $.notify('Oops there something wrong6!', { allow_dismiss: true });
-        $scope.tender_status = true;
-        return false;
-    };
-    $scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
-    console.log($scope.tender_data);
-    console.log(data);
-   var promise = ProductFactory.tender_product(data);
-    promise.then(function(data){
-        window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
-            + '&user_id_fname=' + $scope.user.first_name 
-            + '&user_id_lname=' + $scope.user.last_name 
-            + '&date_time=' + $scope.filter.product_expiration 
-            + '&TI=' + $scope.form.transact_number
-            + '&count=' + g
-            + '&net_amnt=' + $scope.net_amount
-            + '&vat=' + $scope.vat
-            + '&change=' + $scope.change
-            + '&total=' + q
-            + '&change=' + $scope.change
-            + '&discount=' + $scope.discount_amounts
-            + '&cash=' + r
-            );
-    })
-    .then(null, function(data){
+if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.product_total == 'NaN') {
+    var notify = $.notify('Oops there something wrong with total!', {'type': 'danger',  allow_dismiss: true });
+    tender_status = true;
+    return false;
+};
+if (data.net_amount == '' || data.net_amount == "" || data.net_amount == NaN || data.net_amount == null || data.net_amount == undefined || data.net_amount == 'NaN') {
+    var notify = $.notify('Oops there something wrong with net amount value!', {'type': 'danger' , allow_dismiss: true });
+    tender_status = true;
+    return false;
+};
+if (data.vat == '' || data.vat == "" || data.vat == NaN || data.vat == null || data.vat == undefined || data.vat == 'NaN') {
+    var notify = $.notify('Oops there something wrong with vat value!', {'type': 'danger' , allow_dismiss: true });
+    tender_status = true;
+    return false;
+};
+if (data.change == NaN || data.change == null || data.change == undefined || data.change == 'NaN') {
+    var notify = $.notify('Oops there something wrong with change value!', {'type': 'danger' , allow_dismiss: true });
+    tender_status = true;
+    return false;
+};
+if (data.cash == '' || data.cash == "" || data.cash == NaN || data.cash == null || data.cash == undefined || data.cash == 'NaN') {
+    var notify = $.notify('Oops there something wrong with cash value!', {'type': 'danger' ,  allow_dismiss: true });
+    tender_status = true;
+    return false;
+};
+/*if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.total == 'NaN') {
+var notify = $.notify('Oops there something wrong with total value!', { allow_dismiss: true });
+$scope.tender_status = true;
+return false;
+};*/
+$scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
+console.log($scope.tender_data);
+console.log(data);
+var promise = ProductFactory.tender_product(data);
+promise.then(function(data){
+    window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
+        + '&user_id_fname=' + $scope.user.first_name 
+        + '&user_id_lname=' + $scope.user.last_name 
+        + '&date_time=' + $scope.filter.product_expiration 
+        + '&TI=' + $scope.form.transact_number
+        + '&count=' + g
+        + '&net_amnt=' + $scope.net_amount
+        + '&vat=' + $scope.vat
+        + '&change=' + $scope.change
+        + '&total=' + q
+        + '&change=' + $scope.change
+        + '&discount=' + $scope.discount_amounts
+        + '&cash=' + r
+        );
+})
+.then(null, function(data){
 
-    });
+});
 }
 
 $scope.send_receipt = function(){
@@ -844,7 +843,7 @@ $scope.send_receipt = function(){
         title : 'Send Receipt Via E-mail',
         save : 'Send',
         close : 'Cancel'
-     };
+    };
 
     ngDialog.openConfirm({
         template: 'SendReceiptModal',
@@ -852,46 +851,46 @@ $scope.send_receipt = function(){
         scope: $scope,
         showClose: false
     })
-.then(function(value){
-    return false;
-}, function(value){
+    .then(function(value){
+        return false;
+    }, function(value){
 
-    $scope.submit_datas = {
-    product_transaction_number : $scope.form.transact_number,
-    cashier_user_id : $scope.user.user_id,
-    data : JSON.stringify($scope.tender_data),
-    vat_percentage : 12,
-    net_amount : $scope.net_amount,
-    stock_amount_finalized : $scope.stock_amount_finalized,
-    stock_amount_pk : $scope.stock_amount_pk,
-    void_count : $scope.tender_voided.count,
-    email : $scope.modal.email,
-    user_id_fname : $scope.user.first_name,
-    user_id_lname : $scope.user.last_name ,
-    date_time :$scope.filter.product_expiration,
-    TI : $scope.form.transact_number,
-    count : $scope.form.product_count,
-    message: '<p>Dear Customer,</p><div>&nbsp;</div><div>Attached is your official receipt. Thank you for shopping with us and see you very soon!</div><div>&nbsp;</div><div>For feedback and inquiries do not hesitate to email us via the email address written in the official receipt.</div><div>&nbsp;</div><div>Thank you!</div><div>&nbsp;</div><div>GoSari Team</div>',
-    vat : $scope.vat,
-    change :  $scope.change,
-    total :  $scope.form.q,
-    discount : $scope.discount_amounts,
-    cash : $scope.form.r
-    };
+        $scope.submit_datas = {
+            product_transaction_number : $scope.form.transact_number,
+            cashier_user_id : $scope.user.user_id,
+            data : JSON.stringify($scope.tender_data),
+            vat_percentage : 12,
+            net_amount : $scope.net_amount,
+            stock_amount_finalized : $scope.stock_amount_finalized,
+            stock_amount_pk : $scope.stock_amount_pk,
+            void_count : $scope.tender_voided.count,
+            email : $scope.modal.email,
+            user_id_fname : $scope.user.first_name,
+            user_id_lname : $scope.user.last_name ,
+            date_time :$scope.filter.product_expiration,
+            TI : $scope.form.transact_number,
+            count : $scope.form.product_count,
+            message: '<p>Dear Customer,</p><div>&nbsp;</div><div>Attached is your official receipt. Thank you for shopping with us and see you very soon!</div><div>&nbsp;</div><div>For feedback and inquiries do not hesitate to email us via the email address written in the official receipt.</div><div>&nbsp;</div><div>Thank you!</div><div>&nbsp;</div><div>GoSari Team</div>',
+            vat : $scope.vat,
+            change :  $scope.change,
+            total :  $scope.form.q,
+            discount : $scope.discount_amounts,
+            cash : $scope.form.r
+        };
 
         var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });
         console.log($scope.submit_datas);
-    var promise = ProductFactory.submit_toemail($scope.submit_datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });
+        var promise = ProductFactory.submit_toemail($scope.submit_datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });
 
-})
-    .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+        });
 
     });
-
-});
 
 }
 
@@ -901,26 +900,26 @@ $scope.get_all_products = function(){
 
 function get_all_products(){
 
-      if ($scope.filter.searchstring == undefined || $scope.filter.searchstring == '' || $scope.filter.searchstring == null) {
-          $scope.filter.searchstring = undefined;
-      }
+    if ($scope.filter.searchstring == undefined || $scope.filter.searchstring == '' || $scope.filter.searchstring == null) {
+        $scope.filter.searchstring = undefined;
+    }
 
-       var filters = {
-          wildcard : $scope.filter.searchstring
-        };
-      
-      var promise = ProductFactory.get_all_products(filters);
-      promise.then(function(data){
+    var filters = {
+        wildcard : $scope.filter.searchstring
+    };
+
+    var promise = ProductFactory.get_all_products(filters);
+    promise.then(function(data){
         $scope.product_data = data.data.result;
 
-      })
-      .then(null, function(data){
-          $scope.result_status = 'maybe';
-      });
-  }
+    })
+    .then(null, function(data){
+        $scope.result_status = 'maybe';
+    });
+}
 
 
-    $scope.add_supplier = function(){
+$scope.add_supplier = function(){
 
     var datas = {
         supplier_name : $scope.form.supplier_name,
@@ -933,15 +932,15 @@ function get_all_products(){
     var promise = ProductFactory.add_supplier(datas);
     promise.then(function(data){
         var notify = $.notify('You have succesfully added a new supplier', { allow_dismiss: true });
-            get_supplier_data();
-})
+        get_supplier_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
 
     });
 }
 
-    $scope.edit_supplier_data = function(v){
+$scope.edit_supplier_data = function(v){
     var index = $scope.supplier_data.indexOf(v);
 
     $scope.modal = {
@@ -953,7 +952,7 @@ function get_all_products(){
         supplier_contact_number : $scope.supplier_data[index].supplier_contact_number,
         supplier_contact_person : $scope.supplier_data[index].supplier_contact_person,
         supplier_code_name : $scope.supplier_data[index].supplier_code_name
-     };
+    };
 
     ngDialog.openConfirm({
         template: 'EditSupplierData',
@@ -961,7 +960,7 @@ function get_all_products(){
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
             if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){
-            
+
                 var notify = $.notify('There is a blank encoded product data', {'type': 'danger', allow_dismiss: true });
                 return false;
             }
@@ -970,59 +969,59 @@ function get_all_products(){
         scope: $scope,
         showClose: false
     })
-.then(function(value){
-    return false;
-}, function(value){
+    .then(function(value){
+        return false;
+    }, function(value){
 
-    var datas = {
-        pk : $scope.supplier_data[index].pk,
-        supplier_name : $scope.modal.supplier_name,
-        supplier_address : $scope.modal.supplier_address,
-        supplier_contact_number : $scope.modal.supplier_contact_number,
-        supplier_contact_person : $scope.modal.supplier_contact_person,
-        supplier_code_name : $scope.modal.supplier_code_name
-    }
+        var datas = {
+            pk : $scope.supplier_data[index].pk,
+            supplier_name : $scope.modal.supplier_name,
+            supplier_address : $scope.modal.supplier_address,
+            supplier_contact_number : $scope.modal.supplier_contact_number,
+            supplier_contact_person : $scope.modal.supplier_contact_person,
+            supplier_code_name : $scope.modal.supplier_code_name
+        }
 
 
-    var promise = ProductFactory.edit_supplier_data(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
+        var promise = ProductFactory.edit_supplier_data(datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
             get_supplier_data();
-})
-    .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
+        });
     });
-});
 }
 
 function makeid() {
-  var text = "";
-  var text2 = "";
-  var text3 = "";
-  var finalnumber = "";
+    var text = "";
+    var text2 = "";
+    var text3 = "";
+    var finalnumber = "";
 
-  var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible2 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-  for (var i = 0; i < 5; i++){
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-    text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
-}
+    for (var i = 0; i < 5; i++){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+        text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
+    }
     finalnumber = text+"-"+text2;
     $scope.form.finalnumber = finalnumber;
 }
 
-    $scope.request_product_order = function(v){
-        var index = $scope.product_data.indexOf(v);
-        makeid();
+$scope.request_product_order = function(v){
+    var index = $scope.product_data.indexOf(v);
+    makeid();
 
     $scope.modal = {
         title : 'Request Product Order',
         save : 'Request',
         close : 'Cancel',
         finalnumber : $scope.form.finalnumber
-     };
+    };
 
     ngDialog.openConfirm({
         template: 'RequestOrderDataModal',
@@ -1038,32 +1037,32 @@ function makeid() {
         scope: $scope,
         showClose: false
     })
-.then(function(value){
-    return false;
-}, function(value){
-    $scope.modal.new_product_date_needed = $filter('date')($scope.modal.product_date_needed._d, "medium");
-    var datas = {
-        pk : $scope.product_data[index].pk,
-        product_finalnumber : $scope.modal.finalnumber,
-        product_quantity : $scope.modal.product_quantity,
-        product_date_needed : $scope.modal.new_product_date_needed,
-        product_market_price : $scope.modal.product_market_price
-    }
+    .then(function(value){
+        return false;
+    }, function(value){
+        $scope.modal.new_product_date_needed = $filter('date')($scope.modal.product_date_needed._d, "medium");
+        var datas = {
+            pk : $scope.product_data[index].pk,
+            product_finalnumber : $scope.modal.finalnumber,
+            product_quantity : $scope.modal.product_quantity,
+            product_date_needed : $scope.modal.new_product_date_needed,
+            product_market_price : $scope.modal.product_market_price
+        }
 
-    var promise = ProductFactory.request_product_order(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
+        var promise = ProductFactory.request_product_order(datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
             get_supplier_data();
-})
-    .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
+        });
     });
-});
 }
 
-    $scope.delete_supplier_data = function(v){
-        var index = $scope.supplier_data.indexOf(v);
+$scope.delete_supplier_data = function(v){
+    var index = $scope.supplier_data.indexOf(v);
 
 
     var datas = {
@@ -1074,16 +1073,16 @@ function makeid() {
     var promise = ProductFactory.delete_supplier_data(datas);
     promise.then(function(data){
         var notify = $.notify('You have succesfully deleted the supplier', { 'type': 'success', allow_dismiss: true });
-            get_supplier_data();
-})
+        get_supplier_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
     });
 }
 
-    $scope.approve_order_request = function(v){
-        var index = $scope.request_data.indexOf(v);
+$scope.approve_order_request = function(v){
+    var index = $scope.request_data.indexOf(v);
 
 
     var datas = {
@@ -1094,16 +1093,16 @@ function makeid() {
     var promise = ProductFactory.approve_order_request(datas);
     promise.then(function(data){
         var notify = $.notify('You have succesfully approved the request order', { 'type': 'success', allow_dismiss: true });
-            get_request_order_data();
-})
+        get_request_order_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
     });
 }
 
-    $scope.disapprove_order_request = function(v){
-        var index = $scope.request_data.indexOf(v);
+$scope.disapprove_order_request = function(v){
+    var index = $scope.request_data.indexOf(v);
 
 
     var datas = {
@@ -1114,10 +1113,10 @@ function makeid() {
     var promise = ProductFactory.disapprove_order_request(datas);
     promise.then(function(data){
         var notify = $.notify('You have succesfully disapproved the request order', { 'type': 'success', allow_dismiss: true });
-            get_request_order_data();
-})
+        get_request_order_data();
+    })
     .then(null, function(data){
-    var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
     });
 }

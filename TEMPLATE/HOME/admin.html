@@ -10,102 +10,102 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-					<div class="row" style="margin-top:-10px;">
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Product Name" ng-model="form.product_name"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Bar Code" ng-model="form.product_bar_code"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" is-Number placeholder="Stocks" ng-model="form.product_stocks"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" is-Number placeholder="Retail Price" ng-model="form.srp"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" is-Number placeholder="Market Price" ng-model="form.product_price"/>
-						</div>
-						<div class="form-group col-md-2">
-							<select ng-model="form.product_supplier" class="form-control">
-								<option value="" disabled selected style="display:none"> Select Supplier </option>
-								<option ng-repeat="v in supplier_data" value="{{v.supplier_code_name}}">{{v.supplier_name}}</option>
-							</select>
-						</div>
-						<div class="form-group col-md-2">
-							<div class="form-group">
-                				<div class='input-group  date' datetimepicker ng-model="form.product_expiration" id='datetimepicker1' >
-                    				<input type='text'  placeholder="Exp. Date" class="form-control" />
-                    			<span class="input-group-addon">
-                        	<span class="glyphicon glyphicon-calendar"></span>
-                    	</span>
-                				</div>
-            				</div>
-						</div>
-						<div class="form-group col-md-2">
-                			<input type="button" class="btn btn-success" value="Add Item" ng-click="add_product()">
+			<div class="row" style="margin-top:-10px;">
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Product Name" ng-model="form.product_name"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Bar Code" ng-model="form.product_bar_code"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" is-Number placeholder="Stocks" ng-model="form.product_stocks"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" is-Number placeholder="Retail Price" ng-model="form.srp"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" is-Number placeholder="Market Price" ng-model="form.product_price"/>
+				</div>
+				<div class="form-group col-md-2">
+					<select ng-model="form.product_supplier" class="form-control">
+						<option value="" disabled selected style="display:none"> Select Supplier </option>
+						<option ng-repeat="v in supplier_data" value="{{v.supplier_code_name}}">{{v.supplier_name}}</option>
+					</select>
+				</div>
+				<div class="form-group col-md-2">
+					<div class="form-group">
+						<div class='input-group  date' datetimepicker ng-model="form.product_expiration" id='datetimepicker1' >
+							<input type='text'  placeholder="Exp. Date" class="form-control" />
+							<span class="input-group-addon">
+								<span class="glyphicon glyphicon-calendar"></span>
+							</span>
 						</div>
 					</div>
 				</div>
+				<div class="form-group col-md-2">
+					<input type="button" class="btn btn-success" value="Add Item" ng-click="add_product()">
+				</div>
+			</div>
+		</div>
 	</div>
 
 
-			<div class="panel">
-				<div class="panel-body">
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<table class="table table-hover">
-						<thead>
-							<tr >
-								<th>#</th>
-								<th>Product Name</th>
-								<th>Supplier Code Name</th>
-								<th># of Stocks</th>
-								<th>Supplier Price</th>
-								<th>Retail Price</th>
-								<th>Bar Code</th>
-								<th>Date Encoded</th>
-								<th>Product Expiration</th>
-								<th>Option</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="(k,v) in product_data.slice(((currentPage_productdata-1)*itemsPerPage_productdata), ((currentPage_productdata)*itemsPerPage_productdata))">
-								<th scope="row">{{v.number}}</th>
-								<td>{{v.product_name}}</td>
-								<td>{{v.product_supplier}}</td>
-								<td>{{v.product_stocks}}</td>
-								<td>{{v.product_srp}}</td>
-								<td>{{v.product_price}}</td>
-								<td>{{v.product_bar_code}}</td>
-								<td>{{v.date_created | date :  "medium" }}</td>
-								<td>{{v.product_product_expiration | date :  "medium"}}</td>
-								<td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
-									<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
-									<i class="fa fa-shopping-cart" ng-if="v.product_stocks == 0" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)"  title="Request"></i>
-								</td>
-								</tr><!-- 
-								<tr ng-if="!request_points.status">
-									<td colspan="6" style="text-align: center;">No Data Found</td>
-								</tr> -->
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
+	<div class="panel">
+		<div class="panel-body">
+			<div class="clearfix"></div>
 		</div>
-			</div>
+		<div class="x_content">
+			<table class="table table-hover">
+				<thead>
+					<tr >
+						<th>#</th>
+						<th>Product Name</th>
+						<th>Supplier Code Name</th>
+						<th># of Stocks</th>
+						<th>Supplier Price</th>
+						<th>Retail Price</th>
+						<th>Bar Code</th>
+						<th>Date Encoded</th>
+						<th>Product Expiration</th>
+						<th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(k,v) in product_data.slice(((currentPage_productdata-1)*itemsPerPage_productdata), ((currentPage_productdata)*itemsPerPage_productdata))">
+						<th scope="row">{{v.number}}</th>
+						<td>{{v.product_name}}</td>
+						<td>{{v.product_supplier}}</td>
+						<td>{{v.product_stocks}}</td>
+						<td>{{v.product_srp}}</td>
+						<td>{{v.product_price}}</td>
+						<td>{{v.product_bar_code}}</td>
+						<td>{{v.date_created | date :  "medium" }}</td>
+						<td>{{v.product_product_expiration | date :  "medium"}}</td>
+						<td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
+							<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
+							<i class="fa fa-shopping-cart" ng-if="v.product_stocks == 0" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)"  title="Request"></i>
+						</td>
+</tr><!-- 
+<tr ng-if="!request_points.status">
+<td colspan="6" style="text-align: center;">No Data Found</td>
+</tr> -->
+</tbody>
+</table>
+</div>
+</div>
 
-	
-	<div class="row">
-    <div class="col-md-12">
-      <center>
-        <pagination total-items="totalItems_productdata" ng-model="currentPage_productdata" ng-change="pageChanged_productdata()" class="pagination-md" items-per-page="itemsPerPage_productdata"></pagination>
-      </center>
-    </div>
-  </div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<center>
+			<pagination total-items="totalItems_productdata" ng-model="currentPage_productdata" ng-change="pageChanged_productdata()" class="pagination-md" items-per-page="itemsPerPage_productdata"></pagination>
+		</center>
+	</div>
+</div>
 </div>
 
 <div class="page-title">
@@ -120,81 +120,81 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-					<div class="row" style="margin-top:-10px;">
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Registered Name" ng-model="form.supplier_name"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Company Address" ng-model="form.supplier_address"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" is-Number placeholder="Contact Number" ng-model="form.supplier_contact_number"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Contact Person" ng-model="form.supplier_contact_person"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="text" class="form-control" placeholder="Code Name" ng-model="form.supplier_code_name"/>
-						</div>
-						<div class="form-group col-md-2">
-							<input type="button" class="btn btn-success" value="Add Supplier" ng-click="add_supplier()">
-						</div>
-					</div>
+			<div class="row" style="margin-top:-10px;">
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Registered Name" ng-model="form.supplier_name"/>
 				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Company Address" ng-model="form.supplier_address"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" is-Number placeholder="Contact Number" ng-model="form.supplier_contact_number"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Contact Person" ng-model="form.supplier_contact_person"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="Code Name" ng-model="form.supplier_code_name"/>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="button" class="btn btn-success" value="Add Supplier" ng-click="add_supplier()">
+				</div>
+			</div>
+		</div>
 	</div>
 
 
-			<div class="panel">
-				<div class="panel-body">
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<table class="table table-hover">
-						<thead>
-							<tr >
-								<th>#</th>
-								<th>Supplier Name</th>
-								<th>Address</th>
-								<th>Contact Number</th>
-								<th>Contact Person</th>
-								<th>Code Name</th>
-								<th>Date Encoded</th>
-								<th>Option</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="(k,v) in supplier_data.slice(((currentPage_supplierdata-1)*itemsPerPage_supplierdata), ((currentPage_supplierdata)*itemsPerPage_supplierdata))">
-								<th scope="row">{{v.number}}</th>
-								<td>{{v.supplier_name}}</td>
-								<td>{{v.supplier_address}}</td>
-								<td>{{v.supplier_contact_number}}</td>
-								<td>{{v.supplier_contact_person}}</td>
-								<td>{{v.supplier_code_name}}</td>
-								<td>{{v.date_created | date :  "medium" }}</td>
-								<td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_supplier_data(v)"  title="Edit"></i>
-									<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_supplier_data(v)"  title="Delete"></i>
-								</td>
-								</tr><!-- 
-								<tr ng-if="!request_points.status">
-									<td colspan="6" style="text-align: center;">No Data Found</td>
-								</tr> -->
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
+	<div class="panel">
+		<div class="panel-body">
+			<div class="clearfix"></div>
 		</div>
-			</div>
+		<div class="x_content">
+			<table class="table table-hover">
+				<thead>
+					<tr >
+						<th>#</th>
+						<th>Supplier Name</th>
+						<th>Address</th>
+						<th>Contact Number</th>
+						<th>Contact Person</th>
+						<th>Code Name</th>
+						<th>Date Encoded</th>
+						<th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(k,v) in supplier_data.slice(((currentPage_supplierdata-1)*itemsPerPage_supplierdata), ((currentPage_supplierdata)*itemsPerPage_supplierdata))">
+						<th scope="row">{{v.number}}</th>
+						<td>{{v.supplier_name}}</td>
+						<td>{{v.supplier_address}}</td>
+						<td>{{v.supplier_contact_number}}</td>
+						<td>{{v.supplier_contact_person}}</td>
+						<td>{{v.supplier_code_name}}</td>
+						<td>{{v.date_created | date :  "medium" }}</td>
+						<td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_supplier_data(v)"  title="Edit"></i>
+							<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_supplier_data(v)"  title="Delete"></i>
+						</td>
+</tr><!-- 
+<tr ng-if="!request_points.status">
+<td colspan="6" style="text-align: center;">No Data Found</td>
+</tr> -->
+</tbody>
+</table>
+</div>
+</div>
 
-	
-	<div class="row">
-    <div class="col-md-12">
-      <center>
-        <pagination total-items="totalItems_supplierdata" ng-model="currentPage_supplierdata" ng-change="pageChanged_supplierdata()" class="pagination-md" items-per-page="itemsPerPage_supplierdata"></pagination>
-      </center>
-    </div>
-  </div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<center>
+			<pagination total-items="totalItems_supplierdata" ng-model="currentPage_supplierdata" ng-change="pageChanged_supplierdata()" class="pagination-md" items-per-page="itemsPerPage_supplierdata"></pagination>
+		</center>
+	</div>
+</div>
 </div>
 
 
@@ -208,55 +208,55 @@
 <div class="clearfix"></div>
 <div style="margin-top:10px;"></div>
 <div class="container">
-			<div class="panel">
-				<div class="panel-body">
-					<div class="clearfix"></div>
-				</div>
-				<div class="x_content">
-					<table class="table table-hover">
-						<thead>
-							<tr >
-								<th>#</th>
-								<th>Product Number</th>
-								<th>Product Quantity</th>
-								<th>Product Market Price</th>
-								<th>Product Date Needed</th>
-								<th>Status</th>
-								<th>Option</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="(k,v) in request_data.slice(((currentPage_orderdata-1)*itemsPerPage_orderdata), ((currentPage_orderdata)*itemsPerPage_orderdata))">
-								<th scope="row">{{v.number}}</th>
-								<td>{{v.product_finalnumber}}</td>
-								<td>{{v.product_quantity}}</td>
-								<td>{{v.product_market_price}}</td>
-								<td>{{v.product_date_needed | date :  "medium" }}</td>
-								<td>{{v.status}}</td>
-								<td>&nbsp&nbsp<i class="fa fa-thumbs-up" aria-hidden="true" style="cursor:pointer" ng-click="approve_order_request(v)"  title="Approve"></i>
-									<i class="fa fa-thumbs-down" aria-hidden="true" style="cursor:pointer" ng-click="disapprove_order_request(v)"  title="Disapprove"></i>
-								</td>
-								</tr><!-- 
-								<tr ng-if="!request_points.status">
-									<td colspan="6" style="text-align: center;">No Data Found</td>
-								</tr> -->
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-			</div>
+	<div class="panel">
+		<div class="panel-body">
+			<div class="clearfix"></div>
 		</div>
-			</div>
+		<div class="x_content">
+			<table class="table table-hover">
+				<thead>
+					<tr >
+						<th>#</th>
+						<th>Product Number</th>
+						<th>Product Quantity</th>
+						<th>Product Market Price</th>
+						<th>Product Date Needed</th>
+						<th>Status</th>
+						<th>Option</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="(k,v) in request_data.slice(((currentPage_orderdata-1)*itemsPerPage_orderdata), ((currentPage_orderdata)*itemsPerPage_orderdata))">
+						<th scope="row">{{v.number}}</th>
+						<td>{{v.product_finalnumber}}</td>
+						<td>{{v.product_quantity}}</td>
+						<td>{{v.product_market_price}}</td>
+						<td>{{v.product_date_needed | date :  "medium" }}</td>
+						<td>{{v.status}}</td>
+						<td>&nbsp&nbsp<i class="fa fa-thumbs-up" aria-hidden="true" style="cursor:pointer" ng-click="approve_order_request(v)"  title="Approve"></i>
+							<i class="fa fa-thumbs-down" aria-hidden="true" style="cursor:pointer" ng-click="disapprove_order_request(v)"  title="Disapprove"></i>
+						</td>
+</tr><!-- 
+<tr ng-if="!request_points.status">
+<td colspan="6" style="text-align: center;">No Data Found</td>
+</tr> -->
+</tbody>
+</table>
+</div>
+</div>
 
-	
-	<div class="row">
-    <div class="col-md-12">
-      <center>
-        <pagination total-items="totalItems_orderdata" ng-model="currentPage_orderdata" ng-change="pageChanged_orderdata()" class="pagination-md" items-per-page="itemsPerPage_orderdata"></pagination>
-      </center>
-    </div>
-  </div>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<center>
+			<pagination total-items="totalItems_orderdata" ng-model="currentPage_orderdata" ng-change="pageChanged_orderdata()" class="pagination-md" items-per-page="itemsPerPage_orderdata"></pagination>
+		</center>
+	</div>
+</div>
 </div>
 
 <script type="text/ng-template" id="RequestOrderDataModal">

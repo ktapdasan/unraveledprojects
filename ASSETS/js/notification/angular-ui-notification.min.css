@@ -1,6 +1,6 @@
 .ui-notification{
 	position:fixed;
-	z-index:9999999999999999999999; /*Just to make sure ^_^*/
+	z-index:999999999999999999999999999999; /*Just to make sure ^_^*/
 	top:-100px;
 	right:10px;
 	width:300px;

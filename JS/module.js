@@ -13,23 +13,38 @@ var app = angular.module('onload', [
 
 app.config(function($routeProvider) {             
 	$routeProvider
-	.when('/',             {                 
-		controller: 'HomeController',
-		templateUrl: 'TEMPLATE/HOME/home.html'             
-	})
-	.when('/Sales',             {                 
+	.when('/',             
+	{                 
 		controller: 'Product',
 		templateUrl: 'TEMPLATE/HOME/sales.html'             
 	})
-	.when('/Admin',             {                 
+	.when('/Sales',             
+	{                 
+		controller: 'Product',
+		templateUrl: 'TEMPLATE/HOME/sales.html'             
+	})
+	.when('/Admin',             
+	{                 
 		controller: 'Product',
 		templateUrl: 'TEMPLATE/HOME/admin.html'             
 	})
-	.when('/Report',             {                 
+	.when('/Report',             
+	{                 
 		controller: 'Reports',
 		templateUrl: 'TEMPLATE/HOME/report.html'             
 	})
-	.when('/bucket/pictures',             {                 
+	.when('/BestSelling',             
+	{                 
+		controller: 'Reports',
+		templateUrl: 'TEMPLATE/HOME/bestselling.html'             
+	})
+	.when('/ReceiptBackup',             
+	{                 
+		controller: 'Reports',
+		templateUrl: 'TEMPLATE/HOME/receiptbackup.html'             
+	})
+	.when('/bucket/pictures',             
+	{                 
 		controller: 'BucketController',
 		templateUrl: 'TEMPLATE/BUCKET/pictures.html'             
 	})                              

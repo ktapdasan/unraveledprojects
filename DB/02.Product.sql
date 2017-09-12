@@ -54,6 +54,7 @@ create table tender_data
 	discount text not null,
 	change text not null,
 	cash text not null,
+	tempo_total text not null,
 	void_count text not null,
 	total text not null,
 	gc_amount text not null,

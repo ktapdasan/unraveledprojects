@@ -29,16 +29,26 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#/"><b>&nbspBunny POS &trade;</b></a>	
+					<a class="navbar-brand"><b>&nbspBunny POS &trade;</b></a>	
 				</div>
 				<div id="navbar" class="navbar-collapse collapse" style="margin-top:5px;">
 					<ul class="nav navbar-nav">
 						<li><a href="#/Sales"><span class="fa fa-money" aria-hidden="true"></span>&nbspCashier</a></li>
-						<li ng-if="user.user_type == 1"><a href="#/Admin"><i  class="fa fa-cogs"></i>&nbspAdmin</a></li>
-						<li  ng-if="user.user_type == 1"><a href="#/Report"><i class="fa fa-line-chart"></i>&nbspSales Report</a></li>
+						<li ng-if="user.user_type == 1">
+							<div class="dropdown">
+							<p style="cursor:pointer;" class="dropdown-toggle" data-toggle="dropdown"><i style="margin-top:18px;" class="fa fa-cogs"></i> Admin
+							<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li ng-if="user.user_type == 1"><a href="#/Admin"><i  class="fa fa-cogs"></i>&nbspControl Panel</a></li>
+								<li  ng-if="user.user_type == 1"><a href="#/Report"><i class="fa fa-line-chart"></i>&nbspSales Report</a></li>
+								<li  ng-if="user.user_type == 1"><a href="#/ReceiptBackup"><i class="fa fa-list-alt"></i>&nbspReceipt Back-up</a></li>
+								<li  ng-if="user.user_type == 1"><a href="#/BestSelling"><i class="fa fa-star"></i>&nbspBest Selling Products</a></li>
+							</ul>
+							</p>
+						</li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-					 	<li><a href="" title="Your are login as this User">{{user.first_name + " " + user.middle_name + " " + user.last_name}}</a></li>
+					 	<li><a href="" title="You are login as this User">{{user.first_name + " " + user.middle_name + " " + user.last_name}}</a></li>
 			           <li><a href="" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i>&nbspLogOut</span></a></li>
 			        </ul>
 				</div>
@@ -76,7 +86,6 @@
 		<script src="JS/FACTORIES/ProductFactory.js"></script>
 
 		<script src="./ASSETS/js/dialog/ngDialog.js"></script>
-		<script src="./ASSETS/js/bootstrap-notify.min.js"></script>
 		<script src="./ASSETS/js/bootstrap-notify.js"></script>
 		<script src="./ASSETS/js/angucomplete-alt.js"></script>
 		<script src="./ASSETS/js/uploader/angular-file-upload.min.js"></script>

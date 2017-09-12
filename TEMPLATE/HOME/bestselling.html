@@ -1,0 +1,70 @@
+<div class="page-title">
+  <div class="title_left">
+    <h3 class="slideinmargin">
+      Best Selling Products
+    </h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div style="margin-top:10px;"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row" style="margin-top:-10px;">
+        <div class="form-group col-md-12">
+          <strong><a ng-model="form.daily" value="true" ng-click="form.daily=true;form.weekly=false;form.monyhly=false;get_best_selling(form)" style="cursor:pointer;font-size:20px;">Daily</a></strong>
+          <strong><a ng-model="form.weekly" value="true" ng-click="form.weekly=true;form.daily=false;form.monthly=false;get_best_selling(form)" style="cursor:pointer;font-size:20px;margin-left:100px;">Weekly</a></strong>
+          <strong><a ng-model="form.monthly" value="true" ng-click="form.monthly=true;form.daily=false;form.weekly=false;get_best_selling(form)" style="cursor:pointer;font-size:20px;margin-left:100px;">Monthly</a></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="panel">
+  <div class="panel-body">
+    <div class="clearfix"></div>
+  </div>
+  <div class="x_content">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Top</th>
+          <th>Name of the Product</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="v in bestselling_data.slice(((currentPage_bestselling-1)*itemsPerPage_bestselling), ((currentPage_bestselling)*itemsPerPage_bestselling)) track by $index" ng-if="bestselling_status">
+          <td>{{v.number}}</td>
+          <td>{{v.product_name}}</td>
+          <td>{{v.sum}}</td>
+        </tr>
+<tr ng-if="bestselling_status == false">
+  <td colspan="6" style="text-align: center;">No Data Found</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <center>
+      <pagination total-items="totalItems_bestselling" ng-model="currentPage_bestselling" ng-change="pageChanged_bestselling()" class="pagination-md" items-per-page="itemsPerPage_bestselling"></pagination>
+    </center>
+  </div>
+</div>
+</div>
+
+
+	<script type="text/javascript">
+            $(document).ready(function () {
+                $('#datetimepicker1').datetimepicker({
+                  format: 'MM/DD/YYYY'
+                });
+                $('#datetimepicker2').datetimepicker({
+                  format: 'MM/DD/YYYY'
+                });
+            });
+        </script>

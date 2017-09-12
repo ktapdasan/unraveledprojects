@@ -83,7 +83,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->Cell(10, 2,'------------------------------------------------------------------------', 0, 'L');
 		$pdf->Ln();
-		$pdf->Cell(10, 5,$date_time."             ".'TN#'.$TI, 0, 'L'); 
+		$pdf->Cell(10, 5,$date_time."            ".'TN#'.$TI, 0, 'L'); 
 		$pdf->Ln();
 		$pdf->Cell(10, 1,'------------------------------------------------------------------------', 0, 'L');
 		$pdf->Ln();
@@ -114,7 +114,7 @@ class PDF extends FPDF
 		$pdf->Cell(10, 4, $v['product_quantity'], 0, 'L');
 		$pdf->Cell(10, 4, $v['product_name'], 0, 'L');
 		$pdf->SetXY($x,$y);
-		$pdf->Cell(10, 4,$v['tempor_total'], 0, 'L');
+		$pdf->Cell(10, 4,$v['tempo_total'], 0, 'L');
 	}	
 
 		$pdf->Ln();
@@ -128,7 +128,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$w);
 		$pdf->SetFont('Arial', 'B', 10); 
-		$pdf->Cell(10, 4,$total, 0, 'L');
+		$pdf->Cell(10, 4,$v['total'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(10,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
@@ -136,7 +136,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,$cash, 0, 'L');
+		$pdf->Cell(10, 4,$v['cash'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(10,$r);
 		$pdf->SetFont('Arial', 'B', 7); 
@@ -144,7 +144,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$r);
 		$pdf->SetFont('Arial', 'B', 10); 
-		$pdf->Cell(10, 4,$change, 0, 'L');
+		$pdf->Cell(10, 4,$v['change'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(10,$t);
 		$pdf->SetFont('Arial', 'B', 7); 
@@ -152,7 +152,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$t);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,$net_amnt, 0, 'L');
+		$pdf->Cell(10, 4,$v['net_amount'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(10,$s);
 		$pdf->SetFont('Arial', 'B', 7); 
@@ -160,7 +160,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$s);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,$discount, 0, 'L');
+		$pdf->Cell(10, 4,$v['discount'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(10,$a);
 		$pdf->SetFont('Arial', 'B', 7); 
@@ -168,7 +168,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(50,$a);
 		$pdf->SetFont('Arial', 'B', 8); 
-		$pdf->Cell(10, 4,$vat, 0, 'L');
+		$pdf->Cell(10, 4,$v['vat'], 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(0,$endline);
 		$pdf->Cell(10, 1,'-------------------------------------------------------------------------', 0, 'L');

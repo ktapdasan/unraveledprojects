@@ -115,6 +115,91 @@ EOT;
 EOT;
         return ClassParent::get($sql);
     }
+
+    public function get_receipts($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $where = "";
+        $date_from = $filter['date_from'];
+        $date_to = $filter['date_to'];
+
+        $sql = <<<EOT
+            select
+                product_name,
+                product_quantity,
+                date_created,
+                product_supplier_price,
+                product_retail_price,
+                cashier_user_id,
+                discount,
+                product_transaction_number,
+                (select first_name from users where user_id = cashier_user_id) as first_name,
+                (select last_name from users where user_id = cashier_user_id) as last_name,
+                void_count,
+                total
+                from tender_data
+                where tender_data.date_created::date between '$date_from' and '$date_to' AND archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
+    public function get_best_selling($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $date_from = $filter['date_from'];
+        $date_to = $filter['date_to'];
+
+        $sql = <<<EOT
+            select
+                product_name,
+                sum(product_quantity)
+                from tender_data
+                where tender_data.date_created::date between '$date_from' and '$date_to' AND archived = 'f'
+                group by product_name
+                order by sum desc
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
+    public function get_receiptsback($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $transact_number = $filter['transact_number'];
+      
+        $sql = <<<EOT
+            select
+                pk,
+                product_name,
+                product_quantity,
+                date_created,
+                product_supplier_price,
+                product_retail_price,
+                cashier_user_id,
+                discount,
+                tempo_total,
+                net_amount,
+                vat,
+                change,
+                cash,
+                product_transaction_number,
+                (select first_name from users where user_id = cashier_user_id) as first_name,
+                (select last_name from users where user_id = cashier_user_id) as last_name,
+                void_count,
+                total
+                from tender_data
+                where tender_data.product_transaction_number = '$transact_number' AND archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
     public function upload_picture($data){
         $picture_link = $data['picture_link'];
         $uploaded_by = $data['uploaded_by'];
@@ -247,6 +332,7 @@ EOT;
             $product_quantity = $value['product_quantity'];
             $product_supplier_price = $value['product_srp'];
             $product_retail_price = $value['product_price'];
+            $tempo_total = $value['tempor_total'];
             
 
             $sql .= <<<EOT
@@ -268,7 +354,8 @@ EOT;
                     void_count,
                     gc_amount,
                     gc_name,
-                    gc_code
+                    gc_code,
+                    tempo_total
                 )
                 VALUES
                 (
@@ -288,7 +375,8 @@ EOT;
                     '$void_count',
                     '$gc_amount',
                     '$gc_name',
-                    '$gc_code'
+                    '$gc_code',
+                    '$tempo_total'
                 )
                 ;
 EOT;
