@@ -19,6 +19,11 @@
   max-height: 400px;
 }
 
+.ngdialog.dialogwidth500 .ngdialog-content{
+  width : 500px;
+  margin-top: -140px;
+}
+
 .ngdialog.dialogwidth800 .ngdialog-content{
 	width : 800px;
 	margin-top: -140px;

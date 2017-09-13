@@ -1,13 +1,13 @@
 app.controller('Product', function(
-    $scope,
-    SessionFactory,
-    UserFactory,
-    ProductFactory,
-    md5,
-    $filter,
-    ngDialog,
-    $route
-    ) 
+                                    $scope,
+                                    SessionFactory,
+                                    UserFactory,
+                                    ProductFactory,
+                                    md5,
+                                    $filter,
+                                    ngDialog,
+                                    $route
+                                    ) 
 {
 
     $scope.user = {};
@@ -69,6 +69,7 @@ app.controller('Product', function(
             DEFAULTDATES();
             makeid();
             maketransaction_number();
+            makeuser_id();
 
         })
         .then(null, function(data){
@@ -87,6 +88,7 @@ app.controller('Product', function(
             get_product_data();
             get_supplier_data();
             get_request_order_data();
+            get_added_user_data();
 
         })
         .then(null, function(data){
@@ -138,21 +140,21 @@ app.controller('Product', function(
         return monday;
     }
 
-    function get_product_data(){
+    function get_added_user_data(){
 
-        var promise = ProductFactory.get_product_data();
+        var promise = ProductFactory.get_added_user_data();
         promise.then(function(data){
-            $scope.product_data = data.data.result;
+            $scope.added_user_data = data.data.result;
 
-            var a = 0;
+            /*var a = 0;
             for (var i in $scope.product_data) {
                 $scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
                 $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
                 $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
                 $scope.product_data[i].number = a += 1;
-            };
+            };*/
 
-            $scope.totalItems_productdata = $scope.product_data.length;
+            $scope.totalItems_productdata = $scope.added_user_data.length;
 
             $scope.form = {};
         })
@@ -172,6 +174,43 @@ app.controller('Product', function(
 
     $scope.setItemsPerPage_productdata = function(num) {
         $scope.itemsPerPage_productdata = num;
+$scope.currentPage_productdata = 1; //reset to first paghe
+}
+
+function get_product_data(){
+
+    var promise = ProductFactory.get_product_data();
+    promise.then(function(data){
+        $scope.product_data = data.data.result;
+
+        var a = 0;
+        for (var i in $scope.product_data) {
+            $scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
+            $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
+            $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
+            $scope.product_data[i].number = a += 1;
+        };
+
+        $scope.totalItems_productdata = $scope.product_data.length;
+
+        $scope.form = {};
+    })
+    .then(null, function(data){
+
+
+    });
+}
+
+$scope.setPage_productdata = function (pageNo) {
+    $scope.currentPage_productdata = pageNo;
+};
+
+$scope.pageChanged_productdata = function() {
+    console.log('Page changed to: ' + $scope.currentPage_productdata);
+};
+
+$scope.setItemsPerPage_productdata = function(num) {
+    $scope.itemsPerPage_productdata = num;
 $scope.currentPage_productdata = 1; //reset to first paghe
 }
 
@@ -337,6 +376,66 @@ $scope.edit_product_data = function(v){
         })
         .then(null, function(data){
             var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+        });
+    });
+}
+
+function makeuser_id() {
+    var text = "201700";
+    var text2 = "";
+    var text3 = "";
+    var finalnumber = "";
+    var final_user_id = "";
+
+    var possible = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var possible2 = "0123456789";
+
+    for (var i = 0; i < 3; i++){
+        text2 += possible2.charAt(Math.floor(Math.random() * possible2.length));
+    }
+    final_user_id = text+text2;
+    $scope.modal.final_user_id = final_user_id;
+    console.log($scope.modal.final_user_id);
+}
+
+$scope.add_user = function(){
+
+
+    $scope.modal = {
+        title : 'Add User',
+        save : 'Add',
+        close : 'Cancel',
+        final_user_id: $scope.modal.final_user_id
+    }     
+
+    ngDialog.openConfirm({
+        template: 'EditUser',
+        className: 'ngdialog-theme-plain dialogwidth500',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+            if($scope.modal.first_password != $scope.modal.confirm_password){
+                var notify = $.notify('The Pin is incorrect!', {'type': 'danger', allow_dismiss: true });
+                return false;
+            }
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
+
+        $scope.modal.new_password = md5.createHash($scope.modal.first_password);
+
+        var promise = ProductFactory.add_user($scope.modal);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully added a new user', { 'type': 'success', allow_dismiss: true });
+            get_added_user_data();
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
 
         });
     });

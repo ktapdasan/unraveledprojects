@@ -77,3 +77,16 @@ create table gift_certificate_data
 	archived boolean default false
 );
 alter table gift_certificate_data owner to ktapdasan;
+
+create table added_user_data
+(
+	pk serial primary key,
+	user_id text not null,
+	first_name text not null,
+	middle_name text not null,
+	last_name text not null,
+	user_type text not null,
+	date_created timestamptz default now(),
+	archived boolean default false
+);
+alter table added_user_data owner to ktapdasan;

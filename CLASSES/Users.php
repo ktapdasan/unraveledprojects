@@ -200,6 +200,96 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_added_user_data($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        } 
+
+        $sql = <<<EOT
+            select
+                pk,
+                user_id,
+                first_name,
+                middle_name,
+                last_name,
+                user_type
+                from added_user_data
+                where archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
+    public function add_user($data){
+        $first_name = $data['first_name'];
+        $middle_name = $data['middle_name'];
+        $last_name = $data['last_name'];
+        $new_password = $data['new_password'];
+        $final_user_id = $data['final_user_id'];
+        $user_type = $data['user_type'];
+
+        $sql = "begin;";
+        $sql .= <<<EOT
+                insert into accounts
+                (
+                    user_id,
+                    password,
+                    user_type
+                )
+                VALUES
+                (
+                    '$final_user_id',
+                    '$new_password',
+                    '$user_type'
+
+                )
+                ;
+EOT;
+        $sql .= <<<EOT
+                insert into users
+                (
+                    user_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    user_type,
+                    superior_pin
+                )
+                VALUES
+                (
+                    '$final_user_id',
+                    '$first_name',
+                    '$middle_name',
+                    '$last_name',
+                    '$user_type',
+                    '92d85403814002271a64e291dd433483'
+                )
+                ;
+EOT;
+        $sql .= <<<EOT
+                insert into added_user_data
+                (
+                    user_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    user_type
+                )
+                VALUES
+                (
+                    '$final_user_id',
+                    '$first_name',
+                    '$middle_name',
+                    '$last_name',
+                    '$user_type'
+                )
+                ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
+    }
+
     public function upload_picture($data){
         $picture_link = $data['picture_link'];
         $uploaded_by = $data['uploaded_by'];

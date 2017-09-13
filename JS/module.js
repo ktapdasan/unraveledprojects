@@ -23,6 +23,11 @@ app.config(function($routeProvider) {
 		controller: 'Product',
 		templateUrl: 'TEMPLATE/HOME/sales.html'             
 	})
+	.when('/User',             
+	{                 
+		controller: 'Product',
+		templateUrl: 'TEMPLATE/HOME/usermanagement.html'             
+	})
 	.when('/Admin',             
 	{                 
 		controller: 'Product',
