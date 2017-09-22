@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="onload" class="full">
+<html>
 <head>
   <title>Bunny POS</title>
   <link rel="icon" href="logo.ico">
@@ -58,36 +58,36 @@
         });
     }
 
-    function login(){
-        var error=0;
-        var empid = $('#user_id').val();
-        var pass = $('#password').val();
+  function login(){
+      var error=0;
+      var empid = $('#user_id').val();
+      var pass = $('#password').val();
 
-        if(empid.replace(/\s/g,'') == "" || pass.replace(/\s/g,'') == ""){
-            $('#div-message').empty().show().append("App PIN and/or Password Field is Empty");
-            
-            setTimeout(function(){
+      if(empid.replace(/\s/g,'') == "" || pass.replace(/\s/g,'') == ""){
+        $('#div-message').empty().show().append("App PIN and/or Password Field is Empty");
+
+        setTimeout(function(){
+          $('#div-message').empty().hide();
+        }, 5000);
+      }
+      else {
+        $.ajax('FUNCTIONS/Users/authentication.php', {
+          type: "POST",
+          data: { empid : empid, password : pass},
+          statusCode: {
+            404: function(response){
+              $('#div-message').empty().show().append("Incorrect User Name and/or Password");
+
+              setTimeout(function(){
                 $('#div-message').empty().hide();
-            }, 5000);
-        }
-        else {
-            $.ajax('FUNCTIONS/Users/authentication.php', {
-                type: "POST",
-                data: { empid : empid, password : pass},
-                statusCode: {
-                    404: function(response){
-                        $('#div-message').empty().show().append("Incorrect User ID and/or Password");
-
-                        setTimeout(function(){
-                            $('#div-message').empty().hide();
-                        }, 5000);
-                    }
-                },
-                success: function(data){
-                    window.location = window.location.href.replace('login.html','');
-                }
-            });
-        }
+              }, 5000);
+            }
+          },
+          success: function(data){
+            window.location = window.location.href.replace('login.html','');
+          }
+        });
+      }
     }
     </script>
 </body>
