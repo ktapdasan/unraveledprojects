@@ -3,9 +3,9 @@
 <head>
   <title>Bunny POS</title>
   <link rel="icon" href="logo.ico">
-  <link href="ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <link href="ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
-  <link href="ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="login-page">
   <div class="login-box">
@@ -14,7 +14,7 @@
     </div>
     <div class="login-box-body">
       <p class="login-box-msg">Sign in to start your session</p>
-      <form method="post" action="#">
+      <form>
         <div class="form-group has-feedback">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
           <input id="user_id" type="text" class="form-control" placeholder="User ID"/>
@@ -30,9 +30,9 @@
       </form>
     </div>
   </div>
-  <script src="ASSETS/js/jquery.min.js"></script>
-  <script src="ASSETS/bootstrap/js/bootstrap.min.js"></script>
-  <script src="ASSETS/js/JqueryStretch.js"></script>
+  <script src="./ASSETS/js/jquery.min.js"></script>
+  <script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./ASSETS/js/JqueryStretch.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
         checksession();
@@ -64,7 +64,7 @@
       var pass = $('#password').val();
 
       if(empid.replace(/\s/g,'') == "" || pass.replace(/\s/g,'') == ""){
-        $('#div-message').empty().show().append("App PIN and/or Password Field is Empty");
+        $('#div-message').empty().show().append("User Name and/or Password is Incorrect");
 
         setTimeout(function(){
           $('#div-message').empty().hide();
