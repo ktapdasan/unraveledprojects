@@ -70,6 +70,41 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
+    factory.edit_user = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Users/edit_user.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+
+    factory.delete_user = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Users/delete_user.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
     factory.get_added_user_data = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Users/get_added_user_data.php', 

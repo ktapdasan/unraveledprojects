@@ -212,7 +212,8 @@ EOT;
                 first_name,
                 middle_name,
                 last_name,
-                user_type
+                user_type,
+                (select password from accounts where added_user_data.user_id = user_id) as password
                 from added_user_data
                 where archived = 'f'
                 order by date_created desc
@@ -285,6 +286,110 @@ EOT;
                     '$user_type'
                 )
                 ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
+    }
+
+
+    public function edit_user($data){
+        $first_name = $data['first_name'];
+        $middle_name = $data['middle_name'];
+        $last_name = $data['last_name'];
+        $new_password = $data['new_password'];
+        $final_user_id = $data['final_user_id'];
+        $user_type = $data['user_type'];
+        $user_idd = $data['user_idd'];
+
+        $sql = "begin;";
+        $sql .= <<<EOT
+                update accounts set
+                (
+                    user_id,
+                    password,
+                    user_type
+                )
+                =
+                (
+                    '$final_user_id',
+                    '$new_password',
+                    '$user_type'
+
+                )
+                where user_id = '$user_idd'
+                ;
+EOT;
+        $sql .= <<<EOT
+                update users set
+                (
+                    user_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    user_type,
+                    superior_pin
+                )
+                =
+                (
+                    '$final_user_id',
+                    '$first_name',
+                    '$middle_name',
+                    '$last_name',
+                    '$user_type',
+                    '92d85403814002271a64e291dd433483'
+                )
+                where user_id = '$user_idd'
+                ;
+EOT;
+        $sql .= <<<EOT
+                update added_user_data set
+                (
+                    user_id,
+                    first_name,
+                    middle_name,
+                    last_name,
+                    user_type
+                )
+                =
+                (
+                    '$final_user_id',
+                    '$first_name',
+                    '$middle_name',
+                    '$last_name',
+                    '$user_type'
+                )
+                where user_id = '$user_idd'
+                ;
+EOT;
+        $sql .= "commit;";
+        return ClassParent::insert($sql);
+    }
+
+    public function delete_user($data){
+        $first_name = $data['first_name'];
+        $middle_name = $data['middle_name'];
+        $last_name = $data['last_name'];
+        $new_password = $data['new_password'];
+        $final_user_id = $data['final_user_id'];
+        $user_type = $data['user_type'];
+        $user_idd = $data['user_idd'];
+
+        $sql = "begin;";
+        $sql .= <<<EOT
+
+                delete from accounts
+                where user_id = '$user_idd';
+
+EOT;
+        $sql .= <<<EOT
+
+                delete from users
+                where user_id = '$user_idd';
+EOT;
+        $sql .= <<<EOT
+                
+                delete from added_user_data
+                where user_id = '$user_idd';
 EOT;
         $sql .= "commit;";
         return ClassParent::insert($sql);

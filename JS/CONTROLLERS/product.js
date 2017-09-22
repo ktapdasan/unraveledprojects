@@ -55,6 +55,11 @@ app.controller('Product', function(
     $scope.itemsPerPage_orderdata = $scope.viewby_orderdata;
     $scope.maxSize = 5;
 
+    $scope.viewby_user_data = 4;
+    $scope.currentPage_user_data = 4;
+    $scope.itemsPerPage_user_data = $scope.viewby_user_data;
+    $scope.maxSize = 5;
+
     init();
 
     $scope.vm = {};
@@ -146,35 +151,46 @@ app.controller('Product', function(
         promise.then(function(data){
             $scope.added_user_data = data.data.result;
 
-            /*var a = 0;
-            for (var i in $scope.product_data) {
-                $scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
-                $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
-                $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
-                $scope.product_data[i].number = a += 1;
-            };*/
+            /*console.log($scope.added_user_data);*/
 
-            $scope.totalItems_productdata = $scope.added_user_data.length;
+/*var a = 0;
+for (var i in $scope.product_data) {
+$scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
+$scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
+$scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
+$scope.product_data[i].number = a += 1;
+};*/
 
-            $scope.form = {};
-        })
+for (var x in $scope.added_user_data) {
+    if ($scope.added_user_data[x].user_type == 1) {
+        $scope.added_user_data[x].user_type = 'Cashier';
+    };
+    if ($scope.added_user_data[x].user_type == 2) {
+        $scope.added_user_data[x].user_type = 'Admin';
+    };
+};
+
+$scope.totalItems_user_data = $scope.added_user_data.length;
+
+$scope.form = {};
+})
         .then(null, function(data){
 
 
         });
     }
 
-    $scope.setPage_productdata = function (pageNo) {
-        $scope.currentPage_productdata = pageNo;
+    $scope.setPage_user_data = function (pageNo) {
+        $scope.currentPage_user_data = pageNo;
     };
 
-    $scope.pageChanged_productdata = function() {
-        console.log('Page changed to: ' + $scope.currentPage_productdata);
+    $scope.pageChanged_user_data = function() {
+        console.log('Page changed to: ' + $scope.currentPage_user_data);
     };
 
-    $scope.setItemsPerPage_productdata = function(num) {
-        $scope.itemsPerPage_productdata = num;
-$scope.currentPage_productdata = 1; //reset to first paghe
+    $scope.setItemsPerPage_user_data = function(num) {
+        $scope.itemsPerPage_user_data = num;
+$scope.currentPage_user_data = 1; //reset to first paghe
 }
 
 function get_product_data(){
@@ -219,7 +235,7 @@ function get_supplier_data(){
     var promise = ProductFactory.get_supplier_data();
     promise.then(function(data){
         $scope.supplier_data = data.data.result;
-        console.log($scope.supplier_data);
+        /*console.log($scope.supplier_data);*/
 
         var a = 0;
         for (var i in $scope.supplier_data) {
@@ -256,7 +272,7 @@ function get_request_order_data(){
     var promise = ProductFactory.get_request_order_data();
     promise.then(function(data){
         $scope.request_data = data.data.result;
-        console.log($scope.request_data);
+        /*console.log($scope.request_data);*/
 
         var a = 0;
         for (var i in $scope.request_data) {
@@ -337,7 +353,7 @@ $scope.edit_product_data = function(v){
 
     ngDialog.openConfirm({
         template: 'EditMyProfile',
-        className: 'ngdialog-theme-plain dialogwidth400',
+        className: 'ngdialog-theme-plain dialogwidth500',
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
             if($scope.modal.product_name == '' || $scope.modal.product_bar_code == '' || $scope.modal.product_stocks == '' || $scope.modal.product_price == ''){
@@ -396,7 +412,7 @@ function makeuser_id() {
     }
     final_user_id = text+text2;
     $scope.modal.final_user_id = final_user_id;
-    console.log($scope.modal.final_user_id);
+    /*console.log($scope.modal.final_user_id);*/
 }
 
 $scope.add_user = function(){
@@ -433,12 +449,91 @@ $scope.add_user = function(){
         promise.then(function(data){
             var notify = $.notify('You have succesfully added a new user', { 'type': 'success', allow_dismiss: true });
             get_added_user_data();
+            $route.reload();
         })
         .then(null, function(data){
             var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
 
         });
     });
+}
+
+$scope.edit_user = function(v){
+    var index = $scope.added_user_data.indexOf(v);
+
+    if ($scope.added_user_data[index].user_type == 'Cashier') {
+        $scope.modal.user_type = '1';
+    };
+    if ($scope.added_user_data[index].user_type == 'Admin') {
+        $scope.modal.user_type = '2';
+    };
+
+    /*console.log($scope.modal.user_type);*/
+
+
+    $scope.modal = {
+        title : 'Edit User',
+        save : 'Add',
+        close : 'Cancel',
+        first_name: $scope.added_user_data[index].first_name,
+        middle_name: $scope.added_user_data[index].middle_name,
+        last_name: $scope.added_user_data[index].last_name,
+        final_user_id: $scope.added_user_data[index].user_id,
+        user_type: $scope.modal.user_type,
+        confirm_password: $scope.added_user_data[index].password,
+        first_password: $scope.added_user_data[index].password
+    }     
+
+    ngDialog.openConfirm({
+        template: 'UpdateUser',
+        className: 'ngdialog-theme-plain dialogwidth500',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+            if($scope.modal.first_password != $scope.modal.confirm_password){
+                var notify = $.notify('The Pin is incorrect!', {'type': 'danger', allow_dismiss: true });
+                return false;
+            }
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
+        if ($scope.modal.first_password == $scope.added_user_data[index].password) {
+            $scope.super_final_password = $scope.modal.first_password;
+        }else if ($scope.modal.first_password != $scope.added_user_data[index].password) {
+            $scope.super_final_password = md5.createHash($scope.modal.first_password)
+        };
+        $scope.modal.new_password = $scope.super_final_password;
+        $scope.modal.user_idd = $scope.added_user_data[index].user_id;
+        var promise = ProductFactory.edit_user($scope.modal);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully updated the user', { 'type': 'success', allow_dismiss: true });
+            get_added_user_data();
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+        });
+    });
+}
+
+$scope.delete_user = function(v){
+    var index = $scope.added_user_data.indexOf(v);
+
+
+        $scope.modal.user_idd = $scope.added_user_data[index].user_id;
+        var promise = ProductFactory.delete_user($scope.modal);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully deleted the user', { 'type': 'success', allow_dismiss: true });
+            get_added_user_data();
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+        });
 }
 
 $scope.delete_product_data = function(v){
@@ -587,6 +682,20 @@ ngDialog.openConfirm({
     className: 'ngdialog-theme-plain dialogwidth400',
     preCloseCallback: function(value) {
         var nestedConfirmDialog;
+        if ($scope.modal.gc_name == '' || $scope.modal.gc_name == "" || $scope.modal.gc_name == NaN || $scope.modal.gc_name == null || $scope.modal.gc_name == 0.00 || $scope.modal.gc_name == undefined || $scope.modal.product_gc_name == 'NaN') {
+    var notify = $.notify('Oops there something wrong with gift certificate name!', {'type': 'danger',  allow_dismiss: true });
+    return false;
+    };
+
+    if ($scope.modal.gc_code == '' || $scope.modal.gc_code == "" || $scope.modal.gc_code == NaN || $scope.modal.gc_code == null || $scope.modal.gc_code == 0.00 || $scope.modal.gc_code == undefined || $scope.modal.product_gc_code == 'NaN') {
+    var notify = $.notify('Oops there something wrong with gift certificate code!', {'type': 'danger',  allow_dismiss: true });
+    return false;
+    };
+    
+    if ($scope.modal.gc_amount == '' || $scope.modal.gc_amount == "" || $scope.modal.gc_amount == NaN || $scope.modal.gc_amount == null || $scope.modal.gc_amount == 0.00 || $scope.modal.gc_amount == undefined || $scope.modal.product_gc_amount == 'NaN') {
+    var notify = $.notify('Oops there something wrong with gift certificate amount!', {'type': 'danger',  allow_dismiss: true });
+    return false;
+    };
         return nestedConfirmDialog;
     },
     scope: $scope,
@@ -798,7 +907,7 @@ for (var z in $scope.tender_data){
 
 for (var o in $scope.tender_data) {
     $scope.tender_data[o].product_price = $scope.tender_data[o].product_price.toFixed(2);
-    console.log($scope.tender_data[o].product_price);
+    /*console.log($scope.tender_data[o].product_price);*/
 };
 
 /*for (var o in $scope.tender_data){
@@ -825,7 +934,7 @@ if ($scope.discount == true) {
     $scope.discount_amounts = dscnt_amnt.toFixed(2);
     amnt_snr = net_amnt - dscnt_amnt;
     $scope.amount_senior = amnt_snr.toFixed(2);
-    console.log($scope.amount_senior);  
+    /*console.log($scope.amount_senior);  */
     $scope.product_total = $scope.amount_senior;
 }else{
     $scope.discount_amounts = 0;
@@ -881,7 +990,7 @@ var data = {
 };
 
 
-if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == undefined || data.product_total == 'NaN') {
+if (data.total == '' || data.total == "" || data.total == NaN || data.total == null || data.total == 0.00 || data.total == undefined || data.product_total == 'NaN') {
     var notify = $.notify('Oops there something wrong with total!', {'type': 'danger',  allow_dismiss: true });
     tender_status = true;
     return false;
@@ -912,8 +1021,8 @@ $scope.tender_status = true;
 return false;
 };*/
 $scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
-console.log($scope.tender_data);
-console.log(data);
+/*console.log($scope.tender_data);
+console.log(data);*/
 var promise = ProductFactory.tender_product(data);
 promise.then(function(data){
     window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
@@ -978,7 +1087,7 @@ $scope.send_receipt = function(){
         };
 
         var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });
-        console.log($scope.submit_datas);
+        /*console.log($scope.submit_datas);*/
         var promise = ProductFactory.submit_toemail($scope.submit_datas);
         promise.then(function(data){
             var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });
@@ -1055,7 +1164,7 @@ $scope.edit_supplier_data = function(v){
 
     ngDialog.openConfirm({
         template: 'EditSupplierData',
-        className: 'ngdialog-theme-plain dialogwidth400',
+        className: 'ngdialog-theme-plain dialogwidth500',
         preCloseCallback: function(value) {
             var nestedConfirmDialog;
             if($scope.modal.supplier_name == '' || $scope.modal.supplier_address == '' || $scope.modal.supplier_contact_number == '' || $scope.modal.supplier_contact_person == ''){

@@ -32,12 +32,13 @@
         </tr>
       </thead>
       <tbody>
-        <input type="button" style="margin-left:870px;" ng-if="tender_data_status == true" class="btn btn-danger" value="Download PDF" ng-click="print_pdf()">
-        <tr ng-repeat="(k,v) in added_user_data">
+        <tr ng-repeat="v in added_user_data.slice(((currentPage_user_data-1)*itemsPerPage_user_data), ((currentPage_user_data)*itemsPerPage_user_data)) track by $index">
 
           <td>{{v.first_name+ " " +v.last_name}}</td>
           <td>{{v.user_id}}</td>
           <td>{{v.user_type}}</td>
+          <td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_user(v)"  title="Edit"></i>
+          <i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_user(v)"  title="Delete"></i>
         </tr>
       </tbody>
     </table>
@@ -47,11 +48,16 @@
 </div>
 </div>
 </div>
+<div class="row">
+  <div class="col-md-12">
+    <center>
+      <pagination total-items="totalItems_user_data" ng-model="currentPage_user_data" ng-change="pageChanged_user_data()" class="pagination-md" items-per-page="itemsPerPage_user_data"></pagination>
+    </center>
+  </div>
+</div>
+</div>
 
 
-<!-- <td>&nbsp&nbsp<i class="fa fa-pencil" aria-hidden="true" style="cursor:pointer" ng-click="edit_product_data(v)"  title="Edit"></i>
-<i class="fa fa-trash" aria-hidden="true" style="cursor:pointer" ng-click="delete_product_data(v)"  title="Delete"></i>
-<i class="fa fa-shopping-cart" ng-if="v.product_stocks == 0" aria-hidden="true" style="cursor:pointer" ng-click="request_product_order(v)"  title="Request"></i></td> -->
 
 
 <script type="text/ng-template" id="EditUser">
@@ -97,11 +103,72 @@
     <div class="row">
       <div class="col-md-12">
         <div class="col-md-12">
+          <label>User Type</label>type
+        <select ng-model="modal.user_type" class="form-control">
+            <option value="" disabled selected style="display:none"> -- Select Type here -- </option>
+           <option value="1">Cashier</option>
+           <option value="2">Admin</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <br>
+  <div class="ngdialog-buttons" style="margin-top:20px;">
+    <div class="ngdialog-buttons">
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" data-ng-click="confirm(1)"> <i class="fa fa-times-circle"> </i> {{modal.close}}</button>
+    <button type="button" class="ngdialog-button ngdialog-button-primary" data-ng-click="closeThisDialog('Save')"> <i class="fa fa-check"> </i> {{modal.save}}</button>
+  </div>
+  </br>
+</script>
+
+<script type="text/ng-template" id="UpdateUser">
+  <div class="ngdialog-message">
+    <div style="margin-top: -15px;">
+      <h3><span style="color:#0c79be;"><b>{{ modal.title }}<b></span></h3>
+
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          First Name <input type="text" class="form-control" ng-model="modal.first_name">
+        </div>
+        <div class="col-md-6">
+          Middle Name <input type="text" class="form-control" ng-model="modal.middle_name">
+        </div>
+        <div class="col-md-6">
+          Last Name <input type="text" class="form-control" ng-model="modal.last_name">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          Password <input type="password" class="form-control" ng-model="modal.first_password">
+        </div>
+        <div class="col-md-6">
+          Confirm Password <input type="password" class="form-control" ng-model="modal.confirm_password">
+          </br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          User ID <input type="text" disabled class="form-control" ng-model="modal.final_user_id">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-12">
           <label>User Type</label>
         <select ng-model="modal.user_type" class="form-control">
             <option value="" disabled selected style="display:none"> -- Select Type here -- </option>
-           <option value="1">User Type 1</option>
-           <option value="2">User Type 2 </option>
+           <option value="1">Cashier</option>
+           <option value="2">Admin</option>
         </select>
         </div>
       </div>

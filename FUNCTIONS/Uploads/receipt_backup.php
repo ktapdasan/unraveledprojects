@@ -13,8 +13,8 @@ $change = $_GET['change'];
 $total = $_GET['total'];
 $discount = $_GET['discount'];
 $cash = $_GET['cash'];
-$x = 50;
-$y = 47;
+$x = 60;
+$y = 51;
 $q = 54;
 $w = 57;
 $e = 60;
@@ -22,6 +22,8 @@ $r = 63;
 $t = 66;
 $s = 69;
 $a = 72;
+$b = 25;
+$n = 51;
 $endline = 75;
 $endmessage = 77;
 $endmessage2 = 80;
@@ -33,6 +35,11 @@ $endmessage7 = 97;
 $endmessage7 = 97;
 $count = 0;
 $str = 'Php';
+$heights = 130;
+
+	foreach ($data as $k => $v) {
+		$heights += 1;
+	};
 
 class PDF extends FPDF
 {
@@ -48,7 +55,7 @@ class PDF extends FPDF
 	{
 	    $this->SetFont('Arial', 'B', 10); 
 		$this->SetFillColor(36, 96, 84); 
-		$this->Cell(80, 0, 'GoSari', 0, 0, 'C'); 
+		$this->Image('../../ASSETS/picture/gosarigray.png',36,2,14);
 	    $this->Ln(5);
 	}
 
@@ -60,21 +67,21 @@ class PDF extends FPDF
 	$pdf = new PDF();
 		// $pdf-$column_widths = ['50','50','50','50'];
 		$pdf->construct();
-		$pdf->AddPage('P',array(300,87));
+		$pdf->AddPage('P',array($heights,87));
 		$pdf->SetFont('Arial', 'B', 8); 
-		$pdf->SetXY(10,11); 
+		$pdf->SetXY(10,16); 
 		$pdf->Cell(40, 5, 'AOMOS Information Technology Services' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(9,14); 
+		$pdf->SetXY(9,19); 
 		$pdf->Cell(10, 5, 'De Oro Bldg. Sierra Madre St. Boni Avenue' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(17,17); 
+		$pdf->SetXY(17,22); 
 		$pdf->Cell(10, 5, 'Mandaluyong City, Philippines' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(14,20); 
+		$pdf->SetXY(14,25); 
 		$pdf->Cell(10, 5, 'VAT REG TIN#000-000-000-00000' , 0, 'L'); 
 		$pdf->Ln();
-		$pdf->SetXY(12,23); 
+		$pdf->SetXY(12,28); 
 		$pdf->Cell(10, 5, 'THIS SERVE AS YOUR SALES INVOICE' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->Ln();
@@ -90,6 +97,7 @@ class PDF extends FPDF
 		foreach ($data as $k => $v) {
 		if ($count >= 1) {
 		$y += 4;
+		$n += 4;
 		$q += 5;
 		$w += 5;
 		$e += 5;
@@ -111,7 +119,9 @@ class PDF extends FPDF
 		$pdf->SetFillColor(36, 96, 84);
 		$pdf->Ln();
 		$pdf->SetFont('Arial', 'B', 8); 
-		$pdf->Cell(10, 4, $v['product_quantity'], 0, 'L');
+		$pdf->SetXY(5,$n);
+		$pdf->Cell(10, 4,$v['product_quantity'], 0, 'L');
+		$pdf->SetXY($b,$n);
 		$pdf->Cell(10, 4, $v['product_name'], 0, 'L');
 		$pdf->SetXY($x,$y);
 		$pdf->Cell(10, 4,$v['tempo_total'], 0, 'L');
@@ -119,54 +129,55 @@ class PDF extends FPDF
 
 		$pdf->Ln();
 		$pdf->Ln();
-		$pdf->SetXY(0,$q);
+		$pdf->SetXY(5,$q);
 		$pdf->Cell(10, 4,$counts, 0, 'L');
+		$pdf->SetXY(25,$q);
 		$pdf->Cell(10, 4,'Item(s)', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$w);
+		$pdf->SetXY(25,$w);
 		$pdf->Cell(10, 4,'Total Due', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$w);
+		$pdf->SetXY(60,$w);
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->Cell(10, 4,$v['total'], 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$e);
+		$pdf->SetXY(25,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'Cash', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$e);
+		$pdf->SetXY(60,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$v['cash'], 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$r);
+		$pdf->SetXY(25,$r);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'Change', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$r);
+		$pdf->SetXY(60,$r);
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->Cell(10, 4,$v['change'], 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$t);
+		$pdf->SetXY(25,$t);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'VATable', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$t);
+		$pdf->SetXY(60,$t);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$v['net_amount'], 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$s);
+		$pdf->SetXY(25,$s);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'Discount', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$s);
+		$pdf->SetXY(60,$s);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$v['discount'], 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(10,$a);
+		$pdf->SetXY(25,$a);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'VAT', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(50,$a);
+		$pdf->SetXY(60,$a);
 		$pdf->SetFont('Arial', 'B', 8); 
 		$pdf->Cell(10, 4,$v['vat'], 0, 'L');
 		$pdf->Ln();
@@ -183,7 +194,7 @@ class PDF extends FPDF
 		$pdf->Cell(10, 4,'For comments and suggestions', 0, 'L');
 		$pdf->SetXY(0,$endmessage4);
 		$pdf->SetFont('Arial', 'B', 8); 
-		$pdf->Cell(10, 4,'you can reach us at customercare.gosari@gmail.com', 0, 'L');
+		$pdf->Cell(10, 4,'you can reach us at gosaricare@chrsglobal.com', 0, 'L');
 		$pdf->SetXY(0,$endmessage5);
 		$pdf->SetFont('Arial', 'B', 8); 
 		$pdf->Cell(10, 4,'THIS INVOICE / RECEIPT SHALL BE VALID FOR', 0, 'L');

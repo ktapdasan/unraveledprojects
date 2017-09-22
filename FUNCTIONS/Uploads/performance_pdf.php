@@ -22,13 +22,6 @@ class PDF extends FPDF
 	    $this->Ln(5);
 	}
 
-	function Footer() { 
-		$this->SetFont('Arial', '', 10); 
-		$this->SetTextColor(0); 
-		$this->SetXY(20,-20); 
-		$this->Cell(0, 20, "Confidential", 'T', 0, 'L'); 
-	}
-
 	function SetCellMargin($margin){
         // Set cell margin
         $this->cMargin = $margin;
@@ -47,7 +40,7 @@ class PDF extends FPDF
 		$pdf->Cell(29, 10, 'Voided Items' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(43, 10, 'Transaction Number' , 'LTBR', 0, 'L'); 
 		$pdf->Cell(53, 10, 'Date Tendered' , 'LTBR', 0, 'L'); 
-		$pdf->Cell(25, 10, 'Total' , 'LTBR', 0, 'L'); 
+		$pdf->Cell(30, 10, 'Total' , 'LTBR', 0, 'L'); 
 		$pdf->Ln();
 		foreach ($data as $k => $v) { 
 		$pdf->SetFont('Arial', 'B', 10); 
@@ -61,7 +54,7 @@ class PDF extends FPDF
 		$pdf->Cell(29, 10, $v['void_count'], 'LTBR', 0, 'L');
 		$pdf->Cell(43, 10, $v['product_transaction_number'], 'LTBR', 0, 'L');
 		$pdf->Cell(53, 10, $v['date_created'], 'LTBR', 0, 'L');
-		$pdf->Cell(25, 10, $str." ".$v['tempo_total'], 'LTBR', 0, 'L');
+		$pdf->Cell(30, 10, $str." ".$v['tempo_total'], 'LTBR', 0, 'L');
 		$pdf->Ln();
 	}	
 		$pdf->Cell(40, 10, '' , 0, 'L'); 
@@ -73,6 +66,6 @@ class PDF extends FPDF
 		$pdf->Cell(29, 10, '' , 0, 'L'); 
 		$pdf->Cell(43, 10, '' , 0, 'L'); 
 		$pdf->Cell(53, 10, 'Grand Total' , 'LTBR', 0, 'L'); 
-		$pdf->Cell(25, 10, $str." ".$total, 'LTBR', 0, 'L'); 
+		$pdf->Cell(30, 10, $str." ".$total, 'LTBR', 0, 'L'); 
 		$pdf->Output();
 ?>

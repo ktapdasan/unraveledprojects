@@ -89,6 +89,8 @@ app.controller('Reports', function(
         $scope.filter.product_expiration = new Date();
         $scope.filter.sales_from = new Date();
         $scope.filter.sales_to = new Date();
+        $scope.form.sales_to = new Date();
+        $scope.form.sales_from = new Date();
     }
 
     function getMonday(d) {
@@ -126,7 +128,7 @@ app.controller('Reports', function(
         var promise = ProductFactory.get_receipts(filter);
         promise.then(function(data){
             $scope.receipts_data = data.data.result;
-            console.log($scope.receipts_data);
+            /*console.log($scope.receipts_data);*/
 
             var a = 0;
             for (var i in $scope.receipts_data) {
@@ -171,7 +173,7 @@ $scope.get_best_selling = function(form){
         $scope.form.sales_from = $scope.form.sales_from_daily;
         $scope.form.sales_to = $scope.form.sales_to_daily;
     }
-    console.log(form.daily);
+    /*console.log(form.daily);*/
 
     if (form.weekly == true) {
         form.daily = false;
@@ -182,7 +184,7 @@ $scope.get_best_selling = function(form){
         $scope.form.sales_from = $scope.form.sales_from_weekly;
         $scope.form.sales_to = $scope.form.sales_to_weekly;
     }
-    console.log(form.weekly);
+    /*console.log(form.weekly);*/
 
     if (form.monthly == true) {
         form.daily = false;
@@ -194,17 +196,17 @@ $scope.get_best_selling = function(form){
         $scope.form.sales_from = $scope.form.sales_from_monthly;
         $scope.form.sales_to = $scope.form.sales_to_monthly;
     }
-    console.log(form.monthly);
+    /*console.log(form.monthly);*/
 
     var filter = {
         date_from : $filter('date')($scope.form.sales_from, "yyyy-MM-dd"),
         date_to : $filter('date')($scope.form.sales_to, "yyyy-MM-dd")
     };
-    console.log(filter);
+    /*console.log(filter);*/
     var promise = ProductFactory.get_best_selling(filter);
     promise.then(function(data){
         $scope.bestselling_data = data.data.result;
-        console.log($scope.bestselling_data);
+        /*console.log($scope.bestselling_data);*/
 
         var a = 0;
         for (var i in $scope.bestselling_data) {
@@ -258,16 +260,16 @@ $scope.get_reports = function(){
         for (var i in $scope.tender_data) {
             b = parseFloat($scope.tender_data[i].product_quantity) * parseFloat($scope.tender_data[i].product_retail_price); 
             $scope.tender_data[i].tempo_total = b.toFixed(2);
-            console.log($scope.tender_data[i].tempo_total);            
+            /*console.log($scope.tender_data[i].tempo_total);            
             console.log($scope.tender_data[i].product_quantity);            
-            console.log($scope.tender_data[i].product_retail_price);            
+            console.log($scope.tender_data[i].product_retail_price);*/
         };
 
         $scope.form.totaaal = 0;
         for (var k in $scope.tender_data) {
             $scope.form.totaaal += parseFloat($scope.tender_data[k].tempo_total);
             $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
-            console.log($scope.form.totaaal);
+            /*console.log($scope.form.totaaal);*/
         };
 
         $scope.tender_data_status = true;
@@ -390,7 +392,7 @@ $scope.toget_receipt = function(v) {
     var promise = ProductFactory.get_receiptsback(filter);
     promise.then(function(data){
         $scope.receipts_data_back = data.data.result;
-        console.log($scope.receipts_data_back);
+        /*console.log($scope.receipts_data_back);*/
 
         var a = 0;
         for (var i in $scope.receipts_data_back) {
@@ -403,7 +405,7 @@ $scope.toget_receipt = function(v) {
         for (var k in $scope.receipts_data_back) {
             $scope.form.totaaaal += parseFloat($scope.receipts_data_back[k].tempo_total);
             $scope.form.final_totaaaal = $scope.form.totaaaal.toFixed(2);
-            console.log($scope.form.totaaaal);
+            /*console.log($scope.form.totaaaal);*/
         };
 
         $scope.receipts_data_back_status = true;
@@ -429,8 +431,8 @@ $scope.download_receipt = function(){
         $scope.receipts_data_back[i].date_created = new Date($scope.receipts_data_back[i].date_created);
         $scope.form.date_time = $filter('date')($scope.receipts_data_back[i].date_created, "medium");
         $scope.form.count += parseInt($scope.receipts_data_back[i].product_quantity); 
-        console.log($scope.form.product_transaction_number);
-        console.log($scope.form.count);
+        /*console.log($scope.form.product_transaction_number);
+        console.log($scope.form.count);*/
     };
     window.open('./FUNCTIONS/Uploads/receipt_backup.php?reports=' + JSON.stringify($scope.receipts_data_back) 
         + '&TI=' + $scope.form.product_transaction_number
@@ -469,8 +471,8 @@ $scope.send_receipt = function(){
             $scope.receipts_data_back[i].date_created = new Date($scope.receipts_data_back[i].date_created);
             $scope.form.date_time = $filter('date')($scope.receipts_data_back[i].date_created, "medium");
             $scope.form.count += parseInt($scope.receipts_data_back[i].product_quantity); 
-            console.log($scope.form.product_transaction_number);
-            console.log($scope.form.count);
+            /*console.log($scope.form.product_transaction_number);
+            console.log($scope.form.count);*/
         };
 
         $scope.submit_datas = {
