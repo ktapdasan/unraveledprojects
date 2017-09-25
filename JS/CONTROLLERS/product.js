@@ -198,6 +198,7 @@ function get_product_data(){
     var promise = ProductFactory.get_product_data();
     promise.then(function(data){
         $scope.product_data = data.data.result;
+        console.log($scope.product_data);
 
         var a = 0;
         for (var i in $scope.product_data) {
@@ -205,6 +206,14 @@ function get_product_data(){
             $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
             $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
             $scope.product_data[i].number = a += 1;
+        };
+
+        var x = .12;
+        for (var i in $scope.product_data) {
+           $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
+           $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+           $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
+           console.log($scope.product_data[i].wamount);
         };
 
         $scope.totalItems_productdata = $scope.product_data.length;
@@ -320,7 +329,9 @@ $scope.add_product = function(){
         product_srp : $scope.form.srp,
         product_price : $scope.form.product_price,
         product_product_expiration : $scope.form.product_expiration,
-        product_supplier : $scope.form.product_supplier
+        product_supplier : $scope.form.product_supplier,
+        product_receipt_name : $scope.form.receipt_name,
+
 
     }
 
@@ -348,7 +359,8 @@ $scope.edit_product_data = function(v){
         product_price : $scope.product_data[index].product_price,
         product_expiration : $scope.product_data[index].product_product_expiration,
         product_srp : $scope.product_data[index].product_srp,
-        product_supplier : $scope.product_data[index].product_supplier
+        product_supplier : $scope.product_data[index].product_supplier,
+        receipt_name : $scope.product_data[index].product_receipt_name
     };
 
     ngDialog.openConfirm({
@@ -382,7 +394,8 @@ $scope.edit_product_data = function(v){
             product_srp : $scope.modal.product_srp,
             product_expiration : $scope.modal.new_product_date_expiration,
             supplier_code_name : $scope.modal.supplier_code_name,
-            product_supplier : $scope.modal.product_supplier
+            product_supplier : $scope.modal.product_supplier,
+            product_receipt_name : $scope.modal.receipt_name
         }
 
         var promise = ProductFactory.edit_product_data(datas);
@@ -1251,6 +1264,7 @@ $scope.request_product_order = function(v){
         $scope.modal.new_product_date_needed = $filter('date')($scope.modal.product_date_needed._d, "medium");
         var datas = {
             pk : $scope.product_data[index].pk,
+            product_name : $scope.product_data[index].product_name,
             product_finalnumber : $scope.modal.finalnumber,
             product_quantity : $scope.modal.product_quantity,
             product_date_needed : $scope.modal.new_product_date_needed,
@@ -1260,7 +1274,7 @@ $scope.request_product_order = function(v){
         var promise = ProductFactory.request_product_order(datas);
         promise.then(function(data){
             var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
-            get_supplier_data();
+            get_request_order_data();
         })
         .then(null, function(data){
             var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });

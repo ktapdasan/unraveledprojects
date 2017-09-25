@@ -122,7 +122,7 @@ class PDF extends FPDF
 		$pdf->SetXY(5,$n);
 		$pdf->Cell(10, 4,$v['product_quantity'], 0, 'L');
 		$pdf->SetXY($b,$n);
-		$pdf->Cell(10, 4, $v['product_name'], 0, 'L');
+		$pdf->Cell(10, 4, $v['product_receipt_name'], 0, 'L');
 		$pdf->SetXY($x,$y);
 		$pdf->Cell(10, 4,$v['tempor_total'], 0, 'L');
 	}	

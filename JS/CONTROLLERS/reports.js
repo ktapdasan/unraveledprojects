@@ -91,6 +91,8 @@ app.controller('Reports', function(
         $scope.filter.sales_to = new Date();
         $scope.form.sales_to = new Date();
         $scope.form.sales_from = new Date();
+        $scope.form.date1 = new Date();
+        $scope.form.date2 = new Date();
     }
 
     function getMonday(d) {
@@ -239,12 +241,73 @@ $scope.currentPage_bestselling = 1; //reset to first paghe
 }
 
 
-$scope.get_reports = function(){
+$scope.get_reports = function(form){
+
+    $scope.form.sales_from = '';
+    $scope.form.sales_to = '';
+
+    if (form.defaults == true && form.defaults2 == true) {
+        form.daily = false;
+        form.monthly = false;
+        form.weekly = false;
+        var today = new Date();
+        $scope.form.defaults = $scope.form.date1._d;
+        $scope.form.defaults2 = $scope.form.date2._d;
+        $scope.form.sales_from = $scope.form.defaults;
+        $scope.form.sales_to = $scope.form.defaults2;
+    }
+
+    if (form.daily == true) {
+        form.weekly = false;
+        form.monthly = false;
+        form.defaults = false;
+        form.defaults2 = false;
+        var today = new Date();
+        $scope.form.sales_from_daily = new Date();
+        $scope.form.sales_to_daily = new Date();
+        $scope.form.sales_from = $scope.form.sales_from_daily;
+        $scope.form.sales_to = $scope.form.sales_to_daily;
+    }
+    /*console.log(form.daily);*/
+
+    if (form.weekly == true) {
+        form.daily = false;
+        form.monthly = false;
+        form.defaults = false;
+        form.defaults2 = false;
+        var today = new Date();
+        $scope.form.sales_from_weekly = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+0);
+        $scope.form.sales_to_weekly = new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()+6);
+        $scope.form.sales_from = $scope.form.sales_from_weekly;
+        $scope.form.sales_to = $scope.form.sales_to_weekly;
+    }
+    /*console.log(form.weekly);*/
+
+    if (form.monthly == true) {
+        form.daily = false;
+        form.weekly = false;
+        form.defaults = false;
+        form.defaults2 = false;
+        var today = new Date();
+        var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+        $scope.form.sales_from_monthly = new Date(y, m, 1);
+        $scope.form.sales_to_monthly = new Date(y, m + 1, 0);
+        $scope.form.sales_from = $scope.form.sales_from_monthly;
+        $scope.form.sales_to = $scope.form.sales_to_monthly;
+    }
+
     var filter = {
+        name : $scope.form.cashier_name,
+        date_from : $filter('date')($scope.form.sales_from, "yyyy-MM-dd"),
+        date_to : $filter('date')($scope.form.sales_to, "yyyy-MM-dd")
+    }; 
+
+
+    /*var filter = {
         name : $scope.form.cashier_name,
         date_from : $filter('date')($scope.form.sales_from._d, "mediumDate"),
         date_to : $filter('date')($scope.form.sales_to._d, "mediumDate")
-    };
+    };*/
     var promise = ProductFactory.get_reports(filter);
     promise.then(function(data){
         $scope.tender_data = data.data.result;

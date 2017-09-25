@@ -190,6 +190,7 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
+                (select product_receipt_name from product_data where product_name = tender_data.product_name) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
@@ -456,6 +457,7 @@ EOT;
         $product_price = $data['product_price'];
         $product_product_expiration = $data['product_product_expiration'];
         $product_supplier = $data['product_supplier'];
+        $product_receipt_name = $data['product_receipt_name'];
 
         $sql = <<<EOT
                 insert into product_data
@@ -466,7 +468,8 @@ EOT;
                     product_stocks,
                     product_price,
                     product_product_expiration,
-                    product_supplier
+                    product_supplier,
+                    product_receipt_name
                 )
                 VALUES
                 (
@@ -476,7 +479,8 @@ EOT;
                     '$product_stocks',
                     '$product_price',
                     '$product_product_expiration',
-                    '$product_supplier'
+                    '$product_supplier',
+                    '$product_receipt_name'
                 )
                 ;
 EOT;
@@ -587,6 +591,7 @@ EOT;
         $product_quantity = $data['product_quantity'];
         $product_date_needed = $data['product_date_needed'];
         $product_market_price = $data['product_market_price'];
+        $product_name = $data['product_name'];
 
         $sql = <<<EOT
                 insert into request_order_data
@@ -595,7 +600,8 @@ EOT;
                     product_finalnumber,
                     product_quantity,
                     product_date_needed,
-                    product_market_price
+                    product_market_price,
+                    product_name
                 )
                 VALUES
                 (
@@ -603,7 +609,8 @@ EOT;
                     '$product_finalnumber',
                     '$product_quantity',
                     '$product_date_needed',
-                    '$product_market_price'
+                    '$product_market_price',
+                    '$product_name'
                 )
                 ;
 EOT;
@@ -648,6 +655,7 @@ EOT;
         $product_stocks = $data['product_stocks'];
         $product_price = $data['product_price'];
         $product_expiration = $data['product_expiration'];
+        $product_receipt_name = $data['product_receipt_name'];
 
         $sql = <<<EOT
                 update product_data set
@@ -657,7 +665,8 @@ EOT;
                     product_bar_code,
                     product_stocks,
                     product_price,
-                    product_product_expiration
+                    product_product_expiration,
+                    product_receipt_name
                 )
                 =
                 (
@@ -666,7 +675,8 @@ EOT;
                     '$product_bar_code',
                     '$product_stocks',
                     '$product_price',
-                    '$product_expiration'
+                    '$product_expiration',
+                    '$product_receipt_name'
                 )
                 where pk = '$pk'
                 ;
@@ -814,6 +824,7 @@ EOT;
                     product_bar_code,
                     product_stocks,
                     product_price,
+                    product_receipt_name,
                     product_product_expiration,
                     date_created::timestamp(0)
                 from product_data
@@ -852,6 +863,7 @@ EOT;
                 select
                     pk, 
                     product_finalnumber,
+                    product_name,
                     product_quantity,
                     product_date_needed,
                     product_market_price,

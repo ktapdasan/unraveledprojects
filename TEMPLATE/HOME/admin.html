@@ -24,7 +24,7 @@
 					<input type="text" class="form-control" is-Number placeholder="Retail Price" ng-model="form.srp"/>
 				</div>
 				<div class="form-group col-md-2">
-					<input type="text" class="form-control" is-Number placeholder="Market Price" ng-model="form.product_price"/>
+					<input type="text" class="form-control" placeholder="Market Price" ng-model="form.product_price"/>
 				</div>
 				<div class="form-group col-md-2">
 					<select ng-model="form.product_supplier" class="form-control">
@@ -41,6 +41,9 @@
 							</span>
 						</div>
 					</div>
+				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" max-length="17"  placeholder="Receipt Name" ng-model="form.receipt_name"/>
 				</div>
 				<div class="form-group col-md-2">
 					<input type="button" class="btn btn-success" value="Add Item" ng-click="add_product()">
@@ -60,9 +63,11 @@
 					<tr >
 						<th>#</th>
 						<th>Product Name</th>
+						<th>Receipt Name</th>
 						<th>Supplier Code Name</th>
 						<th># of Stocks</th>
 						<th>Supplier Price</th>
+						<th>Amount with VAT</th>
 						<th>Retail Price</th>
 						<th>Bar Code</th>
 						<th>Date Encoded</th>
@@ -74,9 +79,11 @@
 					<tr ng-repeat="(k,v) in product_data.slice(((currentPage_productdata-1)*itemsPerPage_productdata), ((currentPage_productdata)*itemsPerPage_productdata))">
 						<th scope="row">{{v.number}}</th>
 						<td>{{v.product_name}}</td>
+						<td>{{v.product_receipt_name}}</td>
 						<td>{{v.product_supplier}}</td>
 						<td>{{v.product_stocks}}</td>
 						<td>{{v.product_srp}}</td>
+						<td>{{v.wamount3}}</td>
 						<td>{{v.product_price}}</td>
 						<td>{{v.product_bar_code}}</td>
 						<td>{{v.date_created | date :  "medium" }}</td>
@@ -200,14 +207,14 @@
 
 <div class="page-title">
 	<div class="title_left">
-		<h3 class="slideinmargin">
+		<h3 class="slideinmargin" ng-show="user.user_id == '2014000100' ">
 			Request Product Order List
 		</h3>
 	</div>
 </div>
 <div class="clearfix"></div>
 <div style="margin-top:10px;"></div>
-<div class="container">
+<div class="container" ng-show="user.user_id == '2014000100' ">
 	<div class="panel">
 		<div class="panel-body">
 			<div class="clearfix"></div>
@@ -215,8 +222,9 @@
 		<div class="x_content">
 			<table class="table table-hover">
 				<thead>
-					<tr >
+					<tr ng-show="user.user_id == '2014000100' ">
 						<th>#</th>
+						<th>Product Name</th>
 						<th>Product Number</th>
 						<th>Product Quantity</th>
 						<th>Product Market Price</th>
@@ -226,8 +234,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="(k,v) in request_data.slice(((currentPage_orderdata-1)*itemsPerPage_orderdata), ((currentPage_orderdata)*itemsPerPage_orderdata))">
+					<tr ng-show="user.user_id == '2014000100' " ng-repeat="(k,v) in request_data.slice(((currentPage_orderdata-1)*itemsPerPage_orderdata), ((currentPage_orderdata)*itemsPerPage_orderdata))">
 						<th scope="row">{{v.number}}</th>
+						<td>{{v.product_name}}</td>
 						<td>{{v.product_finalnumber}}</td>
 						<td>{{v.product_quantity}}</td>
 						<td>{{v.product_market_price}}</td>
@@ -251,7 +260,7 @@
 
 
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-md-12" ng-show="user.user_id == '2014000100' ">
 		<center>
 			<pagination total-items="totalItems_orderdata" ng-model="currentPage_orderdata" ng-change="pageChanged_orderdata()" class="pagination-md" items-per-page="itemsPerPage_orderdata"></pagination>
 		</center>
@@ -338,7 +347,7 @@
         </div>
         <div style="margin-left:13px;">
           Supplier 
-							<select style="width:100%;" ng-model="form.product_supplier" class="form-control">
+							<select style="width:100%;" ng-model="modal.product_supplier" class="form-control">
 								<option value="" disabled selected style="display:none"> Select Supplier </option>
 								<option ng-repeat="v in supplier_data" value="{{v.supplier_code_name}}">{{v.supplier_name}}</option>
 							</select>
@@ -352,6 +361,9 @@
              </span>
         </div>
       </div>
+      <div style="margin-left:13px;">
+          Receipt Name <input type="text" max-length="17"  style="width:100%;" class="form-control" ng-model="modal.receipt_name">
+        </div>
     <br>
 
 
