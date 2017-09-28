@@ -193,6 +193,56 @@ $scope.form = {};
 $scope.currentPage_user_data = 1; //reset to first paghe
 }
 
+$scope.search = function(){
+    if ($scope.form.search == "") {
+        get_product_data();
+    }
+
+    var filters = {
+        wildcard : $scope.form.search
+    };
+    console.log(filters);
+
+    var promise = ProductFactory.get_product_data_search(filters);
+    promise.then(function(data){
+        $scope.product_data = data.data.result;
+        console.log($scope.product_data);
+
+        var a = 0;
+        for (var i in $scope.product_data) {
+            $scope.product_data[i].product_product_expiration = new Date($scope.product_data[i].product_product_expiration);
+            $scope.product_data[i].product_product_expiration = $filter('date')($scope.product_data[i].product_product_expiration, "mediumDate");
+            $scope.product_data[i].date_created = new Date($scope.product_data[i].date_created);
+            $scope.product_data[i].number = a += 1;
+        };
+
+        var x = .12;
+        for (var i in $scope.product_data) {
+           $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
+           $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+           $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
+           console.log($scope.product_data[i].wamount);
+        };
+
+        $scope.totalItems_productdata = $scope.product_data.length;
+    })
+.then(null, function(data){
+
+});
+}
+$scope.setPage_productdata = function (pageNo) {
+    $scope.currentPage_productdata = pageNo;
+};
+
+$scope.pageChanged_productdata = function() {
+    console.log('Page changed to: ' + $scope.currentPage_productdata);
+};
+
+$scope.setItemsPerPage_productdata = function(num) {
+    $scope.itemsPerPage_productdata = num;
+$scope.currentPage_productdata = 1; //reset to first paghe
+}
+
 function get_product_data(){
 
     var promise = ProductFactory.get_product_data();
@@ -217,8 +267,6 @@ function get_product_data(){
         };
 
         $scope.totalItems_productdata = $scope.product_data.length;
-
-        $scope.form = {};
     })
     .then(null, function(data){
 
@@ -254,7 +302,49 @@ function get_supplier_data(){
 
         $scope.totalItems_supplierdata = $scope.supplier_data.length;
 
-        $scope.form = {};
+    })
+    .then(null, function(data){
+
+
+    });
+}
+
+
+$scope.setPage_supplierdata = function (pageNo) {
+    $scope.currentPage_supplierdata = pageNo;
+};
+
+$scope.pageChanged_supplierdata = function() {
+    console.log('Page changed to: ' + $scope.currentPage_supplierdata);
+};
+
+$scope.setItemsPerPage_supplierdata = function(num) {
+    $scope.itemsPerPage_supplierdata = num;
+$scope.currentPage_supplierdata = 1; //reset to first paghe
+}
+
+$scope.search_supplier = function(){
+    if ($scope.form.search_supplier1 == "") {
+        get_supplier_data();
+    }
+
+    var filters = {
+        wildcard : $scope.form.search_supplier1
+    };
+    console.log(filters);
+
+    var promise = ProductFactory.get_supplier_data_search(filters);
+    promise.then(function(data){
+        $scope.supplier_data = data.data.result;
+        /*console.log($scope.supplier_data);*/
+
+        var a = 0;
+        for (var i in $scope.supplier_data) {
+            $scope.supplier_data[i].date_created = new Date($scope.supplier_data[i].date_created);
+            $scope.supplier_data[i].number = a += 1;
+        };
+
+        $scope.totalItems_supplierdata = $scope.supplier_data.length;
     })
     .then(null, function(data){
 
