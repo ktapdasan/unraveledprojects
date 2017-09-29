@@ -1062,8 +1062,12 @@ w = parseFloat($scope.product_total);
 q = w.toFixed(2);
 $scope.form.q = q;
 
+if ($scope.gift_status == true) {
+    $scope.form.r_name = 'Gift Certificate'
+}else{
+    $scope.form.r_name = 'Cash'
+};
 
-$scope.gift_status = true;
 
 if ($scope.modal.gc_amount == undefined) {
     $scope.modal.gc_amount = 0;
@@ -1089,7 +1093,8 @@ var data = {
     total : $scope.form.q,
     stock_amount_finalized : $scope.stock_amount_finalized,
     stock_amount_pk : $scope.stock_amount_pk,
-    void_count : $scope.tender_voided.count
+    void_count : $scope.tender_voided.count,
+    r_name : $scope.form.r_name
 };
 
 
@@ -1126,6 +1131,7 @@ return false;
 $scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
 /*console.log($scope.tender_data);
 console.log(data);*/
+
 var promise = ProductFactory.tender_product(data);
 promise.then(function(data){
     window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
@@ -1141,6 +1147,7 @@ promise.then(function(data){
         + '&change=' + $scope.change
         + '&discount=' + $scope.discount_amounts
         + '&cash=' + r
+        + '&rname=' + $scope.form.r_name
         );
 })
 .then(null, function(data){
@@ -1166,6 +1173,12 @@ $scope.send_receipt = function(){
         return false;
     }, function(value){
 
+        if ($scope.gift_status == true) {
+        $scope.form.r_name = 'Gift Certificate'
+        }else{
+        $scope.form.r_name = 'Cash'
+        };
+
         $scope.submit_datas = {
             product_transaction_number : $scope.form.transact_number,
             cashier_user_id : $scope.user.user_id,
@@ -1186,11 +1199,12 @@ $scope.send_receipt = function(){
             change :  $scope.change,
             total :  $scope.form.q,
             discount : $scope.discount_amounts,
-            cash : $scope.form.r
+            cash : $scope.form.r,
+            r_name: $scope.form.r_name
         };
 
         var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });
-        /*console.log($scope.submit_datas);*/
+       
         var promise = ProductFactory.submit_toemail($scope.submit_datas);
         promise.then(function(data){
             var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });

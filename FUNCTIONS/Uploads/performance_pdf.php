@@ -46,7 +46,7 @@ class PDF extends FPDF
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->SetFillColor(36, 96, 84);
 		$pdf->Cell(40, 10, $v['first_name'].' '.$v['last_name'], 'LTBR', 0, 'L'); 
-		$pdf->Cell(40, 10, $v['product_name'], 'LTBR', 0, 'L');
+		$pdf->Cell(40, 10, $v['product_receipt_name'], 'LTBR', 0, 'L');
 		$pdf->Cell(36, 10, $v['product_quantity'], 'LTBR', 0, 'L');
 		$pdf->Cell(30, 10, $v['product_supplier_price'], 'LTBR', 0, 'L');
 		$pdf->Cell(25, 10, $v['product_retail_price'], 'LTBR', 0, 'L');

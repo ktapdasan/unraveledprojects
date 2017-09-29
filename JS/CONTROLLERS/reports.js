@@ -497,12 +497,22 @@ $scope.download_receipt = function(){
         /*console.log($scope.form.product_transaction_number);
         console.log($scope.form.count);*/
     };
+
+    for (var k in $scope.receipts_data_back) {
+            if ($scope.receipts_data_back[k].gc_amount > 0) {
+            $scope.form.r_name = 'Gift Certificate'
+            }else{
+            $scope.form.r_name = 'Cash'
+            };
+
+        };
     window.open('./FUNCTIONS/Uploads/receipt_backup.php?reports=' + JSON.stringify($scope.receipts_data_back) 
         + '&TI=' + $scope.form.product_transaction_number
         + '&date_time=' + $scope.form.date_time
         + '&user_id_fname=' + $scope.form.first_name
         + '&user_id_lname=' + $scope.form.last_name
         + '&count=' + $scope.form.count
+        + '&r_name=' + $scope.form.r_name
         );
 }
 
@@ -538,6 +548,15 @@ $scope.send_receipt = function(){
             console.log($scope.form.count);*/
         };
 
+        for (var k in $scope.receipts_data_back) {
+            if ($scope.receipts_data_back[k].gc_amount > 0) {
+            $scope.form.r_name = 'Gift Certificate'
+            }else{
+            $scope.form.r_name = 'Cash'
+            };
+
+        };
+
         $scope.submit_datas = {
             data : JSON.stringify($scope.receipts_data_back),
             message: '<p>Dear Customer,</p><div>&nbsp;</div><div>Attached is your official receipt. Thank you for shopping with us and see you very soon!</div><div>&nbsp;</div><div>For feedback and inquiries do not hesitate to email us via the email address written in the official receipt.</div><div>&nbsp;</div><div>Thank you!</div><div>&nbsp;</div><div>GoSari Team</div>',
@@ -553,7 +572,8 @@ $scope.send_receipt = function(){
             discount : $scope.receipts_data_back[i].discount,
             cash : $scope.receipts_data_back[i].cash,
             email : $scope.modal.email,
-            tempo_total : $scope.receipts_data_back[i].tempo_total
+            tempo_total : $scope.receipts_data_back[i].tempo_total,
+            r_name : $scope.form.r_name,
         };
 
         var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });

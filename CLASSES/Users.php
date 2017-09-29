@@ -106,6 +106,7 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
+                (select product_receipt_name from product_data where product_name = tender_data.product_name) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
@@ -181,6 +182,7 @@ EOT;
                 product_supplier_price,
                 product_retail_price,
                 cashier_user_id,
+                gc_amount,
                 discount,
                 tempo_total,
                 net_amount,

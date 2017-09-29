@@ -15,6 +15,7 @@ $total = $_POST['total'];
 $discount = $_POST['discount'];
 $message = $_POST['message'];
 $cash = $_POST['cash'];
+$rname = $_POST['r_name'];
 $x = 60;
 $y = 51;
 $q = 54;
@@ -145,7 +146,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(25,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,'Cash', 0, 'L');
+		$pdf->Cell(10, 4,$rname, 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(60,$e);
 		$pdf->SetFont('Arial', 'B', 7); 

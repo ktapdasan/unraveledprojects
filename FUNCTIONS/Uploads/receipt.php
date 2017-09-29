@@ -13,6 +13,7 @@ $change = $_GET['change'];
 $total = $_GET['total'];
 $discount = $_GET['discount'];
 $cash = $_GET['cash'];
+$rname = $_GET['rname'];
 $x = 60;
 $y = 51;
 $q = 54;
@@ -143,7 +144,7 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(25,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
-		$pdf->Cell(10, 4,'Cash', 0, 'L');
+		$pdf->Cell(10, 4,$rname, 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(60,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
