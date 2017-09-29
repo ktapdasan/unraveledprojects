@@ -868,6 +868,7 @@ EOT;
                     product_srp,
                     product_bar_code,
                     product_stocks,
+                    product_status,
                     product_price,
                     product_receipt_name,
                     product_product_expiration,

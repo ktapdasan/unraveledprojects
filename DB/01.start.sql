@@ -41,6 +41,17 @@ insert into accounts
 )
 VALUES
 (
+	'201400028',
+	'1'
+);
+
+insert into accounts
+(
+	user_id,
+	user_type
+)
+VALUES
+(
 	'201400072',
 	'2'
 );
@@ -69,6 +80,23 @@ create table users
 );
 alter table users owner to ktapdasan;
 alter table users add column superior_pin text DEFAULT md5('SirWayne'::text);
+
+insert into users
+(
+	first_name,
+	middle_name,
+	last_name,
+	user_id,
+	user_type
+)
+VALUES
+(
+	'Patrick',
+	'Matetu',
+	'Chavez',
+	'201400028',
+	'1'
+);
 
 insert into users
 (
