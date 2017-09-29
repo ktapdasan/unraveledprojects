@@ -151,7 +151,7 @@ app.controller('Product', function(
         promise.then(function(data){
             $scope.added_user_data = data.data.result;
 
-            /*console.log($scope.added_user_data);*/
+            console.log($scope.added_user_data);
 
 /*var a = 0;
 for (var i in $scope.product_data) {
@@ -162,10 +162,10 @@ $scope.product_data[i].number = a += 1;
 };*/
 
 for (var x in $scope.added_user_data) {
-    if ($scope.added_user_data[x].user_type == 1) {
+    if ($scope.added_user_data[x].user_type == 2) {
         $scope.added_user_data[x].user_type = 'Cashier';
     };
-    if ($scope.added_user_data[x].user_type == 2) {
+    if ($scope.added_user_data[x].user_type == 1) {
         $scope.added_user_data[x].user_type = 'Admin';
     };
 };
@@ -565,10 +565,10 @@ $scope.edit_user = function(v){
     var index = $scope.added_user_data.indexOf(v);
 
     if ($scope.added_user_data[index].user_type == 'Cashier') {
-        $scope.modal.user_type = '1';
+        $scope.modal.user_type = '2';
     };
     if ($scope.added_user_data[index].user_type == 'Admin') {
-        $scope.modal.user_type = '2';
+        $scope.modal.user_type = '1';
     };
 
     /*console.log($scope.modal.user_type);*/
