@@ -460,8 +460,12 @@ EOT;
         $product_product_expiration = $data['product_product_expiration'];
         $product_supplier = $data['product_supplier'];
         $product_receipt_name = $data['product_receipt_name'];
+        $product_status = $data['product_status'];
+        $product_status_pk = $data['product_status_pk'];
+        $product_status_1 = $data['product_status_1'];
 
-        $sql = <<<EOT
+        $sql = "begin;";
+         $sql = <<<EOT
                 insert into product_data
                 (
                     product_name,
@@ -471,7 +475,8 @@ EOT;
                     product_price,
                     product_product_expiration,
                     product_supplier,
-                    product_receipt_name
+                    product_receipt_name,
+                    product_status
                 )
                 VALUES
                 (
@@ -482,12 +487,27 @@ EOT;
                     '$product_price',
                     '$product_product_expiration',
                     '$product_supplier',
-                    '$product_receipt_name'
+                    '$product_receipt_name',
+                    '$product_status'
                 )
                 ;
 EOT;
-
-        return ClassParent::insert($sql);
+        if ($product_status_1 == '(NEW/OLD)') {
+            $sql .= <<<EOT
+                update product_data set
+                (
+                    product_status
+                )
+                =
+                (
+                    '(OLD)'
+                )
+                where pk = '$product_status_pk'
+                ;
+EOT;
+        }
+        $sql .= "commit;";
+        return ClassParent::update($sql);
     }
 
     public function tender_product($data){
@@ -816,6 +836,7 @@ EOT;
                     product_name,
                     product_supplier,
                     product_srp,
+                    product_status,
                     product_bar_code,
                     product_stocks,
                     product_price,

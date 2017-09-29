@@ -412,6 +412,13 @@ $scope.add_product = function(){
 
     $scope.form.product_expiration = $filter('date')($scope.filter.product_expiration, "mediumDate");
 
+
+    if ($scope.form.product_status == 1) {
+        $scope.form.product_status_new = '(NEW)';
+    }else{
+        $scope.form.product_status_new = '(NEW)';
+        $scope.form.product_status_1 = '(NEW/OLD)';
+    }
     var datas = {
         product_name : $scope.form.product_name,
         product_bar_code : $scope.form.product_bar_code,
@@ -421,14 +428,16 @@ $scope.add_product = function(){
         product_product_expiration : $scope.form.product_expiration,
         product_supplier : $scope.form.product_supplier,
         product_receipt_name : $scope.form.receipt_name,
-
-
+        product_status : $scope.form.product_status_new,
+        product_status_1 : $scope.form.product_status_1,
+        product_status_pk : $scope.form.product_status_pk
     }
-
-    var promise = ProductFactory.add_product(datas);
+    var promise = ProductFactory.add_product(datas);    
     promise.then(function(data){
         var notify = $.notify('You have succesfully added the product', { allow_dismiss: true });
         get_product_data();
+        $route.reload();
+
     })
     .then(null, function(data){
         var notify = $.notify('Oops there something wrong!', { allow_dismiss: true });
@@ -1390,6 +1399,30 @@ $scope.request_product_order = function(v){
 $scope.delete_supplier_data = function(v){
     var index = $scope.supplier_data.indexOf(v);
 
+    $scope.modal = {
+        title : 'Please input a pin',
+        save : 'Delete',
+        close : 'Cancel'
+    }     
+
+    ngDialog.openConfirm({
+        template: 'InputPinModal',
+        className: 'ngdialog-theme-plain dialogwidth400',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+            $scope.form.pin = md5.createHash($scope.modal.pin);
+            if($scope.form.pin != $scope.user.superior_pin){
+                var notify = $.notify('The Pin is incorrect!', {'type': 'danger', allow_dismiss: true });
+                return false;
+            }
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
 
     var datas = {
         pk : $scope.supplier_data[index].pk
@@ -1403,6 +1436,8 @@ $scope.delete_supplier_data = function(v){
     })
     .then(null, function(data){
         var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+
+    });
 
     });
 }

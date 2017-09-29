@@ -16,6 +16,10 @@ alter table product_data owner to ktapdasan;
 --sept 25,2017
 alter table product_data add column product_receipt_name text;
 
+--sept 29,2017
+alter table product_data add column product_status text;
+
+
 create table supplier_data
 (
 	pk serial primary key,
@@ -28,6 +32,9 @@ create table supplier_data
 	archived boolean default false
 );
 alter table supplier_data owner to ktapdasan;
+
+--sept 29,2017
+alter table supplier_data alter column supplier_contact_number type text ;
 
 create table request_order_data
 (
