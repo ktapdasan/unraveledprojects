@@ -97,7 +97,7 @@
 						<th scope="row">{{v.number}}</th>
 						<td>{{v.product_name}}</td>
 						<td>{{v.product_receipt_name}}</td>
-						<td>{{v.product_status}}</td>
+						<td ng-if="v.product_status_color == 1" style="color:{{v.product_status_color1}};">{{v.product_status}}</td>
 						<td>{{v.product_supplier}}</td>
 						<td>{{v.product_stocks}}</td>
 						<td>{{v.product_srp}}</td>

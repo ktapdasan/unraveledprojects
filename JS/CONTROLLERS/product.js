@@ -266,6 +266,17 @@ function get_product_data(){
            console.log($scope.product_data[i].wamount);
         };
 
+        for (var z in $scope.product_data) {
+            if ($scope.product_data[z].product_status == '(OLD)') {
+                $scope.product_data[z].product_status_color = 1;
+                $scope.product_data[z].product_status_color1 = 'red';
+            }
+            if ($scope.product_data[z].product_status == '(NEW)') {
+                $scope.product_data[z].product_status_color = 1;
+                $scope.product_data[z].product_status_color1 = 'green';
+            }
+        };
+
         $scope.totalItems_productdata = $scope.product_data.length;
     })
     .then(null, function(data){
