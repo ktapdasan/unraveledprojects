@@ -798,14 +798,8 @@ EOT;
         $pk = $data['pk'];
 
         $sql = <<<EOT
-                update supplier_data set
-                (
-                    archived
-                )
-                =
-                (
-                    't'
-                )
+
+                delete from supplier_data
                 where pk = '$pk'
                 ;
 EOT;
