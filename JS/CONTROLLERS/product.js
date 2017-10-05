@@ -219,10 +219,10 @@ $scope.search = function(){
 
         var x = .12;
         for (var i in $scope.product_data) {
-           $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
-           $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
-           $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
-           console.log($scope.product_data[i].wamount);
+            $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
+            $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+            $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
+            console.log($scope.product_data[i].wamount);
         };
 
         $scope.totalItems_productdata = $scope.product_data.length;
@@ -261,10 +261,10 @@ function get_product_data(){
 
         var x = .12;
         for (var i in $scope.product_data) {
-           $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
-           $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
-           $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
-           console.log($scope.product_data[i].wamount);
+            $scope.form.vat_wamount = x * $scope.product_data[i].product_srp;
+            $scope.product_data[i].wamount1 = parseFloat($scope.product_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+            $scope.product_data[i].wamount3 = parseFloat($scope.product_data[i].wamount1).toFixed(2);
+            console.log($scope.product_data[i].wamount);
         };
 
         for (var z in $scope.product_data) {
@@ -280,10 +280,10 @@ function get_product_data(){
 
         $scope.totalItems_productdata = $scope.product_data.length;
     })
-    .then(null, function(data){
+.then(null, function(data){
 
 
-    });
+});
 }
 
 $scope.setPage_productdata = function (pageNo) {
@@ -431,24 +431,24 @@ $scope.check_item = function(){
     promise.then(function(data){
         $scope.check_item_data_status = true;
         $scope.check_item_data = data.data.result;
-       
+
 
 
         for (var i in $scope.check_item_data) {
             if ($scope.form.product_bar_code == $scope.check_item_data[i].product_bar_code) {
-            $scope.form.x = $scope.check_item_data[i].pk;
-            $scope.form.product_status_new = '(NEW)';
-            $scope.form.product_status_1 = '(NEW/OLD)';
-            $scope.add_product();
+                $scope.form.x = $scope.check_item_data[i].pk;
+                $scope.form.product_status_new = '(NEW)';
+                $scope.form.product_status_1 = '(NEW/OLD)';
+                $scope.add_product();
             };
         };
 
     })
-.then(null, function(data){
-    $scope.check_item_data_status = false;
-    $scope.form.product_status = 1; 
-    $scope.add_product();
-});
+    .then(null, function(data){
+        $scope.check_item_data_status = false;
+        $scope.form.product_status = 1; 
+        $scope.add_product();
+    });
 }
 
 $scope.add_product = function(){
@@ -477,7 +477,7 @@ $scope.add_product = function(){
     }
 
     console.log(datas);
-    
+
     var promise = ProductFactory.add_product(datas);    
     promise.then(function(data){
         var notify = $.notify('You have succesfully added the product', { allow_dismiss: true });
@@ -682,16 +682,16 @@ $scope.delete_user = function(v){
     var index = $scope.added_user_data.indexOf(v);
 
 
-        $scope.modal.user_idd = $scope.added_user_data[index].user_id;
-        var promise = ProductFactory.delete_user($scope.modal);
-        promise.then(function(data){
-            var notify = $.notify('You have succesfully deleted the user', { 'type': 'success', allow_dismiss: true });
-            get_added_user_data();
-        })
-        .then(null, function(data){
-            var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
+    $scope.modal.user_idd = $scope.added_user_data[index].user_id;
+    var promise = ProductFactory.delete_user($scope.modal);
+    promise.then(function(data){
+        var notify = $.notify('You have succesfully deleted the user', { 'type': 'success', allow_dismiss: true });
+        get_added_user_data();
+    })
+    .then(null, function(data){
+        var notify = $.notify('Oops there is something wrong!', { 'type': 'danger', allow_dismiss: true });
 
-        });
+    });
 }
 
 $scope.delete_product_data = function(v){
@@ -841,19 +841,19 @@ ngDialog.openConfirm({
     preCloseCallback: function(value) {
         var nestedConfirmDialog;
         if ($scope.modal.gc_name == '' || $scope.modal.gc_name == "" || $scope.modal.gc_name == NaN || $scope.modal.gc_name == null || $scope.modal.gc_name == 0.00 || $scope.modal.gc_name == undefined || $scope.modal.product_gc_name == 'NaN') {
-    var notify = $.notify('Oops there something wrong with gift certificate name!', {'type': 'danger',  allow_dismiss: true });
-    return false;
-    };
+            var notify = $.notify('Oops there something wrong with gift certificate name!', {'type': 'danger',  allow_dismiss: true });
+            return false;
+        };
 
-    if ($scope.modal.gc_code == '' || $scope.modal.gc_code == "" || $scope.modal.gc_code == NaN || $scope.modal.gc_code == null || $scope.modal.gc_code == 0.00 || $scope.modal.gc_code == undefined || $scope.modal.product_gc_code == 'NaN') {
-    var notify = $.notify('Oops there something wrong with gift certificate code!', {'type': 'danger',  allow_dismiss: true });
-    return false;
-    };
-    
-    if ($scope.modal.gc_amount == '' || $scope.modal.gc_amount == "" || $scope.modal.gc_amount == NaN || $scope.modal.gc_amount == null || $scope.modal.gc_amount == 0.00 || $scope.modal.gc_amount == undefined || $scope.modal.product_gc_amount == 'NaN') {
-    var notify = $.notify('Oops there something wrong with gift certificate amount!', {'type': 'danger',  allow_dismiss: true });
-    return false;
-    };
+        if ($scope.modal.gc_code == '' || $scope.modal.gc_code == "" || $scope.modal.gc_code == NaN || $scope.modal.gc_code == null || $scope.modal.gc_code == 0.00 || $scope.modal.gc_code == undefined || $scope.modal.product_gc_code == 'NaN') {
+            var notify = $.notify('Oops there something wrong with gift certificate code!', {'type': 'danger',  allow_dismiss: true });
+            return false;
+        };
+
+        if ($scope.modal.gc_amount == '' || $scope.modal.gc_amount == "" || $scope.modal.gc_amount == NaN || $scope.modal.gc_amount == null || $scope.modal.gc_amount == 0.00 || $scope.modal.gc_amount == undefined || $scope.modal.product_gc_amount == 'NaN') {
+            var notify = $.notify('Oops there something wrong with gift certificate amount!', {'type': 'danger',  allow_dismiss: true });
+            return false;
+        };
         return nestedConfirmDialog;
     },
     scope: $scope,
@@ -964,9 +964,38 @@ promise.then(function(data){
 
 $scope.cancel_transaction = function(){
 
+    $scope.modal = {
+        title : 'Please input a pin',
+        save : 'Confirm',
+        close : 'Cancel'
+    }     
+
+    ngDialog.openConfirm({
+        template: 'InputPinModal',
+        className: 'ngdialog-theme-plain dialogwidth400',
+        preCloseCallback: function(value) {
+            var nestedConfirmDialog;
+            $scope.form.pin = md5.createHash($scope.modal.pin);
+            if($scope.form.pin != $scope.user.superior_pin){
+                var notify = $.notify('The Pin is incorrect!', {'type': 'danger', allow_dismiss: true });
+                return false;
+            }
+            $route.reload();
+            return nestedConfirmDialog;
+        },
+        scope: $scope,
+        showClose: false
+    })
+    .then(function(value){
+        return false;
+    }, function(value){
+
+    });
+
+}
+
+$scope.next_transaction = function(){
     $route.reload();
-
-
 }
 
 $scope.check_amount = function(cash){
@@ -1229,9 +1258,9 @@ $scope.send_receipt = function(){
     }, function(value){
 
         if ($scope.gift_status == true) {
-        $scope.form.r_name = 'Gift Certificate'
+            $scope.form.r_name = 'Gift Certificate'
         }else{
-        $scope.form.r_name = 'Cash'
+            $scope.form.r_name = 'Cash'
         };
 
         $scope.submit_datas = {
@@ -1259,7 +1288,7 @@ $scope.send_receipt = function(){
         };
 
         var notify = $.notify('Please wait for the receipt to be send', { 'type': 'warning', allow_dismiss: true });
-       
+
         var promise = ProductFactory.submit_toemail($scope.submit_datas);
         promise.then(function(data){
             var notify = $.notify('You have succesfully send the receipt', { 'type': 'success', allow_dismiss: true });
@@ -1365,7 +1394,7 @@ $scope.edit_supplier_data = function(v){
 
         var promise = ProductFactory.edit_supplier_data(datas);
         promise.then(function(data){
-            var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
+            var notify = $.notify('You have succesfully updated the product', { 'type': 'success', allow_dismiss: true });
             get_supplier_data();
         })
         .then(null, function(data){
@@ -1432,7 +1461,7 @@ $scope.request_product_order = function(v){
 
         var promise = ProductFactory.request_product_order(datas);
         promise.then(function(data){
-            var notify = $.notify('You have succesfully added the product', { 'type': 'success', allow_dismiss: true });
+            var notify = $.notify('You have succesfully requested the product', { 'type': 'success', allow_dismiss: true });
             get_request_order_data();
         })
         .then(null, function(data){
@@ -1470,20 +1499,20 @@ $scope.delete_supplier_data = function(v){
         return false;
     }, function(value){
 
-    var datas = {
-        pk : $scope.supplier_data[index].pk
-    }
+        var datas = {
+            pk : $scope.supplier_data[index].pk
+        }
 
 
-    var promise = ProductFactory.delete_supplier_data(datas);
-    promise.then(function(data){
-        var notify = $.notify('You have succesfully deleted the supplier', { 'type': 'success', allow_dismiss: true });
-        get_supplier_data();
-    })
-    .then(null, function(data){
-        var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
+        var promise = ProductFactory.delete_supplier_data(datas);
+        promise.then(function(data){
+            var notify = $.notify('You have succesfully deleted the supplier', { 'type': 'success', allow_dismiss: true });
+            get_supplier_data();
+        })
+        .then(null, function(data){
+            var notify = $.notify('Oops there something wrong!', { 'type': 'danger', allow_dismiss: true });
 
-    });
+        });
 
     });
 }
