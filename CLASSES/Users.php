@@ -106,7 +106,7 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
-                (select product_receipt_name from product_data where product_name = tender_data.product_name) as product_receipt_name,
+                (select product_receipt_name from product_data where pk = tender_data.pk) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
@@ -192,11 +192,30 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
-                (select product_receipt_name from product_data where product_name = tender_data.product_name) as product_receipt_name,
+                (select product_receipt_name from product_data where pk = tender_data.pk) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
                 where tender_data.product_transaction_number = '$transact_number' AND archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+        return ClassParent::get($sql);
+    }
+
+    public function get_check_item($filter){
+        foreach($filter as $k=>$v){
+            $filter[$k] = pg_escape_string(trim(strip_tags($v)));
+        }
+        $wildcard = $filter['wildcard'];
+      
+        $sql = <<<EOT
+            select
+                pk,
+                product_name,
+                product_bar_code
+                from product_data
+                where product_data.product_bar_code = '$wildcard' AND archived = 'f'
                 order by date_created desc
                 ;
 EOT;

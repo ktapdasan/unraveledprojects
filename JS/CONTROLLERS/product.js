@@ -17,6 +17,7 @@ app.controller('Product', function(
     $scope.tender_voided = {};
     $scope.tender_voided.count = 0;
     $scope.submit_datas = {};
+    $scope.check_item_data_status = {};
     $scope.stock_amount_finalized = 0;
     $scope.stock_amount_pk = {};
     $scope.stock_amount = 0;
@@ -419,6 +420,37 @@ $scope.logout = function(){
     })
 }
 
+$scope.check_item = function(){
+
+    var filters = {
+        wildcard : $scope.form.product_bar_code
+    };
+    console.log(filters);
+
+    var promise = ProductFactory.get_check_item(filters);
+    promise.then(function(data){
+        $scope.check_item_data_status = true;
+        $scope.check_item_data = data.data.result;
+       
+
+
+        for (var i in $scope.check_item_data) {
+            if ($scope.form.product_bar_code == $scope.check_item_data[i].product_bar_code) {
+            $scope.form.x = $scope.check_item_data[i].pk;
+            $scope.form.product_status_new = '(NEW)';
+            $scope.form.product_status_1 = '(NEW/OLD)';
+            $scope.add_product();
+            };
+        };
+
+    })
+.then(null, function(data){
+    $scope.check_item_data_status = false;
+    $scope.form.product_status = 1;
+    $scope.add_product();
+});
+}
+
 $scope.add_product = function(){
 
     $scope.form.product_expiration = $filter('date')($scope.filter.product_expiration, "mediumDate");
@@ -441,8 +473,11 @@ $scope.add_product = function(){
         product_receipt_name : $scope.form.receipt_name,
         product_status : $scope.form.product_status_new,
         product_status_1 : $scope.form.product_status_1,
-        product_status_pk : $scope.form.product_status_pk
+        product_status_pk : $scope.form.x
     }
+
+    console.log(datas);
+    
     var promise = ProductFactory.add_product(datas);    
     promise.then(function(data){
         var notify = $.notify('You have succesfully added the product', { allow_dismiss: true });
