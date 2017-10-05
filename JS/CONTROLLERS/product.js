@@ -446,7 +446,7 @@ $scope.check_item = function(){
     })
 .then(null, function(data){
     $scope.check_item_data_status = false;
-    $scope.form.product_status = 1;
+    $scope.form.product_status = 1; 
     $scope.add_product();
 });
 }
