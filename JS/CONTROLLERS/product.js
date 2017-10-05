@@ -1215,7 +1215,7 @@ return false;
 $scope.filter.product_expiration = $filter('date')($scope.filter.product_expiration, "medium");
 /*console.log($scope.tender_data);
 console.log(data);*/
-
+$scope.gift_status = true;
 var promise = ProductFactory.tender_product(data);
 promise.then(function(data){
     window.open('./FUNCTIONS/Uploads/receipt.php?reports=' + JSON.stringify($scope.tender_data) + '&total=' + $scope.form.final_totaal 
