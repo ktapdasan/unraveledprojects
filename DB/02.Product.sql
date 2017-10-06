@@ -19,6 +19,9 @@ alter table product_data add column product_receipt_name text;
 --sept 29,2017
 alter table product_data add column product_status text;
 
+--oct 6,2017
+alter table product_data add column product_or_number text;
+
 
 create table supplier_data
 (

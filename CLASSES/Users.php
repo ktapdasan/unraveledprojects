@@ -482,6 +482,7 @@ EOT;
         $product_status = $data['product_status'];
         $product_status_pk = $data['product_status_pk'];
         $product_status_1 = $data['product_status_1'];
+        $product_or_number = $data['product_or_number'];
 
         $sql = "begin;";
          $sql = <<<EOT
@@ -495,7 +496,8 @@ EOT;
                     product_product_expiration,
                     product_supplier,
                     product_receipt_name,
-                    product_status
+                    product_status,
+                    product_or_number
                 )
                 VALUES
                 (
@@ -507,7 +509,8 @@ EOT;
                     '$product_product_expiration',
                     '$product_supplier',
                     '$product_receipt_name',
-                    '$product_status'
+                    '$product_status',
+                    '$product_or_number'
                 )
                 ;
 EOT;
@@ -697,6 +700,7 @@ EOT;
         $product_price = $data['product_price'];
         $product_expiration = $data['product_expiration'];
         $product_receipt_name = $data['product_receipt_name'];
+        $product_or_number = $data['product_or_number'];
 
         $sql = <<<EOT
                 update product_data set
@@ -707,7 +711,8 @@ EOT;
                     product_stocks,
                     product_price,
                     product_product_expiration,
-                    product_receipt_name
+                    product_receipt_name,
+                    product_or_number
                 )
                 =
                 (
@@ -717,7 +722,8 @@ EOT;
                     '$product_stocks',
                     '$product_price',
                     '$product_expiration',
-                    '$product_receipt_name'
+                    '$product_receipt_name',
+                    '$product_or_number'
                 )
                 where pk = '$pk'
                 ;
@@ -851,6 +857,7 @@ EOT;
                     product_srp,
                     product_status,
                     product_bar_code,
+                    product_or_number,
                     product_stocks,
                     product_price,
                     product_receipt_name,
@@ -870,7 +877,7 @@ EOT;
 
         $wildcard = $filter['wildcard'];
         if ($wildcard != undefined) {
-             $product_name.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%'";
+             $product_name.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%' OR product_or_number ILIKE '%$wildcard%'";
         }
 
         $sql = <<<EOT
@@ -881,6 +888,7 @@ EOT;
                     product_srp,
                     product_bar_code,
                     product_stocks,
+                    product_or_number,
                     product_status,
                     product_price,
                     product_receipt_name,

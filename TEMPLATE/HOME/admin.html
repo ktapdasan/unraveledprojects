@@ -45,6 +45,9 @@
 				<div class="form-group col-md-2">
 					<input type="text" class="form-control" max-length="17"  placeholder="Receipt Name" ng-model="form.receipt_name"/>
 				</div>
+				<div class="form-group col-md-2">
+					<input type="text" class="form-control" placeholder="O.R. #" ng-model="form.or_number"/>
+				</div>
 				<!-- <div class="form-group col-md-2">
 					<select ng-model="form.product_status" class="form-control">
 						<option value="" disabled selected style="display:none"> Select Status</option>
@@ -80,6 +83,7 @@
 						<th>#</th>
 						<th>Product Name</th>
 						<th>Receipt Name</th>
+						<th>O.R #</th>
 						<th>Status</th>
 						<th>Supplier Code Name</th>
 						<th># of Stocks</th>
@@ -97,6 +101,7 @@
 						<th scope="row">{{v.number}}</th>
 						<td>{{v.product_name}}</td>
 						<td>{{v.product_receipt_name}}</td>
+						<td>{{v.product_or_number}}</td>
 						<td ng-if="v.product_status_color == 1" style="color:{{v.product_status_color1}};">{{v.product_status}}</td>
 						<td>{{v.product_supplier}}</td>
 						<td>{{v.product_stocks}}</td>
@@ -384,6 +389,9 @@
       </div>
       <div style="margin-left:13px;">
           Receipt Name <input type="text" max-length="17"  style="width:100%;" class="form-control" ng-model="modal.receipt_name">
+        </div>
+        <div style="margin-left:13px;">
+          O.R # <input type="text"  style="width:100%;" class="form-control" ng-model="modal.or_number">
         </div>
     <br>
 

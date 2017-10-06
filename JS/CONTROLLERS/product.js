@@ -473,7 +473,8 @@ $scope.add_product = function(){
         product_receipt_name : $scope.form.receipt_name,
         product_status : $scope.form.product_status_new,
         product_status_1 : $scope.form.product_status_1,
-        product_status_pk : $scope.form.x
+        product_status_pk : $scope.form.x,
+        product_or_number : $scope.form.or_number
     }
 
     console.log(datas);
@@ -505,7 +506,8 @@ $scope.edit_product_data = function(v){
         product_expiration : $scope.product_data[index].product_product_expiration,
         product_srp : $scope.product_data[index].product_srp,
         product_supplier : $scope.product_data[index].product_supplier,
-        receipt_name : $scope.product_data[index].product_receipt_name
+        receipt_name : $scope.product_data[index].product_receipt_name,
+        or_number : $scope.product_data[index].product_or_number
     };
 
     ngDialog.openConfirm({
@@ -540,7 +542,8 @@ $scope.edit_product_data = function(v){
             product_expiration : $scope.modal.new_product_date_expiration,
             supplier_code_name : $scope.modal.supplier_code_name,
             product_supplier : $scope.modal.product_supplier,
-            product_receipt_name : $scope.modal.receipt_name
+            product_receipt_name : $scope.modal.receipt_name,
+            product_or_number : $scope.modal.or_number
         }
 
         var promise = ProductFactory.edit_product_data(datas);
