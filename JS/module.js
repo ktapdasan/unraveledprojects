@@ -48,6 +48,11 @@ app.config(function($routeProvider) {
 		controller: 'Reports',
 		templateUrl: 'TEMPLATE/HOME/receiptbackup.html'             
 	})
+	.when('/ORList',             
+	{                 
+		controller: 'Reports',
+		templateUrl: 'TEMPLATE/HOME/orlist.html'             
+	})
 	.when('/bucket/pictures',             
 	{                 
 		controller: 'BucketController',

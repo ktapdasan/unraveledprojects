@@ -18,6 +18,7 @@ app.controller('Reports', function(
     $scope.tender_data_status = {};
     $scope.bestselling_status = {};
     $scope.receipts_data_back_status = {};
+    $scope.or_list_data_status = {};
 
     $scope.viewby_orderdata = 4;
     $scope.currentPage_orderdata = 4;
@@ -61,6 +62,7 @@ app.controller('Reports', function(
         var promise = UserFactory.get_user(filters);
         promise.then(function(data){
             $scope.user = data.data.result[0];
+            get_or_data();
 
         })
         .then(null, function(data){
@@ -119,6 +121,125 @@ app.controller('Reports', function(
     }
 
 
+$scope.search_or = function(){
+    if ($scope.form.search == "") {
+        get_or_data();
+    }
+
+    var filters = {
+        wildcard : $scope.form.search_or
+    };
+    console.log(filters);
+
+    var promise = ProductFactory.get_product_data_or(filters);
+    promise.then(function(data){
+        $scope.or_list_data = data.data.result;
+        console.log($scope.or_list_data);
+
+        var a = 0;
+        for (var i in $scope.or_list_data) {
+            $scope.or_list_data[i].product_product_expiration = new Date($scope.or_list_data[i].product_product_expiration);
+            $scope.or_list_data[i].product_product_expiration = $filter('date')($scope.or_list_data[i].product_product_expiration, "mediumDate");
+            $scope.or_list_data[i].date_created = new Date($scope.or_list_data[i].date_created);
+            $scope.or_list_data[i].number = a += 1;
+        };
+
+        var x = .12;
+        for (var i in $scope.or_list_data) {
+            $scope.form.vat_wamount = x * $scope.or_list_data[i].product_srp;
+            $scope.or_list_data[i].wamount1 = parseFloat($scope.or_list_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+            $scope.or_list_data[i].wamount3 = parseFloat($scope.or_list_data[i].wamount1).toFixed(2);
+            console.log($scope.or_list_data[i].wamount);
+        };
+
+        for (var z in $scope.or_list_data) {
+            if ($scope.or_list_data[z].product_status == '(OLD)') {
+                $scope.or_list_data[z].product_status_color = 1;
+                $scope.or_list_data[z].product_status_color1 = 'red';
+            }
+            if ($scope.or_list_data[z].product_status == '(NEW)') {
+                $scope.or_list_data[z].product_status_color = 1;
+                $scope.or_list_data[z].product_status_color1 = 'green';
+            }
+        };
+
+        $scope.form.totaaal = 0;
+        for (var k in $scope.or_list_data) {
+            $scope.form.totaaal += parseFloat($scope.or_list_data[k].wamount3);
+            $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+            /*console.log($scope.form.totaaal);*/
+        };
+
+        $scope.or_list_data_status = true;
+
+        /*$scope.totalItems_productdata = $scope.or_list_data.length;*/
+/*$scope.setPage_productdata = function (pageNo) {
+    $scope.currentPage_productdata = pageNo;
+};
+
+$scope.pageChanged_productdata = function() {
+    console.log('Page changed to: ' + $scope.currentPage_productdata);
+};
+
+$scope.setItemsPerPage_productdata = function(num) {
+    $scope.itemsPerPage_productdata = num;
+$scope.currentPage_productdata = 1; //reset to first paghe
+}*/
+    })
+.then(null, function(data){
+$scope.or_list_data_status = false;
+});
+}
+
+function get_or_data(){
+
+    var promise = ProductFactory.get_data_or();
+    promise.then(function(data){
+        $scope.or_list_data = data.data.result;
+        console.log($scope.or_list_data);
+
+        var a = 0;
+        for (var i in $scope.or_list_data) {
+            $scope.or_list_data[i].product_product_expiration = new Date($scope.or_list_data[i].product_product_expiration);
+            $scope.or_list_data[i].product_product_expiration = $filter('date')($scope.or_list_data[i].product_product_expiration, "mediumDate");
+            $scope.or_list_data[i].date_created = new Date($scope.or_list_data[i].date_created);
+            $scope.or_list_data[i].number = a += 1;
+        };
+
+        var x = .12;
+        for (var i in $scope.or_list_data) {
+            $scope.form.vat_wamount = x * $scope.or_list_data[i].product_srp;
+            $scope.or_list_data[i].wamount1 = parseFloat($scope.or_list_data[i].product_srp) + parseFloat($scope.form.vat_wamount);
+            $scope.or_list_data[i].wamount3 = parseFloat($scope.or_list_data[i].wamount1).toFixed(2);
+            console.log($scope.or_list_data[i].wamount);
+        };
+
+        for (var z in $scope.or_list_data) {
+            if ($scope.or_list_data[z].product_status == '(OLD)') {
+                $scope.or_list_data[z].product_status_color = 1;
+                $scope.or_list_data[z].product_status_color1 = 'red';
+            }
+            if ($scope.or_list_data[z].product_status == '(NEW)') {
+                $scope.or_list_data[z].product_status_color = 1;
+                $scope.or_list_data[z].product_status_color1 = 'green';
+            }
+        };
+
+        $scope.form.totaaal = 0;
+        for (var k in $scope.or_list_data) {
+            $scope.form.totaaal += parseFloat($scope.or_list_data[k].wamount3);
+            $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
+            /*console.log($scope.form.totaaal);*/
+        };
+
+        /*$scope.totalItems_productdata = $scope.product_data.length;*/
+        $scope.or_list_data_status = true;
+    })
+.then(null, function(data){
+$scope.or_list_data_status = false;
+
+});
+}
 
 
     $scope.get_receipts = function(){

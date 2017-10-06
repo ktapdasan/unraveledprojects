@@ -872,12 +872,69 @@ EOT;
         return ClassParent::get($sql);
     }
 
+    public function get_data_or($data){
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    product_name,
+                    product_supplier,
+                    product_srp,
+                    product_status,
+                    product_bar_code,
+                    product_or_number,
+                    product_stocks,
+                    product_price,
+                    product_receipt_name,
+                    product_product_expiration,
+                    date_created::timestamp(0)
+                from product_data
+                where archived = 'f'
+                order by date_created desc
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function get_product_data_search($filter){
         $wildcard = "";
 
         $wildcard = $filter['wildcard'];
         if ($wildcard != undefined) {
              $product_name.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%' OR product_or_number ILIKE '%$wildcard%'";
+        }
+
+        $sql = <<<EOT
+                select
+                    pk, 
+                    product_name,
+                    product_supplier,
+                    product_srp,
+                    product_bar_code,
+                    product_stocks,
+                    product_or_number,
+                    product_status,
+                    product_price,
+                    product_receipt_name,
+                    product_product_expiration,
+                    date_created::timestamp(0)
+                from product_data
+                where archived = 'f'
+                $product_name
+                order by date_created desc
+                ;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_product_data_or($filter){
+        $wildcard = "";
+
+        $wildcard = $filter['wildcard'];
+        if ($wildcard != undefined) {
+             $product_name.=" AND product_or_number ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%'";
         }
 
         $sql = <<<EOT

@@ -35,6 +35,40 @@ app.factory('ProductFactory', function($http, $location){
         return promise;
     };
 
+    factory.get_data_or = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/get_data_or.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
+    factory.get_product_data_or = function(data){
+        var promise = $http({
+            url:'./FUNCTIONS/Product/get_product_data_or.php', 
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+            data : data
+        }) 
+
+        return promise;
+    };
+
     factory.get_check_item = function(data){
         var promise = $http({
             url:'./FUNCTIONS/Product/get_check_item.php', 
