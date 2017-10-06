@@ -245,7 +245,7 @@ function get_or_data(){
 
         $scope.form.totaaal = 0;
         for (var k in $scope.or_list_data) {
-            $scope.form.totaaal += parseFloat($scope.or_list_data[k].wamount3);
+            $scope.form.totaaal += parseFloat($scope.or_list_data[k].tempo_total);
             $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
             /*console.log($scope.form.totaaal);*/
         };
