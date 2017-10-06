@@ -163,9 +163,18 @@ $scope.search_or = function(){
             }
         };
 
+        var b = 0;
+        for (var i in $scope.or_list_data) {
+            b = parseFloat($scope.or_list_data[i].product_stocks) * parseFloat($scope.or_list_data[i].wamount3); 
+            $scope.or_list_data[i].tempo_total = b.toFixed(2);
+            /*console.log($scope.or_list_data[i].tempo_total);            
+            console.log($scope.or_list_data[i].product_quantity);            
+            console.log($scope.or_list_data[i].product_retail_price);*/
+        };
+
         $scope.form.totaaal = 0;
         for (var k in $scope.or_list_data) {
-            $scope.form.totaaal += parseFloat($scope.or_list_data[k].wamount3);
+            $scope.form.totaaal += parseFloat($scope.or_list_data[k].tempo_total);
             $scope.form.final_totaal = $scope.form.totaaal.toFixed(2);
             /*console.log($scope.form.totaaal);*/
         };
@@ -223,6 +232,15 @@ function get_or_data(){
                 $scope.or_list_data[z].product_status_color = 1;
                 $scope.or_list_data[z].product_status_color1 = 'green';
             }
+        };
+
+        var b = 0;
+        for (var i in $scope.or_list_data) {
+            b = parseFloat($scope.or_list_data[i].product_stocks) * parseFloat($scope.or_list_data[i].wamount3); 
+            $scope.or_list_data[i].tempo_total = b.toFixed(2);
+            /*console.log($scope.or_list_data[i].tempo_total);            
+            console.log($scope.or_list_data[i].product_quantity);            
+            console.log($scope.or_list_data[i].product_retail_price);*/
         };
 
         $scope.form.totaaal = 0;
