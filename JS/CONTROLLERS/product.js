@@ -121,6 +121,7 @@ app.controller('Product', function(
 
 
         $scope.filter.product_expiration = new Date();
+        $scope.form.product_expiration = new Date();
     }
 
     function getMonday(d) {
@@ -464,7 +465,7 @@ $scope.check_item = function(){
 
 $scope.add_product = function(){
 
-    $scope.form.product_expiration = $filter('date')($scope.filter.product_expiration, "mediumDate");
+    $scope.form.product_expiration = $filter('date')($scope.form.product_expiration, "mediumDate");
 
 
     if ($scope.form.product_status == 1) {

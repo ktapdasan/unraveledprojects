@@ -82,6 +82,9 @@ create table tender_data
 );
 alter table tender_data owner to ktapdasan;
 
+--oct 6,2017
+alter table tender_data add column product_pk int;
+
 create table gift_certificate_data
 (
 	pk serial primary key,

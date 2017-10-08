@@ -192,7 +192,7 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
-                (select product_receipt_name from product_data where pk = tender_data.pk) as product_receipt_name,
+                (select product_receipt_name from product_data where pk = tender_data.product_pk) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
@@ -576,6 +576,7 @@ EOT;
             $product_supplier_price = $value['product_srp'];
             $product_retail_price = $value['product_price'];
             $tempo_total = $value['tempor_total'];
+            $pk = $value['pk'];
             
 
             $sql .= <<<EOT
@@ -598,7 +599,8 @@ EOT;
                     gc_amount,
                     gc_name,
                     gc_code,
-                    tempo_total
+                    tempo_total,
+                    product_pk
                 )
                 VALUES
                 (
@@ -619,7 +621,8 @@ EOT;
                     '$gc_amount',
                     '$gc_name',
                     '$gc_code',
-                    '$tempo_total'
+                    '$tempo_total',
+                    '$pk'
                 )
                 ;
 EOT;
