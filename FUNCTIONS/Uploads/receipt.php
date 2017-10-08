@@ -80,7 +80,7 @@ class PDF extends FPDF
 		$pdf->Cell(10, 5, 'Mandaluyong City, Philippines' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->SetXY(14,25); 
-		$pdf->Cell(10, 5, 'VAT REG TIN#000-000-000-00000' , 0, 'L'); 
+		$pdf->Cell(10, 5, 'VAT REG TIN#106-568-918-000' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->SetXY(12,28); 
 		$pdf->Cell(10, 5, 'THIS SERVE AS YOUR SALES INVOICE' , 0, 'L'); 

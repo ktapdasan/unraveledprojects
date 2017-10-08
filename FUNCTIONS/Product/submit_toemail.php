@@ -16,6 +16,7 @@ $discount = $_POST['discount'];
 $message = $_POST['message'];
 $cash = $_POST['cash'];
 $rname = $_POST['r_name'];
+$email = $_POST['email'];
 $x = 60;
 $y = 51;
 $q = 54;
@@ -25,7 +26,7 @@ $r = 63;
 $t = 66;
 $s = 69;
 $a = 72;
-$b = 25;
+$b = 13;
 $n = 51;
 $endline = 75;
 $endmessage = 77;
@@ -82,7 +83,7 @@ class PDF extends FPDF
 		$pdf->Cell(10, 5, 'Mandaluyong City, Philippines' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->SetXY(18,25); 
-		$pdf->Cell(10, 5, 'VAT REG TIN#000-000-000-00000' , 0, 'L'); 
+		$pdf->Cell(10, 5, 'VAT REG TIN#106-568-918-000' , 0, 'L'); 
 		$pdf->Ln();
 		$pdf->SetXY(16,28); 
 		$pdf->Cell(10, 5, 'THIS SERVE AS YOUR SALES INVOICE' , 0, 'L'); 
@@ -134,17 +135,17 @@ class PDF extends FPDF
 		$pdf->Ln();
 		$pdf->SetXY(5,$q);
 		$pdf->Cell(10, 4,$counts, 0, 'L');
-		$pdf->SetXY(25,$q);
+		$pdf->SetXY(13,$q);
 		$pdf->Cell(10, 4,'Item(s)', 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$w);
+		$pdf->SetXY(13,$w);
 		$pdf->Cell(10, 4,'Total Due', 0, 'L');
 		$pdf->Ln();
 		$pdf->SetXY(60,$w);
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->Cell(10, 4,$total, 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$e);
+		$pdf->SetXY(13,$e);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$rname, 0, 'L');
 		$pdf->Ln();
@@ -152,7 +153,7 @@ class PDF extends FPDF
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$cash, 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$r);
+		$pdf->SetXY(13,$r);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'Change', 0, 'L');
 		$pdf->Ln();
@@ -160,7 +161,7 @@ class PDF extends FPDF
 		$pdf->SetFont('Arial', 'B', 10); 
 		$pdf->Cell(10, 4,$change, 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$t);
+		$pdf->SetXY(13,$t);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'VATable', 0, 'L');
 		$pdf->Ln();
@@ -168,7 +169,7 @@ class PDF extends FPDF
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$net_amount, 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$s);
+		$pdf->SetXY(13,$s);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'Discount', 0, 'L');
 		$pdf->Ln();
@@ -176,7 +177,7 @@ class PDF extends FPDF
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,$discount, 0, 'L');
 		$pdf->Ln();
-		$pdf->SetXY(25,$a);
+		$pdf->SetXY(13,$a);
 		$pdf->SetFont('Arial', 'B', 7); 
 		$pdf->Cell(10, 4,'VAT', 0, 'L');
 		$pdf->Ln();
@@ -223,7 +224,7 @@ class PDF extends FPDF
 	$mail->Port = 587;                                    // TCP port to connect to
 
 	$mail->setFrom('gosaricare@chrsglobal.com', 'GoSari');
-	$mail->addAddress($_POST['email']);     // Add a recipient
+	$mail->addAddress($email);     // Add a recipient
 	//$mail->addReplyTo('info@example.com', 'Information');
 	$mail->addBCC('');
 
