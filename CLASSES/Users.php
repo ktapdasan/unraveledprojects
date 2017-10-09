@@ -106,7 +106,7 @@ EOT;
                 product_transaction_number,
                 (select first_name from users where user_id = cashier_user_id) as first_name,
                 (select last_name from users where user_id = cashier_user_id) as last_name,
-                (select product_receipt_name from product_data where pk = tender_data.pk) as product_receipt_name,
+                (select product_receipt_name from product_data where pk = tender_data.product_pk) as product_receipt_name,
                 void_count,
                 total
                 from tender_data
