@@ -905,7 +905,7 @@ EOT;
 
         $wildcard = $filter['wildcard'];
         if ($wildcard != undefined) {
-             $product_name.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%' OR product_or_number ILIKE '%$wildcard%'";
+             $product_name.=" AND product_bar_code ILIKE '%$wildcard%' OR product_name ILIKE '%$wildcard%' OR product_or_number ILIKE '%$wildcard%' OR product_status ILIKE '%$wildcard%'";
         }
 
         $sql = <<<EOT
