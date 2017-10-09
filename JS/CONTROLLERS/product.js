@@ -547,10 +547,10 @@ $scope.edit_product_data = function(v){
         var datas = {
             pk : $scope.product_data[index].pk,
             product_name : $scope.modal.product_name,
+            product_srp : $scope.modal.product_srp,
             product_bar_code : $scope.modal.product_bar_code,
             product_stocks : $scope.modal.product_stocks,
             product_price : $scope.modal.product_price,
-            product_srp : $scope.modal.product_srp,
             product_expiration : $scope.modal.new_product_date_expiration,
             supplier_code_name : $scope.modal.supplier_code_name,
             product_supplier : $scope.modal.product_supplier,

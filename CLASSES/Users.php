@@ -704,6 +704,7 @@ EOT;
         $product_expiration = $data['product_expiration'];
         $product_receipt_name = $data['product_receipt_name'];
         $product_or_number = $data['product_or_number'];
+        $product_supplier = $data['product_supplier'];
 
         $sql = <<<EOT
                 update product_data set
@@ -715,7 +716,8 @@ EOT;
                     product_price,
                     product_product_expiration,
                     product_receipt_name,
-                    product_or_number
+                    product_or_number,
+                    product_supplier
                 )
                 =
                 (
@@ -726,7 +728,8 @@ EOT;
                     '$product_price',
                     '$product_expiration',
                     '$product_receipt_name',
-                    '$product_or_number'
+                    '$product_or_number',
+                    '$product_supplier'
                 )
                 where pk = '$pk'
                 ;
