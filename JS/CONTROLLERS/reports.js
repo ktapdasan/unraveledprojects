@@ -163,6 +163,14 @@ $scope.search_or = function(){
             }
         };
 
+        for (var i in $scope.or_list_data) {
+           if ($scope.or_list_data[i].product_srp == undefined || $scope.or_list_data[i].product_srp == "undefined" || $scope.or_list_data[i].product_srp == NaN || $scope.or_list_data[i].product_srp == 'NaN' || $scope.or_list_data[i].product_srp == '' || $scope.or_list_data[i].product_srp == "") {
+                $scope.or_list_data[i].product_srp = 0;
+                $scope.or_list_data[i].wamount3 = 0;
+                $scope.or_list_data[i].product_price = 0;
+           };
+        };
+
         var b = 0;
         for (var i in $scope.or_list_data) {
             b = parseFloat($scope.or_list_data[i].product_stocks) * parseFloat($scope.or_list_data[i].wamount3); 
@@ -232,6 +240,14 @@ function get_or_data(){
                 $scope.or_list_data[z].product_status_color = 1;
                 $scope.or_list_data[z].product_status_color1 = 'green';
             }
+        };
+
+        for (var i in $scope.or_list_data) {
+           if ($scope.or_list_data[i].product_srp == undefined || $scope.or_list_data[i].product_srp == "undefined" || $scope.or_list_data[i].product_srp == NaN || $scope.or_list_data[i].product_srp == 'NaN' || $scope.or_list_data[i].product_srp == '' || $scope.or_list_data[i].product_srp == "") {
+                $scope.or_list_data[i].product_srp = 0;
+                $scope.or_list_data[i].wamount3 = 0;
+                $scope.or_list_data[i].product_price = 0;
+           };
         };
 
         var b = 0;
