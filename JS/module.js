@@ -15,8 +15,13 @@ app.config(function($routeProvider) {
 	$routeProvider
 	.when('/',             
 	{                 
-		controller: 'Product',
-		templateUrl: 'TEMPLATE/HOME/sales.html'             
+		controller: 'HomeController',
+		templateUrl: 'TEMPLATE/HOME/home.html'             
+	})
+	.when('/Chat',             
+	{                 
+		controller: 'HomeController',
+		templateUrl: 'TEMPLATE/HOME/chat.html'             
 	})
 	.when('/Sales',             
 	{                 

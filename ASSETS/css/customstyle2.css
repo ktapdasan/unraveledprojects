@@ -2958,9 +2958,9 @@ table.text-center th {
 }
 .login-box,
 .register-box {
-  width: 360px;
+  width: 90%;
   margin: 7% auto;
-}
+  }
 @media (max-width: 768px) {
   .login-box,
   .register-box {
@@ -2989,6 +2989,7 @@ table.text-center th {
   margin: 0;
   text-align: center;
   padding: 0 20px 20px 20px;
+  font-size:30px;
 }
 .social-auth-links {
   margin: 10px 0;

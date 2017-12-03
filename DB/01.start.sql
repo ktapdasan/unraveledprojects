@@ -141,3 +141,13 @@ create table pictures
 	archived boolean default false
 );
 alter table pictures owner to ktapdasan;
+
+create table chat
+(
+	chat_pk serial primary key,
+	chatted_by int not null,
+	chat_desc text not null,
+	date_chatted timestamptz default now(),
+	archived boolean default false
+);
+alter table chat owner to ktapdasan;

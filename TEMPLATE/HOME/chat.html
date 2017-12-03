@@ -1,0 +1,38 @@
+<section class="content-header" style="margin-top:-30px;">
+  <h1>
+    Chat
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href=""><i class="fa fa-dashboard"></i> Unraveled Projects</a></li>
+    <li class="active">Chat</li>
+  </ol>
+</section>
+<section>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-lg-12">
+			<div class="panel" style="height: 300px !important;max-height: 300px !important;overflow-y: scroll;overflow-x: hidden;">
+				<table class="table table-striped">
+					<tr ng-repeat="(k,v) in array_chat track by $index">
+						<td ng-if="v.yes" style="text-align: left;">					{{v.name}} - {{v.chat_desc}}
+						</td>
+						<td ng-if="!v.yes" style="text-align: right;">
+							{{v.name}} - {{v.chat_desc}}
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="wow"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-lg-12">
+			<div class="panel" style="height: 100% !important;">
+				<textarea class="form-control" ng-model="form.chatdesc"></textarea>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-lg-4">
+			<button class="btn btn-success" ng-click="submit_chat()">Send</button>
+		</div>
+	</div>
+</section>

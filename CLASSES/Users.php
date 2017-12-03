@@ -693,6 +693,64 @@ EOT;
         return ClassParent::insert($sql);
     }
 
+    public function submit_chat($data){
+
+        $pk = $data['pk'];
+        $chatdesc = $data['chatdesc'];
+
+        $sql = <<<EOT
+                insert into chat
+                (
+                    chatted_by,
+                    chat_desc
+                )
+                VALUES
+                (
+                    $pk,
+                    '$chatdesc'
+                )
+                ;
+EOT;
+
+        return ClassParent::insert($sql);
+    }
+
+    public function get_chat_all(){
+
+        $pk = $data['pk'];
+        $chatdesc = $data['chatdesc'];
+
+        $sql = <<<EOT
+                select
+                chat_pk,
+                chat_desc,
+                date_chatted,
+                chatted_by,
+                (select last_name from users where pk = chat.chatted_by) as name
+                from chat;
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
+    public function get_updated_chat($data){
+
+        $chat_pk = $data['chat_pk'];
+
+        $sql = <<<EOT
+                select
+                chat_pk,
+                chat_desc,
+                date_chatted,
+                chatted_by,
+                (select last_name from users where pk = chat.chatted_by) as name
+                from chat
+                where chat_pk NOT IN ($chat_pk);
+EOT;
+
+        return ClassParent::get($sql);
+    }
+
     public function edit_product_data($data){
 
         $pk = $data['pk'];

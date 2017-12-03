@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bunny POS</title>
+  <title>Unraveled Projects</title>
   <link rel="icon" href="logo.ico">
-  <link href="./ASSETS/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-  <link href="./ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
-  <link href="./ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <!-- <link href="./ASSETS/css/customstyle.css" rel="stylesheet" type="text/css" />
+  <link href="./ASSETS/css/customstyle2.css" rel="stylesheet" type="text/css" /> -->
 </head>
-<body class="login-page">
-  <div class="login-box">
+<body style="font-size:40px;">
+<div class="container-fluid" style="padding-top: 10%">
+  <div class="row" style="padding-left: 30%;">
+    <div class="col-sm-12 col-lg-8 col-lg-offset-4 col-md-8 col-md-offset-8">
+      <a href="#"><b><h1 style="font-size:70px;">Unraveled &trade;</h1></b></a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-lg-8 col-lg-offset-4 col-md-8 col-md-offset-8">
+      <input type="text" class="form-control" placeholder="Hello">
+    </div>
+  </div>
+</div>
+
+  <!-- <div class="login-box" style="min-height: 500px !important;">
     <div class="login-logo">
-      <a href="#"><b>Bunny &trade;</b></a>
+      <a href="#"><b>Unraveled &trade;</b></a>
     </div>
     <div class="login-box-body">
       <p class="login-box-msg">Sign in to start your session</p>
       <form>
-        <div class="form-group has-feedback">
+        <div class="form-group has-feedback" >
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
           <input id="user_id" type="text" class="form-control" placeholder="User ID"/>
         </div>
@@ -29,14 +42,14 @@
         <input type="button" id="btn_submit" class="btn btn-success btn-md" onclick="login()" value="Log In">
       </form>
     </div>
-  </div>
+  </div> -->
   <script src="./ASSETS/js/jquery.min.js"></script>
   <script src="./ASSETS/bootstrap/js/bootstrap.min.js"></script>
   <script src="./ASSETS/js/JqueryStretch.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
         checksession();
-        $.backstretch("ASSETS/picture/gosaricolored.png");
+        // $.backstretch("ASSETS/picture/gosaricolored.png");
         $("#user_id, #password, #btn_submit").on('keypress', function( event ) {
             if ( event.which == 13 ) {
                 login();
